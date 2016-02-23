@@ -13,13 +13,51 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
+            $table->engine = "InnoDB";
             $table->increments('id');
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password', 60);
+            $table->string('nombres');
+            $table->string('apellidos')->nullable();
+            $table->string('sexo')->default('M');
+            $table->string('username')->unique();
+            $table->string('password', 60)->default('');
+            $table->string('email')->nullable()->unique();$table->integer('firma_id')->nullable(); // Código de la imagen que tiene la firma
+            $table->integer('tipo_doc')->unsigned()->nullable();
+            $table->integer('num_doc')->nullable();
+            $table->integer('ciudad_doc')->unsigned()->nullable();
+            $table->date('fecha_nac')->nullable();
+            $table->integer('ciudad_nac')->unsigned()->nullable();
+            $table->string('titulo')->nullable();
+            $table->string('estado_civil')->nullable();
+            $table->string('barrio')->nullable();
+            $table->string('direccion')->nullable();
+            $table->string('telefono')->nullable();
+            $table->string('celular')->nullable();
+            $table->string('facebook')->nullable()->unique();
+            $table->boolean('is_superuser')->default(false);
+            $table->integer('imagen_id')->unsigned()->nullable();
+            $table->integer('deleted_by')->unsigned()->nullable();
+            $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
         });
+
+
+
+        Schema::create('images', function(Blueprint $table)
+        {
+            $table->engine = "InnoDB";
+            $table->increments('id');
+            $table->string('nombre'); // Si no es pública, este nombre indica una imagen dentro de la carpeta del usuario.
+            $table->integer('user_id')->nullable();
+            $table->boolean('publica')->nullable(); // Esto indica que la imagen no se buscará en la carpeta del usuario, sino en la carpeta del colegio.
+            $table->integer('created_by')->nullable();
+            $table->integer('updated_by')->nullable();
+            $table->integer('deleted_by')->nullable();
+            $table->softDeletes();
+            $table->timestamps();
+        });
+
+
     }
 
     /**
@@ -29,6 +67,8 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
+        
+        Schema::drop('images');
         Schema::drop('users');
     }
 }

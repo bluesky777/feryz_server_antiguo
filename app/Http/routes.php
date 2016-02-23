@@ -16,8 +16,10 @@ Route::get('/', function () {
 });
 
 
+Route::controller('login', 'LoginController');
 Route::controller('productos', 'ProductosController');
-
+Route::controller('usuarios', 'UsuariosController');
+Route::controller('empleados', 'EmpleadosController');
 
 /*
 |--------------------------------------------------------------------------

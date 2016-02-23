@@ -2,6 +2,9 @@
 
 use Illuminate\Database\Seeder;
 
+use App\Models\User;
+
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -11,6 +14,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UserTableSeeder::class);
+        
+        //$this->call('CiudadesTableSeeder');
+
+        $user = new User;
+        $user->id=1;
+        $user->nombres='Administrador';
+        $user->username='admin';
+        $user->email='hola@yopmail.com';
+        $user->password=Hash::make('123');
+        $user->save();
+
+
+        $this->call('PaisesTableSeeder');
     }
 }
