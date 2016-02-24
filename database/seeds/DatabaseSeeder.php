@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
         $user->save();
 
 
+        //$this->call('ImagesTableSeeder');
         $this->call('PaisesTableSeeder');
     }
 }

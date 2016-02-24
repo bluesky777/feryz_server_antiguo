@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use JWTAuth;
 use Request;
 use Auth;
+use DB;
 
 
 use App\Http\Controllers\Controller;
 
-use App\Models\Usuario;
+use App\Models\User;
 
 class LoginController extends Controller
 {
@@ -23,6 +24,20 @@ class LoginController extends Controller
 
       if (Auth::attempt($credentials)) {
          $user = Auth::user();
+
+         $cons = 'SELECT u.id, u.username, u.nombres, u.apellidos, u.sexo, u.email,
+                     i.id as image_id,
+                     ifnull(i.nombre, if(u.sexo="F", "'.User::$default_female.'", "'.User::$default_male.'") ) as image_nombre
+                  from users u
+                  left join images i on i.id=u.image_id
+                  where u.id=? and i.deleted_at is null and u.deleted_at is null';
+         
+         $user = DB::select($cons, [$user->id]);
+
+         if (count($user)>0) {
+            $user = $user[0];
+         }
+
          if (! $token = JWTAuth::attempt($credentials)){
             return abort(400, 'Token pailas');
          }else{
@@ -32,18 +47,18 @@ class LoginController extends Controller
          return abort(400, 'Credenciales invalidas');
       }
 
-   	return $user;
+   	return (array)$user;
    }
 
    public function postVerificar()
    {
       try{
          $user = JWTAuth::parseToken()->authenticate();
-         User::datos_usuario_logueado($user);
+         $user = User::datos_usuario_logueado($user);
       } catch (JWTException $e){
          return response()->json(['errror '=>'Al parecer el token expiro'], 401);
       }
-      return $user;
+      return (array)$user;
    }
 
    public function putLogout()

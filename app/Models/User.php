@@ -5,10 +5,16 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
-use App\Models\ImagenModel;
+use DB;
 
 class User extends Authenticatable
 {
+
+    public static $default_female = 'system/avatars/famale1.jpg';
+    public static $default_male = 'system/avatars/male1.jpg';
+    public static $perfil_path = 'perfil/';
+
+
 
     protected $hidden = [
         'password', 'remember_token',
@@ -63,21 +69,30 @@ class User extends Authenticatable
         // *************************************************
         //User::roles_y_permisos($usuario);
 
-        $usuario->imagen_nombre = ImagenModel::imagen_de_usuario($usuario->sexo, $usuario->imagen_id);
+        $usuario = User::datos_usuario_logueado($usuario);
 
         $usuario->token = $token;
 
-        return $usuario;
+        return (array)$usuario;
     }
     public static function datos_usuario_logueado(&$usuario)
     {
 
-        User::roles_y_permisos($usuario);
+        
+         $cons = 'SELECT u.id, u.username, u.nombres, u.apellidos, u.sexo, u.email,
+                     i.id as image_id,
+                     ifnull(i.nombre, if(u.sexo="F", "'.User::$default_female.'", "'.User::$default_male.'") ) as image_nombre
+                  from users u
+                  left join images i on i.id=u.image_id
+                  where u.id=? and i.deleted_at is null and u.deleted_at is null';
+         
+         $user = DB::select($cons, [$usuario->id]);
 
-        $usuario->imagen_nombre = ImagenModel::imagen_de_usuario($usuario->sexo, $usuario->imagen_id);
+         if (count($user)>0) {
+            $user = $user[0];
+         }
 
-
-        return $usuario;
+        return $user;
     }
 
 }

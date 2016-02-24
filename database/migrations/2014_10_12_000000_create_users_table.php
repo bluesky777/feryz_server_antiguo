@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('apellidos')->nullable();
             $table->string('sexo')->default('M');
             $table->string('username')->unique();
+            $table->integer('image_id')->unsigned()->nullable();
             $table->string('password', 60)->default('');
             $table->string('email')->nullable()->unique();$table->integer('firma_id')->nullable(); // Código de la imagen que tiene la firma
             $table->integer('tipo_doc')->unsigned()->nullable();
