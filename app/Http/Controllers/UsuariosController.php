@@ -62,7 +62,7 @@ class UsuariosController extends Controller {
 		$User->facebook = Request::input('facebook');
 		$User->save();
 
-		return $User;
+		return 'Cambiado';
 	}
 
 	public function deleteDestroy($id)
