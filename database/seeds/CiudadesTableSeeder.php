@@ -21,7 +21,7 @@ class CiudadesTableSeeder extends Seeder {
 		
 		// Insertamos los más de 4 mil registros separados de a mil en varios archivos.
 		$this->command->info("Vamos a insertar las ciudades...");
-		$sql = file_get_contents(dirname(__FILE__) .'/sql/ciudades_colombia.sql');
+		$sql = file_get_contents(dirname(__FILE__) .'/sql/otr.sql');
 		DB::statement($sql);
 		
 

@@ -13,7 +13,7 @@ class CreateExamenIngresosTable extends Migration
     public function up()
     {
         Schema::create('exameningresos', function (Blueprint $table) {
-           
+            $table->engine = "InnoDB";
             $table->increments('id');
             $table->string('departamento');
             $table->string('ciudad');
@@ -60,6 +60,6 @@ class CreateExamenIngresosTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('exameningresos');
     }
 }

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDatos1Table extends Migration
+class CreateIngresoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateDatos1Table extends Migration
     public function up()
     {
         Schema::create('pacientes', function (Blueprint $table) {
-           
+            $table->engine = "InnoDB";
             $table->increments('id');
             $table->string('nombres'); 
             $table->string('apellidos');
             $table->string('departamento');
             $table->string('ciudad');
-            $table->date('fecha');
             $table->string('empresa_usuaria');
             $table->string('empresa_temporal')->nullable();
             $table->string('actividad_economica');
@@ -29,8 +28,8 @@ class CreateDatos1Table extends Migration
             $table->string('direccion');
             $table->integer('telefono')->nullable();
             $table->string('telefono_contacto');
-            $table->date('fecha_nacimiento');
-            $table->string('lugar');
+            $table->date('fecha_nac');
+            $table->string('lugar_nac');
             $table->string('estado_civil');
             $table->string('nivel_escolaridad')->nullable();
             $table->string('edad');
@@ -40,7 +39,6 @@ class CreateDatos1Table extends Migration
             $table->string('eps');
             $table->string('arp');
             $table->string('afp');
-            $table->date('fecha_ingreso');
             $table->string('cargo');
             $table->string('descripcion_cargo');
             $table->string('motivo_consulta');
@@ -48,15 +46,14 @@ class CreateDatos1Table extends Migration
             $table->string('antec_hospitalarios');
             $table->string('antec_quirurgicos');
             $table->string('antec_familiares');
-            $table->integer('paciente_id');
+            $table->integer('paciente_id')->unsigned();
             $table->softDeletes();
-            $table->rememberToken();
             $table->timestamps();
         });
 
 
         Schema::create('antec_laborales', function (Blueprint $table) {
-           
+            $table->engine = "InnoDB";
             $table->increments('id');
             $table->string('empresa');
             $table->string('activ_economica')->nullable();
@@ -65,17 +62,15 @@ class CreateDatos1Table extends Migration
             $table->string('tiemp_exposicion');
             $table->string('niv_exposicion');
             $table->string('controles');
-            $table->string('controles');
             $table->string('epp');
-            $table->integer('paciente_id')
+            $table->integer('paciente_id');
             $table->softDeletes();
-            $table->rememberToken();
             $table->timestamps();
         });
 
 
         Schema::create('accid_trabajo', function (Blueprint $table) {
-           
+            $table->engine = "InnoDB";
             $table->increments('id');
             $table->date('fecha');
             $table->string('diagnostico')->nullable();
@@ -86,15 +81,14 @@ class CreateDatos1Table extends Migration
             $table->string('tipo_accidente');
             $table->integer('severidad');
             $table->string('secuelas');
-            $table->integer('paciente_id')
+            $table->integer('paciente_id');
             $table->softDeletes();
-            $table->rememberToken();
             $table->timestamps();
         });
 
 
         Schema::create('enfermedades_prof', function (Blueprint $table) {
-           
+            $table->engine = "InnoDB";
             $table->increments('id');
             $table->date('fecha');
             $table->string('diagnostico')->nullable();
@@ -105,15 +99,14 @@ class CreateDatos1Table extends Migration
             $table->string('tipo_accidente');
             $table->integer('severidad');
             $table->string('secuelas');
-            $table->integer('paciente_id')
+            $table->integer('paciente_id');
             $table->softDeletes();
-            $table->rememberToken();
             $table->timestamps();
         });
 
 
         Schema::create('inmunizaciones', function (Blueprint $table) {
-           
+            $table->engine = "InnoDB";
             $table->increments('id');
             $table->integer('vacuna_id');
             $table->boolean('d1')->default(false);
@@ -122,15 +115,14 @@ class CreateDatos1Table extends Migration
             $table->boolean('d4')->default(false);
             $table->boolean('d5')->default(false);
             $table->boolean('refuerzo')->default(false);
-            $table->integer('paciente_id')
+            $table->integer('paciente_id');
             $table->softDeletes();
-            $table->rememberToken();
             $table->timestamps();
         });
 
 
         Schema::create('habitos', function (Blueprint $table) {
-           
+            $table->engine = "InnoDB";
             $table->increments('id');
             $table->boolean('cigarrillo')->default(false);
             $table->string('cigarrillo_descripcion');
@@ -142,15 +134,14 @@ class CreateDatos1Table extends Migration
             $table->string('dieta_descripcion');
             $table->boolean('ejercicio')->default(false);
             $table->string('ejercicio_descripcion');
-            $table->integer('paciente_id')
+            $table->integer('paciente_id');
             $table->softDeletes();
-            $table->rememberToken();
             $table->timestamps();
         });
 
 
         Schema::create('examen_fisico', function (Blueprint $table) {
-           
+            $table->engine = "InnoDB";
             $table->increments('id');
             $table->integer('sign_vit_fr');
             $table->integer('sign_vit_ta');
@@ -178,11 +169,36 @@ class CreateDatos1Table extends Migration
             $table->string('piel_anexos');
             $table->string('examen_mental');
             $table->string('observaciones');
-            $table->integer('paciente_id')
+            $table->integer('paciente_id');
             $table->softDeletes();
-            $table->rememberToken();
             $table->timestamps();
         });
+
+        Schema::create('examen_paraclinico', function (Blueprint $table) {
+            $table->engine = "InnoDB";
+            $table->increments('id');
+            $table->string('examen');
+            $table->string('diagnostico');
+            $table->integer('paciente_id');
+            $table->softDeletes();
+            $table->timestamps();
+        });
+
+        Schema::create('diagnosticos', function (Blueprint $table) {
+            $table->engine = "InnoDB";
+            $table->increments('id');
+            $table->string('diagnostico');
+            $table->string('nivel_aptitud');
+            $table->string('restricciones_temp_perm');
+            $table->string('recomendaciones_diagnostico');
+            $table->integer('paciente_id');
+            $table->softDeletes();
+            $table->timestamps();
+        });
+
+
+
+
     }
 
     /**
@@ -192,6 +208,13 @@ class CreateDatos1Table extends Migration
      */
     public function down()
     {
+        Schema::drop('examen_fisico');
+        Schema::drop('examen_fisico');
+        Schema::drop('habitos');
+        Schema::drop('inmunizaciones');
+        Schema::drop('enfermedades_prof');
+        Schema::drop('accid_trabajo');
+        Schema::drop('antec_laborales');
         Schema::drop('pacientes');
     }
 }
