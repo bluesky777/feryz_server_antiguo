@@ -208,7 +208,8 @@ class CreateIngresoTable extends Migration
      */
     public function down()
     {
-        Schema::drop('examen_fisico');
+        Schema::drop('diagnosticos');
+        Schema::drop('examen_paraclinico');
         Schema::drop('examen_fisico');
         Schema::drop('habitos');
         Schema::drop('inmunizaciones');

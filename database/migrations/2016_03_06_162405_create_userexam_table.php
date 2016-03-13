@@ -5,11 +5,7 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateUserexamTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+
     public function up()
     {
         Schema::create('examenes', function (Blueprint $table) {
@@ -76,6 +72,7 @@ class CreateUserexamTable extends Migration
      */
     public function down()
     {
-        Schema::drop('pacientes');
+        Schema::drop('user_exam');
+        Schema::drop('examenes');
     }
 }
