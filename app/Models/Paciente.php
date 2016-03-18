@@ -3,8 +3,8 @@
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Ciudad extends Model {
-	protected $table = 'ciudades';
+class Paciente extends Model {
+	protected $table = 'pacientes';
 
 	use SoftDeletes;
 	protected $softDelete = true;

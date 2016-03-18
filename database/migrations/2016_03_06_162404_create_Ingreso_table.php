@@ -5,11 +5,7 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateIngresoTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+
     public function up()
     {
         Schema::create('pacientes', function (Blueprint $table) {
@@ -17,22 +13,21 @@ class CreateIngresoTable extends Migration
             $table->increments('id');
             $table->string('nombres'); 
             $table->string('apellidos');
-            $table->string('departamento');
-            $table->string('ciudad');
-            $table->string('empresa_usuaria');
+            $table->integer('ciudad_actual_id')->unsigned()->nullable();
+            $table->string('empresa_usuaria')->nullable();
             $table->string('empresa_temporal')->nullable();
-            $table->string('actividad_economica');
-            $table->string('doc_tipo');
-            $table->integer('doc_identidad');
-            $table->string('sexo',1);
-            $table->string('direccion');
-            $table->integer('telefono')->nullable();
-            $table->string('telefono_contacto');
-            $table->date('fecha_nac');
-            $table->string('lugar_nac');
-            $table->string('estado_civil');
+            $table->string('actividad_economica')->nullable();
+            $table->string('doc_tipo')->nullable();
+            $table->integer('doc_identidad')->nullable();
+            $table->string('sexo', 1)->default('M');
+            $table->string('direccion')->nullable();
+            $table->string('telefono')->nullable();
+            $table->string('telefono_contacto')->nullable();
+            $table->date('fecha_nac')->nullable();
+            $table->integer('ciudad_nac_id')->unsigned()->nullable();
+            $table->string('estado_civil')->nullable(); // Soltero, Casado, 
+                                                        // Viudo, Divorciado, Comprometido, Unión libre
             $table->string('nivel_escolaridad')->nullable();
-            $table->string('edad');
             $table->string('profesion');
             $table->string('grupo_sanguineo');
             $table->string('rh');
@@ -46,7 +41,6 @@ class CreateIngresoTable extends Migration
             $table->string('antec_hospitalarios');
             $table->string('antec_quirurgicos');
             $table->string('antec_familiares');
-            $table->integer('paciente_id')->unsigned();
             $table->softDeletes();
             $table->timestamps();
         });

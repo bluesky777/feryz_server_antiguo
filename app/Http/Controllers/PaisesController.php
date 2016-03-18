@@ -1,18 +1,18 @@
 <?php namespace App\Http\Controllers;
 
 use Request;
-use App\Models\Producto;
+use App\Models\Pais;
 
-class ProductosController extends Controller {
+class PaisesController extends Controller {
 
 	public function getAll()
 	{
-		return Producto::all();
+		return Pais::all();
 	}
 
 	public function postGuardar()
 	{
-		$pro = new Producto;
+		$pro = new Pais;
 		$pro->nombre = Request::input('nombre');
 		$pro->codigo = Request::input('codigo');
 		$pro->save();
@@ -23,7 +23,7 @@ class ProductosController extends Controller {
 
 	public function putActualizar()
 	{
-		$pro = Producto::find(Request::input('id'));
+		$pro = Pais::find(Request::input('id'));
 		$pro->nombre = Request::input('nombre');
 		$pro->codigo = Request::input('codigo');
 		$pro->save();
@@ -33,7 +33,7 @@ class ProductosController extends Controller {
 
 	public function deleteDestroy($id)
 	{
-		$pro = Producto::findOrFail($id);
+		$pro = Pais::findOrFail($id);
 		$pro->delete();
 		return $pro;
 	}

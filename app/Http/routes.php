@@ -17,9 +17,11 @@ Route::get('/', function () {
 
 
 Route::controller('login', 'LoginController');
-Route::controller('productos', 'ProductosController');
+Route::controller('pacientes', 'PacientesController');
 Route::controller('usuarios', 'UsuariosController');
-Route::controller('empleados', 'EmpleadosController');
+Route::controller('imagenes', 'ImagesController');
+Route::controller('paises', 'PaisesController');
+Route::controller('ciudades', 'CiudadesController');
 
 /*
 |--------------------------------------------------------------------------

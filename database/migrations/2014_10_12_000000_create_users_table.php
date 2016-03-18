@@ -12,6 +12,16 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
+        Schema::create('configuracion', function (Blueprint $table) {
+            $table->engine = "InnoDB";
+            $table->increments('id');
+            $table->string('nombre_ips');
+            $table->string('telefono')->nullable();
+            $table->integer('logo_id')->unsigned()->nullable();
+            $table->integer('ciudad_id')->unsigned();
+            $table->timestamps();
+        });
+
         Schema::create('users', function (Blueprint $table) {
             $table->engine = "InnoDB";
             $table->increments('id');
@@ -71,5 +81,6 @@ class CreateUsersTable extends Migration
         
         Schema::drop('images');
         Schema::drop('users');
+        Schema::drop('configuracion');
     }
 }
