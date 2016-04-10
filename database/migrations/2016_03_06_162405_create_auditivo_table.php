@@ -12,7 +12,7 @@ class CreateAuditivoTable extends Migration
      */
     public function up()
     {
-        Schema::create('ant_auditivos', function (Blueprint $table) {
+        Schema::create('antec_auditivos', function (Blueprint $table) {
             $table->engine = "InnoDB";
             $table->increments('id');
             // Otológicos
@@ -93,6 +93,6 @@ class CreateAuditivoTable extends Migration
     {
         Schema::drop('audiometria');
         Schema::drop('otoscopia');
-        Schema::drop('ant_auditivos');
+        Schema::drop('antec_auditivos');
     }
 }

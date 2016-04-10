@@ -41,37 +41,37 @@ class CreateVisiometriaTable extends Migration
             $table->increments('id');
             $table->boolean('correc_optica')->nullable();
             //oido derecho
-            $table->string('ojo_der_esfera')->nullable();
-            $table->string('ojo_der_cilindro')->nullable();
-            $table->string('ojo_der_eje')->nullable();
-            $table->string('ojo_der_add')->nullable();
+            $table->boolean('ojo_der_esfera')->nullable();
+            $table->boolean('ojo_der_cilindro')->nullable();
+            $table->boolean('ojo_der_eje')->nullable();
+            $table->boolean('ojo_der_add')->nullable();
             //vision lejos
-            $table->string('ojo_der_sc_lejos')->nullable();
-            $table->string('ojo_der_cc_lejos')->nullable();
+            $table->boolean('ojo_der_sc_lejos')->nullable();
+            $table->boolean('ojo_der_cc_lejos')->nullable();
             //vision cerca
-            $table->string('ojo_der_sc_cerca')->nullable();
-            $table->string('ojo_der_cc_cerca')->nullable();
+            $table->boolean('ojo_der_sc_cerca')->nullable();
+            $table->boolean('ojo_der_cc_cerca')->nullable();
             //oido izquierdo
-            $table->string('ojo_izq_esfera')->nullable();
-            $table->string('ojo_izq_cilindro')->nullable();
-            $table->string('ojo_izq_eje')->nullable();
-            $table->string('ojo_izq_add')->nullable();
-            $table->string('ojo_izq_sc')->nullable();
+            $table->boolean('ojo_izq_esfera')->nullable();
+            $table->boolean('ojo_izq_cilindro')->nullable();
+            $table->boolean('ojo_izq_eje')->nullable();
+            $table->boolean('ojo_izq_add')->nullable();
+            $table->boolean('ojo_izq_sc')->nullable();
             //vision lejos
-            $table->string('ojo_izq_cc_lejos')->nullable();
-            $table->string('ojo_izq_cs_lejos')->nullable();
+            $table->boolean('ojo_izq_cc_lejos')->nullable();
+            $table->boolean('ojo_izq_cs_lejos')->nullable();
             //vision cerca
-            $table->string('ojo_izq_sc_cerca')->nullable();
-            $table->string('ojo_izq_cc_cerca')->nullable();
+            $table->boolean('ojo_izq_sc_cerca')->nullable();
+            $table->boolean('ojo_izq_cc_cerca')->nullable();
 
-            $table->string('pabellon_auricular_izq')->nullable(); 
-            $table->string('cae_der')->nullable(); 
-            $table->string('cae_izq')->nullable(); 
-            $table->string('membrana_timpanica_der')->nullable(); 
-            $table->string('membrana_timpanica_izq')->nullable();
+            $table->boolean('pabellon_auricular_izq')->nullable(); 
+            $table->boolean('cae_der')->nullable(); 
+            $table->boolean('cae_izq')->nullable(); 
+            $table->boolean('membrana_timpanica_der')->nullable(); 
+            $table->boolean('membrana_timpanica_izq')->nullable();
 
-            $table->string('ojo_izq_ph')->nullable(); 
-            $table->string('ojo_der_ph')->nullable(); 
+            $table->boolean('ojo_izq_ph')->nullable(); 
+            $table->boolean('ojo_der_ph')->nullable(); 
             
             $table->integer('paciente_id')->unsigned();
             $table->softDeletes();

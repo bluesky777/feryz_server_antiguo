@@ -18,6 +18,7 @@ Route::get('/', function () {
 
 Route::controller('login', 'LoginController');
 Route::controller('pacientes', 'PacientesController');
+Route::controller('antecedentes-laborales', 'AntecedentesLaboralesController');
 Route::controller('usuarios', 'UsuariosController');
 Route::controller('imagenes', 'ImagesController');
 Route::controller('paises', 'PaisesController');
