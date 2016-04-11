@@ -24,6 +24,7 @@ class CreateIngresoTable extends Migration
             $table->string('telefono')->nullable();
             $table->string('telefono_contacto')->nullable();
             $table->date('fecha_nac')->nullable();
+            $table->date('fecha_ingreso')->nullable();
             $table->integer('ciudad_nac_id')->unsigned()->nullable();
             $table->string('estado_civil')->nullable(); // Soltero, Casado, 
                                                         // Viudo, Divorciado, Comprometido, Unión libre
