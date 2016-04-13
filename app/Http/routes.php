@@ -20,6 +20,7 @@ Route::controller('login', 'LoginController');
 Route::controller('pacientes', 'PacientesController');
 Route::controller('accidentes-trabajo', 'AccidentesTrabajoController');
 Route::controller('antecedentes-laborales', 'AntecedentesLaboralesController');
+Route::controller('enfermedades-profesionales', 'EnfermedadesProfesionalesController');
 Route::controller('usuarios', 'UsuariosController');
 Route::controller('imagenes', 'ImagesController');
 Route::controller('paises', 'PaisesController');

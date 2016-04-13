@@ -3,6 +3,7 @@
 use Request;
 use DB;
 use App\Models\Ciudad;
+use App\Models\Pais;
 
 class CiudadesController extends Controller {
 
@@ -33,6 +34,38 @@ class CiudadesController extends Controller {
 
 		return $pro;
 	}
+
+
+	public function getPaisdeciudad($ciudad_id)
+	{	
+		$consulta = 'SELECT paises.id, pais, abrev FROM paises, ciudades where paises.id = ciudades.pais_id and ciudades.id = :ciudad_id';
+		return DB::select($consulta, ['ciudad_id' => $ciudad_id]);
+	}
+
+	public function getPordepartamento($departamento)
+	{
+		return Ciudad::where('departamento', $departamento)->get();
+	}
+
+
+
+	public function getDatosciudad($ciudad_id)
+	{
+		$ciudad = Ciudad::find($ciudad_id);
+		$pais = $this->getPaisdeciudad($ciudad->id);
+
+		$departamentos = $this->getDepartamentos($pais[0]->id);
+		$ciudades = Ciudad::where('departamento' , $ciudad->departamento)->get();
+
+		$result = array('ciudad' => $ciudad, 
+						'ciudades' => $ciudades, 
+						'departamento' => array('departamento'=>$ciudad->departamento), 
+						'departamentos' => $departamentos,
+						'pais'=> $pais[0],
+						'paises' => Pais::all());
+		return $result;
+	}
+
 
 
 	public function putActualizar()
