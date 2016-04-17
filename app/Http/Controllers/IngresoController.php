@@ -1,13 +1,13 @@
 <?php namespace App\Http\Controllers;
 
 use Request;
-use App\Models\User;
+use App\Models\Ingreso;
 
-class UsuariosController extends Controller {
+class IngresoController extends Controller {
 
 	public function getAll()
 	{
-		return User::all();
+		return Ingreso::all();
 	}
 
 	public function postGuardar()
@@ -18,13 +18,13 @@ class UsuariosController extends Controller {
 		$User->sexo = 		Request::input('sexo');
 		//$pro->image_id = Request::input('image_id');
 		$User->username = 	Request::input('username');
-		//$User->password = 	Hash::make(Request::input('password'));
+		$User->password = 	Hash::make(Request::input('password'));
 		$User->email = 		Request::input('email');
-		$User->tipo_doc = 	Request::input('tipo_doc')['id'];
+		$User->tipo_doc = 	Request::input('tipo_doc');
 		$User->num_doc = 	Request::input('num_doc');
 		$User->ciudad_doc = Request::input('ciudad_doc');
 		$User->fecha_nac = 	Request::input('fecha_nac');
-		$User->ciudad_nac = Request::input('ciudad_nac')['id'];
+		$User->ciudad_nac = Request::input('ciudad_nac');
 		$User->titulo = 	Request::input('titulo');
 		$User->estado_civil = Request::input('estado_civil');
 		$User->barrio = 	Request::input('barrio');
@@ -46,13 +46,13 @@ class UsuariosController extends Controller {
 		$User->sexo = Request::input('sexo');
 		//$pro->image_id = Request::input('image_id');
 		$User->username = Request::input('username');
-		//$User->password = Request::input('password');
+		$User->password = Request::input('password');
 		$User->email = Request::input('email');
-		$User->tipo_doc = Request::input('tipo_doc')['id'];
+		$User->tipo_doc = Request::input('tipo_doc');
 		$User->num_doc = Request::input('num_doc');
 		$User->ciudad_doc = Request::input('ciudad_doc');
 		$User->fecha_nac = Request::input('fecha_nac');
-		$User->ciudad_nac = Request::input('ciudad_nac')['id'];
+		$User->ciudad_nac = Request::input('ciudad_nac');
 		$User->titulo = Request::input('titulo');
 		$User->estado_civil = Request::input('estado_civil');
 		$User->barrio = Request::input('barrio');
