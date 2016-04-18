@@ -91,7 +91,7 @@ class ImagesController extends Controller {
 
 	public function guardar_imagen($user)
 	{
-		$folderName = 'user_'.$user->user_id;
+		$folderName = 'user_'.$user['id'];
 		$folder = 'images/perfil/'.$folderName;
 
 		if (!File::exists($folder)) {
@@ -99,10 +99,20 @@ class ImagesController extends Controller {
 		}
 
 		$file = Request::file("file");
-		//separamos el nombre de la img y la extensión
-		$info = explode(".", $file->getClientOriginalName());
-		//asignamos de nuevo el nombre de la imagen completo
-		$miImg = $file->getClientOriginalName();
+		
+		try {
+			/*
+			//separamos el nombre de la img y la extensión
+			$info = explode(".", $file->getClientOriginalName());
+			//asignamos de nuevo el nombre de la imagen completo
+			$miImg = $file->getClientOriginalName();
+			*/
+			$miImg = date('Y-m-d-H:i:s');
+		} catch (Exception $e) {
+			$miImg = 'cam';
+		}
+		
+		
 
 		//return Request::file('file')->getMimeType(); // Puedo borrarlo
 		//mientras el nombre exista iteramos y aumentamos i
