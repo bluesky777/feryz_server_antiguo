@@ -27,12 +27,13 @@ class CiudadesController extends Controller {
 
 	public function postGuardar()
 	{
-		$pro = new Ciudad;
-		$pro->nombre = Request::input('nombre');
-		$pro->codigo = Request::input('codigo');
-		$pro->save();
+		$city = new Ciudad;
+		$city->ciudad = Request::input('ciudad');
+		$city->departamento = Request::input('departamento');
+		$city->pais = Request::input('pais');
+		$city->save();
 
-		return $pro;
+		return $city;
 	}
 
 

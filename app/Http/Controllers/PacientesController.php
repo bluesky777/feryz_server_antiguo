@@ -24,6 +24,8 @@ class PacientesController extends Controller {
 		$pac->direccion = Request::input('direccion');
 		$pac->telefono = Request::input('telefono');
 		$pac->telefono_contacto = Request::input('telefono_contacto');
+		$pac->fecha_nac = Request::input('fecha_nac');
+
 		$pac->ciudad_nac_id = Request::input('ciudad_nac')['id'];
 		$pac->estado_civil = Request::input('estado_civil');
 		$pac->nivel_escolaridad = Request::input('nivel_escolaridad');
@@ -56,6 +58,7 @@ class PacientesController extends Controller {
 		$pac->direccion = Request::input('direccion');
 		$pac->telefono = Request::input('telefono');
 		$pac->telefono_contacto = Request::input('telefono_contacto');
+		
 		$pac->ciudad_nac_id = Request::input('ciudad_nac')['id'];
 		$pac->estado_civil = Request::input('estado_civil');
 		$pac->nivel_escolaridad = Request::input('nivel_escolaridad');

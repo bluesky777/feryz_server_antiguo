@@ -22,7 +22,7 @@ class ConfiguracionController extends Controller {
 		$Conf->nombre_ips = Request::input('nombre_ips');
 		$Conf->telefono = Request::input('telefono');
 		//Conf$pac->logo_id = Request::input('logo_id');
-		$Conf->ciudad_id = Request::input('ciudad_id');
+		$Conf->ciudad_id = Request::input('ciudad_id')['id'];
 		
 
 		$Conf->save();
