@@ -25,12 +25,28 @@ class CiudadesController extends Controller {
 		return Ciudad::where('departamento', $departamento)->get();
 	}
 
-	public function postGuardar()
+	public function postGuardarciudad()
 	{
+		$depart = '';
+		if (Request::input('nuevo_depart')) {
+			$depart = Request::input('txt_new_depart');
+		}else{
+			$depart = Request::input('departamento')['departamento'];
+		}
+
 		$city = new Ciudad;
 		$city->ciudad = Request::input('ciudad');
+		$city->departamento = $depart;
+		$city->pais_id = Request::input('pais')['id'];
+		$city->save();
+
+		return $city;
+	}
+	public function postGuardardepartamento()
+	{
+		$city = new Ciudad;
 		$city->departamento = Request::input('departamento');
-		$city->pais = Request::input('pais');
+		$city->pais_id = Request::input('pais')['id'];
 		$city->save();
 
 		return $city;
@@ -69,7 +85,7 @@ class CiudadesController extends Controller {
 
 
 
-	public function putActualizar()
+	public function putActualizarciudad()
 	{
 		$pro = Ciudad::find(Request::input('id'));
 		$pro->nombre = Request::input('nombre');
