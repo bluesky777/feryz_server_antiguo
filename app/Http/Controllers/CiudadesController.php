@@ -85,14 +85,27 @@ class CiudadesController extends Controller {
 
 
 
-	public function putActualizarciudad()
+	public function putActualizarCiudad()
 	{
-		$pro = Ciudad::find(Request::input('id'));
-		$pro->nombre = Request::input('nombre');
-		$pro->codigo = Request::input('codigo');
-		$pro->save();
+		$city = Ciudad::find(Request::input('id'));
+		$city->ciudad = Request::input('ciudad');
+		$city->departamento = Request::input('departamento');
+		$city->save();
 
-		return $pro;
+		return $city;
+	}
+
+
+	public function putActualizarDepartamento()
+	{
+		$newDepart = Request::input('departamento');
+		$city = Ciudad::find(Request::input('id'));
+
+		DB::table('ciudades')
+            ->where('departamento', $city->departamento)
+            ->update(['departamento' => $newDepart]);
+
+		return $city;
 	}
 
 	public function deleteDestroy($id)

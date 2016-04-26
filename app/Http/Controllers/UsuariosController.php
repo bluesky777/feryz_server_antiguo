@@ -22,7 +22,7 @@ class UsuariosController extends Controller {
 		$User->email = 		Request::input('email');
 		$User->tipo_doc = 	Request::input('tipo_doc')['id'];
 		$User->num_doc = 	Request::input('num_doc');
-		$User->ciudad_doc = Request::input('ciudad_doc');
+		$User->ciudad_doc = Request::input('ciudad_doc')['id'];
 		$User->fecha_nac = 	Request::input('fecha_nac');
 		$User->ciudad_nac = Request::input('ciudad_nac')['id'];
 		$User->titulo = 	Request::input('titulo');
@@ -50,7 +50,7 @@ class UsuariosController extends Controller {
 		$User->email = Request::input('email');
 		$User->tipo_doc = Request::input('tipo_doc')['id'];
 		$User->num_doc = Request::input('num_doc');
-		$User->ciudad_doc = Request::input('ciudad_doc');
+		$User->ciudad_doc = Request::input('ciudad_doc')['id'];
 		$User->fecha_nac = Request::input('fecha_nac');
 		$User->ciudad_nac = Request::input('ciudad_nac')['id'];
 		$User->titulo = Request::input('titulo');

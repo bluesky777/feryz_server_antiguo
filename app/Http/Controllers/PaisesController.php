@@ -12,23 +12,23 @@ class PaisesController extends Controller {
 
 	public function postGuardar()
 	{
-		$pro = new Pais;
-		$pro->nombre = Request::input('nombre');
-		$pro->codigo = Request::input('codigo');
-		$pro->save();
+		$pais = new Pais;
+		$pais->pais = Request::input('paisnuevo');
+		$pais->abrev = Request::input('abrev');
+		$pais->save();
 
-		return $pro;
+		return $pais;
 	}
 
 
 	public function putActualizar()
 	{
-		$pro = Pais::find(Request::input('id'));
-		$pro->nombre = Request::input('nombre');
-		$pro->codigo = Request::input('codigo');
-		$pro->save();
+		$pais = Pais::find(Request::input('id'));
+		$pais->pais = Request::input('pais');
+		$pais->abrev = Request::input('abrev');
+		$pais->save();
 
-		return $pro;
+		return $pais;
 	}
 
 	public function deleteDestroy($id)
