@@ -24,7 +24,8 @@ class PacientesController extends Controller {
 	{
 		$paciente = [];
 
-		$consulta = 'SELECT p.nombres, p.apellidos, p.fecha_nac, p.telefono, p.doc_identidad, p.motivo_consulta, c.id, c.ciudad, c.departamento, c.pais_id, pa.id, pa.pais, pa.abrev
+		$consulta = 'SELECT p.*, c.id, c.ciudad, c.departamento, 
+							c.pais_id, pa.id, pa.pais, pa.abrev
 						from pacientes p 
 						left join ciudades c on c.id=p.ciudad_nac_id
 						left join paises pa on pa.id=c.pais_id
@@ -47,8 +48,8 @@ class PacientesController extends Controller {
 
 		
 		$consulta = 'SELECT * from antec_laborales where paciente_id=:paciente_id';
-		$ant_per = DB::select($consulta, [':paciente_id' => $paciente->id]);
-		$paciente->ant_personales = $ant_per;
+		$ant_lab = DB::select($consulta, [':paciente_id' => $paciente->id]);
+		$paciente->ant_laborales = $ant_lab;
 
 		$consulta = 'SELECT * from accid_trabajo a where a.paciente_id=:paciente_id';
 		$accid_trabajo = DB::select($consulta, [':paciente_id' => $paciente->id]);

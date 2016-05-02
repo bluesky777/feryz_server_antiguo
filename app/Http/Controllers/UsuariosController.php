@@ -2,6 +2,7 @@
 
 use Request;
 use App\Models\User;
+use App\Models\Examen;
 
 class UsuariosController extends Controller {
 
@@ -63,6 +64,12 @@ class UsuariosController extends Controller {
 		$User->save();
 
 		return 'Cambiado';
+	}
+
+
+	public function getExamenes()
+	{
+		return Examen::all();
 	}
 
 	public function deleteDestroy($id)
