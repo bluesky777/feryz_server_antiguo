@@ -81,10 +81,9 @@ class User extends Authenticatable
     {
 
         
-         $cons = 'SELECT u.id, u.username, u.nombres, u.apellidos, u.sexo, u.email,
-                     i.id as image_id,
-                     ifnull(i.nombre, if(u.sexo="F", "'.User::$default_female.'", "'.User::$default_male.'") ) as image_nombre
-                  from users u
+         $cons = 'SELECT u.id, u.username, u.nombres, u.apellidos, u.sexo, u.email, i.id as image_id, u.is_superuser, u.tipo_usu_id,  
+                     IFNULL(i.nombre, if(u.sexo="F", "'.User::$default_female.'", "'.User::$default_male.'") ) as image_nombre
+                  FROM users u
                   left join images i on i.id=u.image_id
                   where u.id=? and i.deleted_at is null and u.deleted_at is null';
          

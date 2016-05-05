@@ -14,6 +14,7 @@ class CreateIngresoTable extends Migration
             $table->string('nombres'); 
             $table->string('apellidos');
             $table->string('sexo', 1)->default('M');
+            $table->integer('image_id')->unsigned()->nullable();
             $table->integer('ciudad_actual_id')->unsigned()->nullable();
             $table->string('empresa_usuaria')->nullable();
             $table->string('empresa_temporal')->nullable();

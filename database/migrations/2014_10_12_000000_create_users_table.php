@@ -30,6 +30,7 @@ class CreateUsersTable extends Migration
             $table->string('sexo')->default('M');
             $table->string('username')->unique();
             $table->integer('image_id')->unsigned()->nullable();
+            $table->integer('tipo_usu_id')->unsigned()->nullable();
             $table->string('password', 60)->default('');
             $table->string('email')->nullable()->unique();$table->integer('firma_id')->nullable(); // Código de la imagen que tiene la firma
             $table->integer('tipo_doc')->unsigned()->nullable();
@@ -52,6 +53,13 @@ class CreateUsersTable extends Migration
             $table->timestamps();
         });
 
+        Schema::create('tipo_usuario', function (Blueprint $table) {
+            $table->engine = "InnoDB";
+            $table->increments('id');
+            $table->string('titulo')->nullable(); // Optómetra, Fonoaudiólogo, Fisioterapeuta, Psicólogo, Bacteriólogo, Recepcionista
+
+            $table->timestamps();
+        });
 
 
         Schema::create('images', function(Blueprint $table)

@@ -26,7 +26,7 @@ class LoginController extends Controller
          $user = Auth::user();
 
          $cons = 'SELECT u.id, u.username, u.nombres, u.apellidos, u.sexo, u.email,
-                     i.id as image_id,
+                     i.id as image_id, u.tipo_usu_id,
                      ifnull(i.nombre, if(u.sexo="F", "'.User::$default_female.'", "'.User::$default_male.'") ) as image_nombre
                   from users u
                   left join images i on i.id=u.image_id

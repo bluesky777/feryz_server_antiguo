@@ -7,12 +7,8 @@ use Image;
 use \stdClass;
 
 use App\Models\User;
-use App\Models\ImageModel;
-use App\Models\Year;
-use App\Models\Alumno;
-use App\Models\Profesor;
-use App\Models\Acudiente;
-use App\Models\ChangeAsked;
+use App\Models\ImagenModel;
+use App\Models\Paciente;
 
 
 class ImagesController extends Controller {
@@ -21,20 +17,31 @@ class ImagesController extends Controller {
 	{
 		$user = User::fromToken();
 		
+		$imagenes = ImagenModel::where('user_id', $user['id'])
+								->get();
 
-		if ($user->tipo == "Alumno" and $user->tipo == "Acudiente") {
-			return ImageModel::where('user_id', $user->user_id)->get();
+		return $imagenes;
+	}
+
+	public function getUsuariosAndPacientes()
+	{
+		$user = User::fromToken();
+
+		$respuesta = [];
+
+		$respuesta['imagenes'] = ImagenModel::where('user_id', $user['id'])
+								->get();
+
+		if ($user['is_superuser']) {
+			$respuesta['usuarios'] = User::all();
+		}else{
+			$respuesta['usuarios'] = User::where('is_superuser', false)->get();
 		}
 
-		$imagenes_privadas = ImageModel::where('user_id', $user->user_id)
-								->whereNull('publica')
-								->get();
+		$respuesta['pacientes'] = Paciente::all();
+		
 
-		$imagenes_publicas = ImageModel::where('user_id', $user->user_id)
-								->where('publica', true)
-								->get();
-
-		return array('imagenes_privadas' => $imagenes_privadas, 'imagenes_publicas' => $imagenes_publicas);
+		return $respuesta;
 	}
 
 
@@ -45,7 +52,7 @@ class ImagesController extends Controller {
 		$imagen_id = Request::input('imagen_id');
 		
 
-		$datos_imagen = ImageModel::DatosImagen($imagen_id, $user_id);
+		$datos_imagen = ImagenModel::DatosImagen($imagen_id, $user_id);
 
 		return $datos_imagen;
 	}
@@ -100,15 +107,15 @@ class ImagesController extends Controller {
 
 		$file = Request::file("file");
 		
-		try {
-			/*
+		
+			/**/
 			//separamos el nombre de la img y la extensión
 			$info = explode(".", $file->getClientOriginalName());
 			//asignamos de nuevo el nombre de la imagen completo
 			$miImg = $file->getClientOriginalName();
-			*/
-			$miImg = date('Y-m-d-H:i:s');
-		} catch (Exception $e) {
+			
+			//$miImg = date('Y-m-d-H:i:s'); 
+		try {} catch (Exception $e) {
 			$miImg = 'cam';
 		}
 		
@@ -125,9 +132,9 @@ class ImagesController extends Controller {
 		//guardamos la imagen con otro nombre ej foto(1).jpg || foto(2).jpg etc
 		$file->move($folder, $miImg);
 		
-		$newImg = new ImageModel;
+		$newImg = new ImagenModel;
 		$newImg->nombre = $folderName.'/'.$miImg;
-		$newImg->user_id = $user->user_id;
+		$newImg->user_id = $user['id'];
 		$newImg->save();
 
 		return $newImg;
@@ -135,7 +142,7 @@ class ImagesController extends Controller {
 
 	public function putRotarimagen($imagen_id)
 	{
-		$imagen = ImageModel::findOrFail($imagen_id);
+		$imagen = ImagenModel::findOrFail($imagen_id);
 
 		$folderName = $imagen->nombre;
 		$img_dir = 'images/perfil/'.$folderName;
@@ -152,7 +159,7 @@ class ImagesController extends Controller {
 
 	public function putPublicarImagen($imagen_id)
 	{
-		$imagen = ImageModel::findOrFail($imagen_id);
+		$imagen = ImagenModel::findOrFail($imagen_id);
 		$imagen->publica = true;
 		$imagen->save();
 
@@ -168,7 +175,7 @@ class ImagesController extends Controller {
 		}
 
 
-		$imagen = ImageModel::findOrFail($imagen_id);
+		$imagen = ImagenModel::findOrFail($imagen_id);
 		$imagen->publica = null;
 		$imagen->save();
 
@@ -250,7 +257,7 @@ class ImagesController extends Controller {
 
 	public function deleteDestroy($id)
 	{
-		$img = ImageModel::findOrFail($id);
+		$img = ImagenModel::findOrFail($id);
 		
 		$filename = 'images/perfil/'.$img->nombre;
 
