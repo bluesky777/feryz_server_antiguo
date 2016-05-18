@@ -49,7 +49,7 @@ class UsuariosController extends Controller {
 		$User->sexo = Request::input('sexo');
 		//$pro->image_id = Request::input('image_id');
 		$User->username = Request::input('username');
-		//$User->password = Request::input('password');
+		$User->password = 	Hash::make(Request::input('password'));
 		$User->email = Request::input('email');
 		$User->tipo_usu_id = 	Request::input('tipo_usu_id')['id'];
 		$User->tipo_doc = Request::input('tipo_doc')['id'];

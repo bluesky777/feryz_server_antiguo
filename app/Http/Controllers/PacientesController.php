@@ -3,6 +3,10 @@
 use Request;
 use DB;
 use App\Models\Paciente;
+use App\Models\Visiometria;
+use App\Models\AccidenteTrabajo;
+use App\Models\EnfermedadProfesional;
+use App\Models\AntecedenteLaboral;
 
 class PacientesController extends Controller {
 
@@ -20,12 +24,33 @@ class PacientesController extends Controller {
 		return DB::select($consulta);
 	}
 
+
+	public function putDatos()
+	{
+		$accTrab = AccidenteTrabajo::where('paciente_id', Request::input('paciente_id'))->get();
+		$antLab = AntecedenteLaboral::where('paciente_id', Request::input('paciente_id'))->get();
+		$enfProf = EnfermedadProfesional::where('paciente_id', Request::input('paciente_id'))->get();
+		$visiometria = Visiometria::where('paciente_id', Request::input('paciente_id'))->first();
+
+		if (!$visiometria) {
+			$visiometria = ['test_color' => 'N', 
+							'estereopsis' => 'N'];
+		}
+
+		return ['accTrab' => $accTrab, 
+				'antLab' => $antLab, 
+				'enfProf' => $enfProf, 
+				'visiometria' => $visiometria];
+	}
+
+
 	public function getExamenIngreso()
 	{
 		$paciente = [];
 
-		$consulta = 'SELECT p.*, c.id, c.ciudad, c.departamento, 
-							c.pais_id, pa.id, pa.pais, pa.abrev
+		$consulta = 'SELECT p.*, c.id as ciudad_id, c.ciudad, c.departamento, 
+							c.pais_id, pa.id as pais_id, pa.pais, pa.abrev,
+							im.nombre as nombre_imagen
 						from pacientes p 
 						left join ciudades c on c.id=p.ciudad_nac_id
 						left join paises pa on pa.id=c.pais_id
@@ -35,6 +60,7 @@ class PacientesController extends Controller {
 						left join motilidad_ocular m on m.paciente_id=p.id
 						left join pulmonar pu on pu.paciente_id=p.id
 						left join visiometria vi on vi.paciente_id=p.id
+						left join images im on im.id=p.image_id
 						and p.id=1';
 		
 		$paciente = DB::select($consulta);

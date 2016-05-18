@@ -9,6 +9,7 @@ use \stdClass;
 use App\Models\User;
 use App\Models\ImagenModel;
 use App\Models\Paciente;
+use App\Models\Configuracion;
 
 
 class ImagesController extends Controller {
@@ -67,7 +68,6 @@ class ImagesController extends Controller {
 		$folder = 'images/perfil/';
 
 		$newImg = $this->guardar_imagen($user);
-
 		try {
 			
 			$img = Image::make($folder . $newImg->nombre);
@@ -140,6 +140,51 @@ class ImagesController extends Controller {
 		return $newImg;
 	}
 
+
+	public function guardar_imagen_tomada($user)
+	{
+		$folderName = 'user_'.$user['id'];
+		$folder = 'images/perfil/'.$folderName;
+
+		if (!File::exists($folder)) {
+			File::makeDirectory($folder, $mode = 0777, true, true);
+		}
+
+		$file = Request::file("file");
+		
+		
+			/**/
+			//separamos el nombre de la img y la extensión
+			$info = explode(".", $file->getClientOriginalName());
+			//asignamos de nuevo el nombre de la imagen completo
+			$miImg = $file->getClientOriginalName();
+			
+			//$miImg = date('Y-m-d-H:i:s'); 
+		try {} catch (Exception $e) {
+			$miImg = 'cam';
+		}
+		
+		
+
+		//return Request::file('file')->getMimeType(); // Puedo borrarlo
+		//mientras el nombre exista iteramos y aumentamos i
+		$i = 0;
+		while(file_exists($folder.'/'. $miImg)){
+			$i++;
+			$miImg = $info[0]."(".$i.")".".".$info[1];              
+		}
+
+		//guardamos la imagen con otro nombre ej foto(1).jpg || foto(2).jpg etc
+		$file->move($folder, $miImg);
+		
+		$newImg = new ImagenModel;
+		$newImg->nombre = $folderName.'/'.$miImg;
+		$newImg->user_id = $user['id'];
+		$newImg->save();
+
+		return $newImg;
+	}
+
 	public function putRotarimagen($imagen_id)
 	{
 		$imagen = ImagenModel::findOrFail($imagen_id);
@@ -157,101 +202,24 @@ class ImagesController extends Controller {
 	}
 
 
-	public function putPublicarImagen($imagen_id)
-	{
-		$imagen = ImagenModel::findOrFail($imagen_id);
-		$imagen->publica = true;
-		$imagen->save();
 
-		return $imagen->nombre;
-	}
-
-	public function putPrivatizarImagen($imagen_id)
-	{
-		$years = Year::where('logo_id', $imagen_id)->get();
-		
-		if (count($years) > 0) {
-			return ['imagen' => array('is_logo_of_year' => $years[0]->year)];
-		}
-
-
-		$imagen = ImagenModel::findOrFail($imagen_id);
-		$imagen->publica = null;
-		$imagen->save();
-
-		return $imagen->nombre;
-	}
-
-
-	public function putCambiarimagenperfil($id)
+	public function putCambiarImagenPerfil($id)
 	{
 		$user = User::findOrFail($id);
-		$user->imagen_id = Request::input('imagen_id');
+		$user->image_id = Request::input('image_id');
 		$user->save();
 		return $user;
 	}
 
 
-	public function putCambiarlogocolegio()
+	public function putCambiarLogo()
 	{
 		$user = User::fromToken();
 
-		$year = Year::findOrFail($user->year_id);
-		$year->logo_id = Request::input('logo_id');
-		$year->save();
-		return $year;
-	}
-
-	public function putCambiarimagenoficial($id)
-	{
-		$user = User::findOrFail($id);
-		$img_id = Request::input('foto_id');
-		$persona = new stdClass();
-		
-		$alumno = Alumno::where('user_id', $user->id)->first();
-
-		if ($alumno) {
-			
-			// No cambiamos la imagen, solo la solicitamos.
-			$persona = $alumno;
-
-			$already = ChangeAsked::where('asked_by_user_id', $user->id)
-								->where('oficial_image_id', $img_id)
-								->whereNull('rechazado_at')
-								->whereNull('accepted_at')
-								->first();
-
-			if ($already) {
-				return 'En espera';
-			}
-
-			$pedido = new ChangeAsked;
-			$pedido->asked_by_user_id = $user->id;
-			$pedido->oficial_image_id = $img_id;
-			$pedido->save();
-			return $pedido;
-
-		}else{
-
-			$profesor = Profesor::where('user_id', $user->id)->first();
-			if ($profesor) {
-				$persona = $profesor;
-			}else{
-				$acudiente = Acudiente::where('user_id', $user->id)->first();
-				if ($acudiente) {
-					$persona = $acudiente;
-				}else{
-					App::abort(400, 'Usuario no tiene foto oficial.');
-				}
-			}
-
-
-			$persona->foto_id = $img_id;
-			$persona->save();
-			return $persona;
-
-		}
-
+		$conf = Configuracion::all()->first();
+		$conf->logo_id = Request::input('logo_id');
+		$conf->save();
+		return $conf;
 	}
 
 
@@ -274,30 +242,20 @@ class ImagesController extends Controller {
 
 
 		// Elimino cualquier referencia que otros tengan a esa imagen borrada.
-		$alumnos = Alumno::where('foto_id', $id)->get();
-		foreach ($alumnos as $alum) {
-			$alum->foto_id = null;
-			$alum->save();
+		$pacientes = Paciente::where('image_id', $id)->get();
+		foreach ($pacientes as $paci) {
+			$paci->image_id = null;
+			$paci->save();
 		}
-		$profesores = Profesor::where('foto_id', $id)->get();
-		foreach ($profesores as $prof) {
-			$prof->foto_id = null;
-			$prof->save();
-		}
-		$acudientes = Acudiente::where('foto_id', $id)->get();
-		foreach ($acudientes as $acud) {
-			$acud->foto_id = null;
-			$acud->save();
-		}
-		$users = User::where('imagen_id', $id)->get();
+		$users = User::where('image_id', $id)->get();
 		foreach ($users as $user) {
-			$user->imagen_id = null;
+			$user->image_id = null;
 			$user->save();
 		}
-		$years = Year::where('logo_id', $id)->get();
-		foreach ($years as $year) {
-			$year->logo_id = null;
-			$year->save();
+		$confs = Configuracion::where('logo_id', $id)->get();
+		foreach ($confs as $conf) {
+			$conf->logo_id = null;
+			$conf->save();
 		}
 
 		
