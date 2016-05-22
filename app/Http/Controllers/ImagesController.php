@@ -67,7 +67,14 @@ class ImagesController extends Controller {
 
 		$folder = 'images/perfil/';
 
-		$newImg = $this->guardar_imagen($user);
+		if (Request::has('foto')) {
+			$newImg = $this->guardar_imagen_tomada($user);
+		}else{
+			$newImg = $this->guardar_imagen($user);
+		}
+
+		
+		
 		try {
 			
 			$img = Image::make($folder . $newImg->nombre);
@@ -107,7 +114,7 @@ class ImagesController extends Controller {
 
 		$file = Request::file("file");
 		
-		
+		try {
 			/**/
 			//separamos el nombre de la img y la extensión
 			$info = explode(".", $file->getClientOriginalName());
@@ -115,7 +122,7 @@ class ImagesController extends Controller {
 			$miImg = $file->getClientOriginalName();
 			
 			//$miImg = date('Y-m-d-H:i:s'); 
-		try {} catch (Exception $e) {
+		} catch (Exception $e) {
 			$miImg = 'cam';
 		}
 		
@@ -150,23 +157,28 @@ class ImagesController extends Controller {
 			File::makeDirectory($folder, $mode = 0777, true, true);
 		}
 
-		$file = Request::file("file");
+		$paciente = Paciente::find(Request::input('paciente_id'));
 		
-		
-			/**/
-			//separamos el nombre de la img y la extensión
-			$info = explode(".", $file->getClientOriginalName());
-			//asignamos de nuevo el nombre de la imagen completo
-			$miImg = $file->getClientOriginalName();
-			
-			//$miImg = date('Y-m-d-H:i:s'); 
-		try {} catch (Exception $e) {
-			$miImg = 'cam';
-		}
-		
-		
+		$anterior = ImagenModel::find($paciente->image_id);
+		if ($anterior) {
+			$filename = 'images/perfil/'.$anterior->nombre;
 
-		//return Request::file('file')->getMimeType(); // Puedo borrarlo
+			if (File::exists($filename)) {
+				File::delete($filename);
+				$anterior->forceDelete();
+				$paciente->image_id = null;
+			}else{
+				return 'No se encuentra la imagen a eliminar. '.$img->nombre;
+			}
+
+		}
+
+		//separamos el nombre de la img y la extensión
+		$info = explode(".",  $paciente->nombres . '.jpg');
+		//asignamos de nuevo el nombre de la imagen completo
+		$miImg = $paciente->nombres . '.jpg';
+		
+		
 		//mientras el nombre exista iteramos y aumentamos i
 		$i = 0;
 		while(file_exists($folder.'/'. $miImg)){
@@ -174,13 +186,24 @@ class ImagesController extends Controller {
 			$miImg = $info[0]."(".$i.")".".".$info[1];              
 		}
 
+
+		$file = Request::input("foto");
+		$binary_data = base64_decode( $file );
+
 		//guardamos la imagen con otro nombre ej foto(1).jpg || foto(2).jpg etc
-		$file->move($folder, $miImg);
+		$result = file_put_contents($folder .'/'. $miImg, $binary_data);
+		//$file->move($folder, $miImg);
+
 		
 		$newImg = new ImagenModel;
 		$newImg->nombre = $folderName.'/'.$miImg;
 		$newImg->user_id = $user['id'];
 		$newImg->save();
+
+
+		$paciente->image_id = $newImg->id;
+		$paciente->save();
+		
 
 		return $newImg;
 	}

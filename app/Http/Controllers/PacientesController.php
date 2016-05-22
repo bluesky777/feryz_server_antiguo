@@ -85,6 +85,13 @@ class PacientesController extends Controller {
 		$enfermedades_prof = DB::select($consulta, [':paciente_id' => $paciente->id]);
 		$paciente->enfermedades_prof = $enfermedades_prof;
 
+		$consulta = 'SELECT * from images i where i.id=:image_id';
+		$images = DB::select($consulta, [':image_id' => $paciente->image_id]);
+		if (count($images)>0) {
+			$images = $images[0];
+		}
+		$paciente->imagen = $images;
+
 
 
 		return (array)$paciente;
