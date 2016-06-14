@@ -112,6 +112,14 @@ class CreateIngresoTable extends Migration
             $table->boolean('d5')->default(false);
             $table->boolean('refuerzo')->default(false);
             $table->integer('paciente_id');
+            $table->timestamps();
+        });
+
+
+        Schema::create('vacunas', function (Blueprint $table) {
+            $table->engine = "InnoDB";
+            $table->increments('id');
+            $table->string('vacuna');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -161,7 +169,7 @@ class CreateIngresoTable extends Migration
             $table->string('columna_vertebral');
             $table->string('neurologico');
             $table->string('osteo_muscular');
-            $table->string('extreminadades');
+            $table->string('extremidades');
             $table->string('piel_anexos');
             $table->string('examen_mental');
             $table->string('observaciones');
@@ -208,6 +216,7 @@ class CreateIngresoTable extends Migration
         Schema::drop('examen_paraclinico');
         Schema::drop('examen_fisico');
         Schema::drop('habitos');
+        Schema::drop('vacunas');
         Schema::drop('inmunizaciones');
         Schema::drop('enfermedades_prof');
         Schema::drop('accid_trabajo');

@@ -12,7 +12,7 @@ class User extends Authenticatable
 {
     protected $table = 'users';
 
-    public static $default_female = 'system/avatars/famale1.jpg';
+    public static $default_female = 'system/avatars/female1.jpg';
     public static $default_male = 'system/avatars/male1.jpg';
     public static $perfil_path = 'perfil/';
 
