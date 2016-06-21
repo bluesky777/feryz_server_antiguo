@@ -11,6 +11,8 @@ use App\Models\Vacuna;
 use App\Models\Inmunizacion;
 use App\Models\Habito;
 use App\Models\ExamenFisico;
+use App\Models\ExamenParaclinico;
+use App\Models\Diagnostico;
 
 
 class PacientesController extends Controller {
@@ -37,9 +39,11 @@ class PacientesController extends Controller {
 		$antLab = AntecedenteLaboral::where('paciente_id', $paciente_id)->get();
 		$enfProf = EnfermedadProfesional::where('paciente_id', $paciente_id)->get();
 		$habitos = Habito::where('paciente_id', $paciente_id)->first();
+		$diagnostico = Diagnostico::where('paciente_id', $paciente_id)->first();
 		$exafis = ExamenFisico::where('paciente_id', $paciente_id)->first();
 		$visiometria = Visiometria::where('paciente_id', $paciente_id)->first();
 		$vacunas = Vacuna::all();
+		$exaPara = ExamenParaclinico::where('paciente_id', $paciente_id)->get();
 
 		$consulta = 'SELECT i.*, v.vacuna
 						from inmunizaciones i 
@@ -60,7 +64,9 @@ class PacientesController extends Controller {
 				'vacunas' => $vacunas, 
 				'inmunizaciones' => $inmunizaciones,
 				'habitos' => $habitos,
-				'examen_fisico' => $exafis];
+				'examen_fisico' => $exafis,
+				'diagnostico' => $diagnostico,
+				'examenes_paraclinicos' => $exaPara];
 	}
 
 
@@ -171,9 +177,47 @@ class PacientesController extends Controller {
 		$hab->save();
 
 
+		// Vacunas
+		$inm = new Inmunizacion;
+		$inm->paciente_id 	= $pac->id;
+		$inm->vacuna_id 	= 1;
+		$inm->save();
+
+		$inm = new Inmunizacion;
+		$inm->paciente_id 	= $pac->id;
+		$inm->vacuna_id 	= 2;
+		$inm->save();
+
+		$inm = new Inmunizacion;
+		$inm->paciente_id 	= $pac->id;
+		$inm->vacuna_id 	= 3;
+		$inm->save();
+
+
+		// Examen físico
 		$exafis = new ExamenFisico;
-		$exafis->paciente_id = $pac->id;
+		$exafis->paciente_id 	= $pac->id;
 		$exafis->save();
+
+		// Examen paraclínico
+		$exaPara = new ExamenParaclinico;
+		$exaPara->paciente_id 	= $pac->id;
+		$exaPara->examen 		= 'Audiometría';
+		$exaPara->save();
+
+		$exaPara = new ExamenParaclinico;
+		$exaPara->paciente_id 	= $pac->id;
+		$exaPara->examen 		= 'Visiometría';
+		$exaPara->save();
+
+		$exaPara = new ExamenParaclinico;
+		$exaPara->paciente_id 	= $pac->id;
+		$exaPara->examen 		= 'Expirometría';
+		$exaPara->save();
+
+		$diag = new Diagnostico;
+		$diag->paciente_id 	= $pac->id;
+		$diag->save();
 
 
 		return $pac;
@@ -205,6 +249,13 @@ class PacientesController extends Controller {
 		$hab->ejercicio = Request::input('habitos')['ejercicio'];
 		$hab->ejercicio_descripcion = Request::input('habitos')['ejercicio_descripcion'];
 		$hab->save();
+
+		$diag = Diagnostico::where('paciente_id', Request::input('id'))->first();
+		$diag->diagnostico = Request::input('diagnostico')['diagnostico'];
+		$diag->nivel_aptitud = Request::input('diagnostico')['nivel_aptitud'];
+		$diag->restricciones_temp_perm = Request::input('diagnostico')['restricciones_temp_perm'];
+		$diag->recomendaciones_diagnostico = Request::input('diagnostico')['recomendaciones_diagnostico'];
+		$diag->save();
 
 		$pac = Paciente::find(Request::input('id'));
 		$pac->empresa_usuaria = Request::input('empresa_usuaria');
@@ -247,13 +298,14 @@ class PacientesController extends Controller {
 			$this->GuardarExaFis($exafis, $pac->id);
 		}
 		
+		
 		return $pac;
 	}
 
 
 	private function GuardarExaFis($exafis, $paciente_id)
 	{
-		$exafis->paciente_id = $paciente_id;
+		$exafis->paciente_id 			= $paciente_id;
 		$exafis->sign_vit_fr 			= Request::input('examen_fisico')['sign_vit_fr'];
 		$exafis->sign_vit_ta 			= Request::input('examen_fisico')['sign_vit_ta'];
 		$exafis->sign_vit_ta1 			= Request::input('examen_fisico')['sign_vit_ta1'];
@@ -268,11 +320,11 @@ class PacientesController extends Controller {
 		$exafis->agudeza_visual 		= Request::input('examen_fisico')['agudeza_visual']['descripcion'];
 		$exafis->ojo_derecho 			= Request::input('examen_fisico')['ojo_derecho']['descripcion'];
 		$exafis->ojo_izquierdo			= Request::input('examen_fisico')['ojo_izquierdo']['descripcion'];
-		$exafis->organos_sentidos			= Request::input('examen_fisico')['organos_sentidos']['descripcion'];
-		$exafis->cardio_pulmonar			= Request::input('examen_fisico')['cardio_pulmonar']['descripcion'];
+		$exafis->organos_sentidos		= Request::input('examen_fisico')['organos_sentidos']['descripcion'];
+		$exafis->cardio_pulmonar		= Request::input('examen_fisico')['cardio_pulmonar']['descripcion'];
 		$exafis->abdomen				= Request::input('examen_fisico')['abdomen']['descripcion'];
-		$exafis->genito_urinario			= Request::input('examen_fisico')['genito_urinario']['descripcion'];
-		$exafis->columna_vertebral			= Request::input('examen_fisico')['columna_vertebral']['descripcion'];
+		$exafis->genito_urinario		= Request::input('examen_fisico')['genito_urinario']['descripcion'];
+		$exafis->columna_vertebral		= Request::input('examen_fisico')['columna_vertebral']['descripcion'];
 		$exafis->neurologico			= Request::input('examen_fisico')['neurologico']['descripcion'];
 		$exafis->osteo_muscular			= Request::input('examen_fisico')['osteo_muscular']['descripcion'];
 		$exafis->extremidades			= Request::input('examen_fisico')['extremidades']['descripcion'];

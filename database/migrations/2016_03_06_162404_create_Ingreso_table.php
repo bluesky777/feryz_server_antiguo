@@ -174,7 +174,6 @@ class CreateIngresoTable extends Migration
             $table->string('examen_mental');
             $table->string('observaciones');
             $table->integer('paciente_id');
-            $table->softDeletes();
             $table->timestamps();
         });
 
@@ -184,7 +183,6 @@ class CreateIngresoTable extends Migration
             $table->string('examen');
             $table->string('diagnostico');
             $table->integer('paciente_id');
-            $table->softDeletes();
             $table->timestamps();
         });
 
