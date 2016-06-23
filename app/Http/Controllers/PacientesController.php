@@ -13,6 +13,9 @@ use App\Models\Habito;
 use App\Models\ExamenFisico;
 use App\Models\ExamenParaclinico;
 use App\Models\Diagnostico;
+use App\Models\AntecedenteAuditivo;
+use App\Models\Audiometria;
+use App\Models\Otoscopia;
 
 
 class PacientesController extends Controller {
@@ -42,6 +45,9 @@ class PacientesController extends Controller {
 		$diagnostico = Diagnostico::where('paciente_id', $paciente_id)->first();
 		$exafis = ExamenFisico::where('paciente_id', $paciente_id)->first();
 		$visiometria = Visiometria::where('paciente_id', $paciente_id)->first();
+		$antAud = AntecedenteAuditivo::where('paciente_id', $paciente_id)->first();
+		$Otos = Otoscopia::where('paciente_id', $paciente_id)->first();
+		$audiometria = Audiometria::where('paciente_id', $paciente_id)->first();
 		$vacunas = Vacuna::all();
 		$exaPara = ExamenParaclinico::where('paciente_id', $paciente_id)->get();
 
@@ -57,7 +63,9 @@ class PacientesController extends Controller {
 							'estereopsis' => 'N'];
 		}
 
-		return ['accTrab' => $accTrab, 
+		return [
+				'paciente_id' => $paciente_id,
+				'accTrab' => $accTrab, 
 				'antLab' => $antLab, 
 				'enfProf' => $enfProf, 
 				'visiometria' => $visiometria, 
@@ -66,7 +74,11 @@ class PacientesController extends Controller {
 				'habitos' => $habitos,
 				'examen_fisico' => $exafis,
 				'diagnostico' => $diagnostico,
-				'examenes_paraclinicos' => $exaPara];
+				'examenes_paraclinicos' => $exaPara,
+				'antAud' => $antAud,
+				'otoscopia' => $Otos,
+				'audiometria' => $audiometria,
+				];
 	}
 
 
@@ -218,6 +230,15 @@ class PacientesController extends Controller {
 		$diag = new Diagnostico;
 		$diag->paciente_id 	= $pac->id;
 		$diag->save();
+		$diag->save();
+
+		$Otos = new Otoscopia;
+		$Otos->paciente_id 	= $pac->id;
+		$Otos->save();
+
+		$antecAud = new AntecedenteAuditivo;
+		$antecAud->paciente_id 	= $pac->id;
+		$antecAud->save();
 
 
 		return $pac;
@@ -249,6 +270,34 @@ class PacientesController extends Controller {
 		$hab->ejercicio = Request::input('habitos')['ejercicio'];
 		$hab->ejercicio_descripcion = Request::input('habitos')['ejercicio_descripcion'];
 		$hab->save();
+
+		$antAud = AntecedenteAuditivo::where('paciente_id', Request::input('id'))->first();
+		$antAud->otalgia 					= Request::input('AntAudit')['otalgia'];
+		$antAud->otitis 					= Request::input('AntAudit')['otitis'];
+		$antAud->sensacion_oido_tapado		= Request::input('AntAudit')['sensacion_oido_tapado'];
+		$antAud->tinitus 					= Request::input('AntAudit')['tinitus'];
+		$antAud->vertigo 					= Request::input('AntAudit')['vertigo'];
+		$antAud->prurito 					= Request::input('AntAudit')['prurito'];
+		$antAud->trauma_craneoencefalico 	= Request::input('AntAudit')['trauma_craneoencefalico'];
+		$antAud->trauma_acustico 			= Request::input('AntAudit')['trauma_acustico'];
+		$antAud->cirugia_oido 				= Request::input('AntAudit')['cirugia_oido'];
+		$antAud->timpanoplastia 			= Request::input('AntAudit')['timpanoplastia'];
+		$antAud->hipertension_arterial 		= Request::input('AntAudit')['hipertension_arterial'];
+		$antAud->diabetes 					= Request::input('AntAudit')['diabetes'];
+		$antAud->rinitis 					= Request::input('AntAudit')['rinitis'];
+		$antAud->fam_prom_auditivos 		= Request::input('AntAudit')['fam_prom_auditivos'];
+		$antAud->exposicion_al_ruido 		= Request::input('AntAudit')['exposicion_al_ruido'];
+		$antAud->diagnostico 		= Request::input('AntAudit')['diagnostico'];
+		$antAud->save();
+
+		$otolo =  Otoscopia::where('paciente_id', Request::input('id'))->first();
+		$otolo->pabellon_auricular_der 					= Request::input('otoscopia')['pabellon_auricular_der'];
+		$otolo->pabellon_auricular_izq 					= Request::input('otoscopia')['pabellon_auricular_izq'];
+		$otolo->cae_der									= Request::input('otoscopia')['cae_der'];
+		$otolo->cae_izq 								= Request::input('otoscopia')['cae_izq'];
+		$otolo->membrana_timpanica_der 					= Request::input('otoscopia')['membrana_timpanica_der'];
+		$otolo->membrana_timpanica_izq 					= Request::input('otoscopia')['membrana_timpanica_izq'];
+		$otolo->save();
 
 		$diag = Diagnostico::where('paciente_id', Request::input('id'))->first();
 		$diag->diagnostico = Request::input('diagnostico')['diagnostico'];

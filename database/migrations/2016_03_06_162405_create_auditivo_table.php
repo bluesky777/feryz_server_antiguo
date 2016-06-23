@@ -21,7 +21,7 @@ class CreateAuditivoTable extends Migration
             $table->boolean('sensacion_oido_tapado')->nullable();
             $table->boolean('tinitus')->nullable();
             $table->boolean('vertigo')->nullable();
-            $table->boolean('plurito')->nullable();
+            $table->boolean('prurito')->nullable();
             // Traumáticos
             $table->boolean('trauma_craneoencefalico')->nullable();
             $table->boolean('trauma_acustico')->nullable();
@@ -46,12 +46,12 @@ class CreateAuditivoTable extends Migration
         Schema::create('otoscopia', function (Blueprint $table) {
             $table->engine = "InnoDB";
             $table->increments('id');
-            $table->string('pabellon_auricular_der')->nullable(); 
-            $table->string('pabellon_auricular_izq')->nullable(); 
-            $table->string('cae_der')->nullable(); 
-            $table->string('cae_izq')->nullable(); 
-            $table->string('membrana_timpanica_der')->nullable(); 
-            $table->string('membrana_timpanica_izq')->nullable(); 
+            $table->boolean('pabellon_auricular_der')->nullable(); 
+            $table->boolean('pabellon_auricular_izq')->nullable(); 
+            $table->boolean('cae_der')->nullable(); 
+            $table->boolean('cae_izq')->nullable(); 
+            $table->boolean('membrana_timpanica_der')->nullable(); 
+            $table->boolean('membrana_timpanica_izq')->nullable(); 
             
             $table->integer('paciente_id')->unsigned();
             $table->softDeletes();
