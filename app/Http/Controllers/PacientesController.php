@@ -236,6 +236,10 @@ class PacientesController extends Controller {
 		$Otos->paciente_id 	= $pac->id;
 		$Otos->save();
 
+		$Otos = new Audiometria;
+		$Otos->paciente_id 	= $pac->id;
+		$Otos->save();
+
 		$antecAud = new AntecedenteAuditivo;
 		$antecAud->paciente_id 	= $pac->id;
 		$antecAud->save();
@@ -298,6 +302,24 @@ class PacientesController extends Controller {
 		$otolo->membrana_timpanica_der 					= Request::input('otoscopia')['membrana_timpanica_der'];
 		$otolo->membrana_timpanica_izq 					= Request::input('otoscopia')['membrana_timpanica_izq'];
 		$otolo->save();
+
+		$otolo =  Audiometria::where('paciente_id', Request::input('id'))->first();
+		$otolo->int0 					= Request::input('audiometria')['int0'];
+		$otolo->int10 					= Request::input('audiometria')['int10'];
+		$otolo->int20					= Request::input('audiometria')['int20'];
+		$otolo->int30 					= Request::input('audiometria')['int30'];
+		$otolo->int40 					= Request::input('audiometria')['int40'];
+		$otolo->int50 					= Request::input('audiometria')['int50'];
+		$otolo->int60 					= Request::input('audiometria')['int60'];
+		$otolo->int70 					= Request::input('audiometria')['int70'];
+		$otolo->int80 					= Request::input('audiometria')['int80'];
+		$otolo->int90 					= Request::input('audiometria')['int90'];
+		$otolo->int100					= Request::input('audiometria')['int100'];
+		$otolo->int110					= Request::input('audiometria')['int110'];
+		$otolo->int120					= Request::input('audiometria')['int120'];
+		$otolo->save();
+
+
 
 		$diag = Diagnostico::where('paciente_id', Request::input('id'))->first();
 		$diag->diagnostico = Request::input('diagnostico')['diagnostico'];
