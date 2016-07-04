@@ -93,9 +93,8 @@ class PacientesController extends Controller {
 						left join ciudades c on c.id=p.ciudad_nac_id
 						left join paises pa on pa.id=c.pais_id
 						left join antec_auditivos antec on antec.paciente_id=p.id
-						left join agudeza_visual agu on agu.paciente_id=p.id 
+						left join visiometria agu on agu.paciente_id=p.id 
 						left join otoscopia o on o.paciente_id=p.id
-						left join motilidad_ocular m on m.paciente_id=p.id
 						left join pulmonar pu on pu.paciente_id=p.id
 						left join visiometria vi on vi.paciente_id=p.id
 						left join images im on im.id=p.image_id
