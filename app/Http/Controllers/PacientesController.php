@@ -244,6 +244,10 @@ class PacientesController extends Controller {
 		$antecAud->paciente_id 	= $pac->id;
 		$antecAud->save();
 
+		$visio = new Visiometria;
+		$visio->paciente_id 	= $pac->id;
+		$visio->save();
+
 
 		return $pac;
 	}
@@ -317,6 +321,41 @@ class PacientesController extends Controller {
 		$otolo->int100					= Request::input('audiometria')['int100'];
 		$otolo->int110					= Request::input('audiometria')['int110'];
 		$otolo->int120					= Request::input('audiometria')['int120'];
+		$otolo->save();
+
+		$otolo =  Visiometria::where('paciente_id', Request::input('id'))->first();
+		$otolo->enrojecimiento_ojo 					= Request::input('visiometria')['enrojecimiento_ojo'];
+		$otolo->lagrimeo 							= Request::input('visiometria')['lagrimeo'];
+		$otolo->ardor_ocular 						= Request::input('visiometria')['ardor_ocular'];
+		$otolo->vision_borrosa 						= Request::input('visiometria')['vision_borrosa'];
+		$otolo->vision_doble 						= Request::input('visiometria')['vision_doble'];
+		$otolo->prurito 							= Request::input('visiometria')['prurito'];
+		$otolo->cefalea 							= Request::input('visiometria')['cefalea'];
+		$otolo->otros 								= Request::input('visiometria')['otros'];
+		$otolo->otro 								= Request::input('visiometria')['otro'];
+		$otolo->antecedentes_personales 			= Request::input('visiometria')['antecedentes_personales'];
+		$otolo->recomendaciones 					= Request::input('visiometria')['recomendaciones'];
+		$otolo->correc_optica						= Request::input('visiometria')['correc_optica'];
+		$otolo->od_correccion_optica_uso 			= Request::input('visiometria')['od_correccion_optica_uso'];
+		$otolo->od_vision_lejos 					= Request::input('visiometria')['od_vision_lejos'];
+		$otolo->od_vision_cerca 					= Request::input('visiometria')['od_vision_cerca'];
+		$otolo->od_visiometria_ph 					= Request::input('visiometria')['od_visiometria_ph'];
+		$otolo->oi_correccion_optica_uso 			= Request::input('visiometria')['oi_correccion_optica_uso'];
+		$otolo->oi_vision_lejos 					= Request::input('visiometria')['oi_vision_lejos'];
+		$otolo->oi_vision_cerca 					= Request::input('visiometria')['oi_vision_cerca'];
+		$otolo->oi_visiometria_ph					= Request::input('visiometria')['oi_visiometria_ph'];
+		$otolo->oftalmoscopia_od					= Request::input('visiometria')['oftalmoscopia_od'];
+		$otolo->oftalmoscopia_od_observ				= Request::input('visiometria')['oftalmoscopia_od_observ'];
+		$otolo->oftalmoscopia_oi					= Request::input('visiometria')['oftalmoscopia_oi'];
+		$otolo->oftalmoscopia_oi_observ				= Request::input('visiometria')['oftalmoscopia_oi_observ'];
+		$otolo->externo_od							= Request::input('visiometria')['externo_od'];
+		$otolo->externo_od_observ					= Request::input('visiometria')['externo_od_observ'];
+		$otolo->externo_oi							= Request::input('visiometria')['externo_oi'];
+		$otolo->externo_oi_observ					= Request::input('visiometria')['externo_oi_observ'];
+		$otolo->estereopsis							= Request::input('visiometria')['estereopsis'];
+		$otolo->estereopsis_observ					= Request::input('visiometria')['estereopsis_observ'];
+		$otolo->test_color							= Request::input('visiometria')['test_color'];
+		$otolo->test_color_observ					= Request::input('visiometria')['test_color_observ'];
 		$otolo->save();
 
 
