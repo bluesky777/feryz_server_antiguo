@@ -98,6 +98,8 @@ class PacientesController extends Controller {
 						left join pulmonar pu on pu.paciente_id=p.id
 						left join visiometria vi on vi.paciente_id=p.id
 						left join images im on im.id=p.image_id
+						left join inmunizaciones inm on inm.paciente_id=p.id 
+						left join examen_fisico examfisi on examfisi.paciente_id=p.id 
 						and p.id=1';
 		
 		$paciente = DB::select($consulta);
@@ -125,6 +127,21 @@ class PacientesController extends Controller {
 		$consulta = 'SELECT * from enfermedades_prof e where e.paciente_id=:paciente_id';
 		$enfermedades_prof = DB::select($consulta, [':paciente_id' => $paciente->id]);
 		$paciente->enfermedades_prof = $enfermedades_prof;
+
+		$consulta = 'SELECT * from examen_fisico e where e.paciente_id=:paciente_id';
+		$examen_fisico = DB::select($consulta, [':paciente_id' => $paciente->id]);
+		$paciente->examen_fisico = $examen_fisico[0];
+
+		$consulta = 'SELECT * from examen_paraclinico e where e.paciente_id=:paciente_id';
+		$examen_paraclinico = DB::select($consulta, [':paciente_id' => $paciente->id]);
+		$paciente->examen_paraclinico = $examen_paraclinico;
+
+		$consulta = 'SELECT i.*, v.vacuna
+						from inmunizaciones i 
+						inner join vacunas v on v.id=i.vacuna_id
+						where i.paciente_id=:paciente_id';
+		$inmunizaciones = DB::select($consulta, [':paciente_id' => $paciente->id]);
+		$paciente->inmunizaciones = $inmunizaciones;
 
 		$consulta = 'SELECT * from images i where i.id=:image_id';
 		$images = DB::select($consulta, [':image_id' => $paciente->image_id]);
