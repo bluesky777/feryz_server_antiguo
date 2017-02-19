@@ -159,14 +159,14 @@ class ImagesController extends Controller {
 
 		$paciente = Paciente::find(Request::input('paciente_id'));
 		
-		$anterior = ImagenModel::find($paciente->image_id);
+		$anterior = ImagenModel::find($paciente->imagen_id);
 		if ($anterior) {
 			$filename = 'images/perfil/'.$anterior->nombre;
 
 			if (File::exists($filename)) {
 				File::delete($filename);
 				$anterior->forceDelete();
-				$paciente->image_id = null;
+				$paciente->imagen_id = null;
 			}else{
 				return 'No se encuentra la imagen a eliminar. '.$img->nombre;
 			}
@@ -270,9 +270,9 @@ class ImagesController extends Controller {
 			$paci->image_id = null;
 			$paci->save();
 		}
-		$users = User::where('image_id', $id)->get();
+		$users = User::where('imagen_id', $id)->get();
 		foreach ($users as $user) {
-			$user->image_id = null;
+			$user->imagen_id = null;
 			$user->save();
 		}
 		$confs = Configuracion::where('logo_id', $id)->get();

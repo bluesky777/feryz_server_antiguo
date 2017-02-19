@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         $user->id=1;
         $user->nombres='Administrador';
         $user->username='admin';
-        $user->email='hola@yopmail.com';
+        $user->email='davidguerrero777@gmail.com';
         $user->password=Hash::make('123');
         $user->is_superuser=true;
         $user->save();
@@ -32,8 +32,7 @@ class DatabaseSeeder extends Seeder
 
         //$this->call('ImagesTableSeeder');
         $this->call('PaisesTableSeeder');
-        $this->call('TipousuarioTableSeeder');
-        $this->call('VacunasTableSeeder');
+        //$this->call('TipousuarioTableSeeder');
         //$this->call('CiudadesTableSeeder');
     }
 }

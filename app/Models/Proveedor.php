@@ -3,9 +3,11 @@
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Ingreso extends Model {
-	protected $table = 'pacientes';
-
+class Proveedor extends Model {
 	use SoftDeletes;
+
 	protected $softDelete = true;
+	
+	protected $table = 'proveedores';
+
 }

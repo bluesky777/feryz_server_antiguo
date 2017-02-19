@@ -12,31 +12,11 @@ class TipousuarioTableSeeder extends Seeder {
 
 		TipoUsuario::create([
 			'id' => '1',
-			'titulo' => 'Optómetra',
+			'titulo' => 'Administrador',
 		]);
 		TipoUsuario::create([
 			'id' => '2',
-			'titulo' => 'Fonoaudiólogo',
-		]);
-		TipoUsuario::create([
-			'id' => '3',
-			'titulo' => 'Fisioterapeuta',
-		]);
-		TipoUsuario::create([
-			'id' => '4',
-			'titulo' => 'Psicólogo',
-		]);
-		TipoUsuario::create([
-			'id' => '5',
-			'titulo' => 'Bacteriólogo',
-		]);
-		TipoUsuario::create([
-			'id' => '6',
-			'titulo' => 'Recepcionista',
-		]);
-		TipoUsuario::create([
-			'id' => '7',
-			'titulo' => 'Médico',
+			'titulo' => 'Tendero',
 		]);
 		$this->command->info("Tipos ingresados.");
 	}

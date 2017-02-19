@@ -4,12 +4,17 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 use DB;
 
 
 class User extends Authenticatable
 {
+    use SoftDeletes;
+
+    protected $softDelete = true;
+    
     protected $table = 'users';
 
     public static $default_female = 'system/avatars/female1.jpg';
@@ -81,10 +86,10 @@ class User extends Authenticatable
     {
 
         
-         $cons = 'SELECT u.id, u.username, u.nombres, u.apellidos, u.sexo, u.email, i.id as image_id, u.is_superuser, u.tipo_usu_id,  
+         $cons = 'SELECT u.id, u.username, u.nombres, u.apellidos, u.sexo, u.email, i.id as image_id, u.is_superuser, u.tipo,  
                      IFNULL(i.nombre, if(u.sexo="F", "'.User::$default_female.'", "'.User::$default_male.'") ) as image_nombre
                   FROM users u
-                  left join images i on i.id=u.image_id
+                  left join images i on i.id=u.imagen_id
                   where u.id=? and i.deleted_at is null and u.deleted_at is null';
          
          $user = DB::select($cons, [$usuario->id]);

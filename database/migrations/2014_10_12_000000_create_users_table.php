@@ -29,51 +29,42 @@ class CreateUsersTable extends Migration
             $table->string('apellidos')->nullable();
             $table->string('sexo')->default('M');
             $table->string('username')->unique();
-            $table->integer('image_id')->unsigned()->nullable();
-            $table->integer('tipo_usu_id')->unsigned()->nullable();
             $table->string('password', 60)->default('');
-            $table->string('email')->nullable()->unique();$table->integer('firma_id')->nullable(); // Código de la imagen que tiene la firma
-            $table->integer('tipo_doc')->unsigned()->nullable();
+            $table->integer('imagen_id')->unsigned()->nullable();
+            $table->string('tipo')->nullable(); // Administrador, Vendedor, Tecnico
+            $table->string('email')->nullable()->unique();
+            $table->string('tipo_doc')->nullable()->default('Cédula');
             $table->integer('num_doc')->nullable();
             $table->integer('ciudad_doc')->unsigned()->nullable();
             $table->date('fecha_nac')->nullable();
             $table->integer('ciudad_nac')->unsigned()->nullable();
-            $table->string('titulo')->nullable();
-            $table->string('estado_civil')->nullable();
-            $table->string('barrio')->nullable();
-            $table->string('direccion')->nullable();
-            $table->string('telefono')->nullable();
-            $table->string('celular')->nullable();
-            $table->string('facebook')->nullable()->unique();
+            $table->string('telefono1')->nullable();
+            $table->string('telefono2')->nullable();
             $table->boolean('is_superuser')->default(false);
-            $table->integer('imagen_id')->unsigned()->nullable();
+            $table->integer('created_by')->unsigned()->nullable();
             $table->integer('deleted_by')->unsigned()->nullable();
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
         });
 
-        Schema::create('tipo_usuario', function (Blueprint $table) {
-            $table->engine = "InnoDB";
-            $table->increments('id');
-            $table->string('titulo')->nullable(); // Optómetra, Fonoaudiólogo, Fisioterapeuta, Psicólogo, Bacteriólogo, Recepcionista
-
-            $table->timestamps();
-        });
-
-
         Schema::create('images', function(Blueprint $table)
         {
             $table->engine = "InnoDB";
             $table->increments('id');
-            $table->string('nombre'); // Si no es pública, este nombre indica una imagen dentro de la carpeta del usuario.
+            $table->string('nombre'); 
             $table->integer('user_id')->nullable();
-            $table->boolean('publica')->nullable(); // Esto indica que la imagen no se buscará en la carpeta del usuario, sino en la carpeta del colegio.
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
             $table->integer('deleted_by')->nullable();
             $table->softDeletes();
             $table->timestamps();
+        });
+
+
+        // Relaciones: 
+        Schema::table('users', function(Blueprint $table) {
+            $table->foreign('imagen_id')->references('id')->on('images')->onDelete('cascade');
         });
 
 
@@ -87,8 +78,8 @@ class CreateUsersTable extends Migration
     public function down()
     {
         
-        Schema::drop('images');
         Schema::drop('users');
+        Schema::drop('images');
         Schema::drop('configuracion');
     }
 }

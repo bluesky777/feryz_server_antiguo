@@ -17,17 +17,15 @@ Route::get('/', function () {
 
 
 Route::controller('login', 'LoginController');
-Route::controller('pacientes', 'PacientesController');
-Route::controller('accidentes-trabajo', 'AccidentesTrabajoController');
-Route::controller('antecedentes-laborales', 'AntecedentesLaboralesController');
-Route::controller('enfermedades-profesionales', 'EnfermedadesProfesionalesController');
 Route::controller('usuarios', 'UsuariosController');
+Route::controller('proveedores', 'ProveedoresController');
+Route::controller('clientes', 'ClientesController');
+Route::controller('categorias', 'CategoriasController');
+Route::controller('productos', 'ProductosController');
 Route::controller('imagenes', 'ImagesController');
 Route::controller('paises', 'PaisesController');
 Route::controller('ciudades', 'CiudadesController');
 Route::controller('configuracion', 'ConfiguracionController');
-Route::controller('inmunizaciones', 'InmunizacionesController');
-Route::controller('paraclinicos', 'ExamenesParaclinicosController');
 
 /*
 |--------------------------------------------------------------------------

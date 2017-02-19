@@ -12,6 +12,12 @@ class CiudadesController extends Controller {
 		return Ciudad::all();
 	}
 
+	public function departamentos($pais_id)
+	{
+		$consulta = 'SELECT distinct departamento FROM ciudades where pais_id = :pais';
+		return DB::select($consulta, ['pais' => $pais_id]);
+	}
+
 	public function getDepartamentos()
 	{
 		$pais_id = Request::get('pais_id');
@@ -71,7 +77,7 @@ class CiudadesController extends Controller {
 		$ciudad = Ciudad::find($ciudad_id);
 		$pais = $this->getPaisdeciudad($ciudad->id);
 
-		$departamentos = $this->getDepartamentos($pais[0]->id);
+		$departamentos = $this->departamentos($pais[0]->id);
 		$ciudades = Ciudad::where('departamento' , $ciudad->departamento)->get();
 
 		$result = array('ciudad' => $ciudad, 
