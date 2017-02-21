@@ -18,21 +18,19 @@ class ProductosController extends Controller {
 	{
 		$user = User::fromToken();
 
-		$clie = new Producto;
+		$prod = new Producto;
 
-		$clie->nombre 		= Request::input('nombre');
-		$clie->direccion 	= Request::input('direccion');
-		$clie->ciudad_id 	= Request::input('ciudad_id')['id'];
-		$clie->persona_contacto = Request::input('persona_contacto');
-		$clie->email 		= Request::input('email');
-		$clie->telefono1 	= Request::input('telefono1');
-		$clie->telefono2 	= Request::input('telefono2');
-		$clie->nota 		= Request::input('nota');
-		$clie->balance 		= Request::input('balance');
-		$clie->created_by 	= $user['id'];
-		$clie->save();
+		$prod->nombre 			= Request::input('nombre');
+		$prod->unidad_medida 	= Request::input('unidad_medida')['unidad'];
+		$prod->categoria_id 	= Request::input('categoria')['id'];
+		$prod->precio_compra 	= Request::input('precio_compra');
+		$prod->precio_venta 	= Request::input('precio_venta');
+		$prod->cantidad 		= Request::input('cantidad');
+		$prod->nota 			= Request::input('nota');
+		$prod->created_by 		= $user['id'];
+		$prod->save();
 
-		return $clie;
+		return $prod;
 	}
 
 
@@ -40,22 +38,23 @@ class ProductosController extends Controller {
 	{
 		$user = User::fromToken();
 
-		$clie = Producto::find(Request::input('id'));
+		$prod = Producto::find(Request::input('id'));
 
-		if (is_array(Request::input('ciudad'))) {
-			Request::merge(['ciudad' => Request::input('ciudad')['id']]);
+		if (is_array(Request::input('categoria'))) {
+			Request::merge(['categoria_id' => Request::input('categoria')['id']]);
+		} 
+		if (is_array(Request::input('unidad_medida'))) {
+			Request::merge(['unidad_medida' => Request::input('unidad_medida')['unidad']]);
 		} 
 
-		$clie->nombre 		= Request::input('nombre');
-		$clie->direccion 	= Request::input('direccion');
-		$clie->ciudad_id 	= Request::input('ciudad');
-		$clie->persona_contacto = Request::input('persona_contacto');
-		$clie->email 		= Request::input('email');
-		$clie->telefono1 	= Request::input('telefono1');
-		$clie->telefono2 	= Request::input('telefono2');
-		$clie->nota 		= Request::input('nota');
-		$clie->balance 		= Request::input('balance');
-		$clie->save();
+		$prod->nombre 			= Request::input('nombre');
+		$prod->unidad_medida 	= Request::input('unidad_medida');
+		$prod->categoria_id 	= Request::input('categoria_id');
+		$prod->precio_compra 	= Request::input('precio_compra');
+		$prod->precio_venta 	= Request::input('precio_venta');
+		$prod->cantidad 		= Request::input('cantidad');
+		$prod->nota 			= Request::input('nota');
+		$prod->save();
 
 		return 'Cambiado';
 	}
@@ -64,9 +63,9 @@ class ProductosController extends Controller {
 
 	public function deleteDestroy($id)
 	{
-		$clie = Cliente::findOrFail($id);
-		$clie->delete();
-		return $clie;
+		$prod = Producto::findOrFail($id);
+		$prod->delete();
+		return $prod;
 	}
 
 }

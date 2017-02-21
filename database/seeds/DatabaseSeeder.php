@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
 
         //$this->call('ImagesTableSeeder');
         $this->call('PaisesTableSeeder');
+        $this->call('ConfiguracionTableSeeder');
         //$this->call('TipousuarioTableSeeder');
         //$this->call('CiudadesTableSeeder');
     }

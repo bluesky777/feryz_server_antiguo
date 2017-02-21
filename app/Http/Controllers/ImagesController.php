@@ -8,7 +8,6 @@ use \stdClass;
 
 use App\Models\User;
 use App\Models\ImagenModel;
-use App\Models\Paciente;
 use App\Models\Configuracion;
 
 
@@ -24,7 +23,7 @@ class ImagesController extends Controller {
 		return $imagenes;
 	}
 
-	public function getUsuariosAndPacientes()
+	public function getConUsuarios()
 	{
 		$user = User::fromToken();
 
@@ -37,10 +36,7 @@ class ImagesController extends Controller {
 			$respuesta['usuarios'] = User::all();
 		}else{
 			$respuesta['usuarios'] = User::where('is_superuser', false)->get();
-		}
-
-		$respuesta['pacientes'] = Paciente::all();
-		
+		}		
 
 		return $respuesta;
 	}
@@ -157,16 +153,16 @@ class ImagesController extends Controller {
 			File::makeDirectory($folder, $mode = 0777, true, true);
 		}
 
-		$paciente = Paciente::find(Request::input('paciente_id'));
+		$usuario = User::find(Request::input('user_id'));
 		
-		$anterior = ImagenModel::find($paciente->imagen_id);
+		$anterior = ImagenModel::find($usuario->imagen_id);
 		if ($anterior) {
 			$filename = 'images/perfil/'.$anterior->nombre;
 
 			if (File::exists($filename)) {
 				File::delete($filename);
 				$anterior->forceDelete();
-				$paciente->imagen_id = null;
+				$usuario->imagen_id = null;
 			}else{
 				return 'No se encuentra la imagen a eliminar. '.$img->nombre;
 			}
@@ -174,9 +170,9 @@ class ImagesController extends Controller {
 		}
 
 		//separamos el nombre de la img y la extensión
-		$info = explode(".",  $paciente->nombres . '.jpg');
+		$info = explode(".",  $usuario->nombres . '.jpg');
 		//asignamos de nuevo el nombre de la imagen completo
-		$miImg = $paciente->nombres . '.jpg';
+		$miImg = $usuario->nombres . '.jpg';
 		
 		
 		//mientras el nombre exista iteramos y aumentamos i
@@ -201,8 +197,8 @@ class ImagesController extends Controller {
 		$newImg->save();
 
 
-		$paciente->image_id = $newImg->id;
-		$paciente->save();
+		$usuario->image_id = $newImg->id;
+		$usuario->save();
 		
 
 		return $newImg;
@@ -229,7 +225,7 @@ class ImagesController extends Controller {
 	public function putCambiarImagenPerfil($id)
 	{
 		$user = User::findOrFail($id);
-		$user->image_id = Request::input('image_id');
+		$user->imagen_id = Request::input('image_id');
 		$user->save();
 		return $user;
 	}
@@ -265,11 +261,6 @@ class ImagesController extends Controller {
 
 
 		// Elimino cualquier referencia que otros tengan a esa imagen borrada.
-		$pacientes = Paciente::where('image_id', $id)->get();
-		foreach ($pacientes as $paci) {
-			$paci->image_id = null;
-			$paci->save();
-		}
 		$users = User::where('imagen_id', $id)->get();
 		foreach ($users as $user) {
 			$user->imagen_id = null;
