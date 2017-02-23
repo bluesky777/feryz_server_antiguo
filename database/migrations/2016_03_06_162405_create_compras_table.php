@@ -31,8 +31,8 @@ class CreateComprasTable extends Migration
             $table->increments('id');
             $table->integer('producto_id')->unsigned();
             $table->integer('cantidad');
-            $table->integer('precio_compra');
-            $table->integer('precio_venta')->nullable();
+            $table->double('precio_compra', 11, 3);
+            $table->double('precio_venta', 11, 3)->nullable();
             $table->integer('total')->nullable();
             $table->timestamps();
         });

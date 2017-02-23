@@ -21,12 +21,15 @@ class CreateProductosTable extends Migration
         Schema::create('productos', function (Blueprint $table) {
             $table->engine = "InnoDB";
             $table->increments('id');
+            $table->string('codigo_barras')->nullable(); 
             $table->string('nombre'); 
             $table->string('unidad_medida')->nullable()->default('-');
             $table->integer('categoria_id')->unsigned()->nullable();
-            $table->integer('precio_compra')->nullable();
-            $table->integer('precio_venta')->nullable();
-            $table->integer('cantidad')->nullable();
+            $table->double('precio_compra', 15, 3)->nullable();
+            $table->double('precio_venta', 15, 3)->nullable();
+            $table->decimal('iva', 4, 1)->nullable();
+            $table->integer('cantidad_minima')->nullable()->default(5);
+            $table->boolean('activo')->default(true);
             $table->string('nota')->nullable();
             $table->integer('created_by')->unsigned()->nullable(); 
             $table->integer('updated_by')->unsigned()->nullable(); 

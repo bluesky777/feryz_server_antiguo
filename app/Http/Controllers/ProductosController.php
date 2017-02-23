@@ -22,11 +22,14 @@ class ProductosController extends Controller {
 
 		$prod->nombre 			= Request::input('nombre');
 		$prod->unidad_medida 	= Request::input('unidad_medida')['unidad'];
+		$prod->codigo_barras 	= Request::input('codigo_barras');
 		$prod->categoria_id 	= Request::input('categoria')['id'];
 		$prod->precio_compra 	= Request::input('precio_compra');
 		$prod->precio_venta 	= Request::input('precio_venta');
-		$prod->cantidad 		= Request::input('cantidad');
+		$prod->cantidad_minima 	= Request::input('cantidad_minima');
+		$prod->iva 				= Request::input('iva');
 		$prod->nota 			= Request::input('nota');
+		$prod->activo 			= Request::input('activo');
 		$prod->created_by 		= $user['id'];
 		$prod->save();
 
@@ -49,11 +52,15 @@ class ProductosController extends Controller {
 
 		$prod->nombre 			= Request::input('nombre');
 		$prod->unidad_medida 	= Request::input('unidad_medida');
+		$prod->codigo_barras 	= Request::input('codigo_barras');
 		$prod->categoria_id 	= Request::input('categoria_id');
 		$prod->precio_compra 	= Request::input('precio_compra');
 		$prod->precio_venta 	= Request::input('precio_venta');
-		$prod->cantidad 		= Request::input('cantidad');
+		$prod->cantidad_minima 	= Request::input('cantidad_minima');
+		$prod->iva 				= Request::input('iva');
 		$prod->nota 			= Request::input('nota');
+		$prod->activo 			= Request::input('activo');
+		$prod->updated_by 		= $user['id'];
 		$prod->save();
 
 		return 'Cambiado';
@@ -63,7 +70,11 @@ class ProductosController extends Controller {
 
 	public function deleteDestroy($id)
 	{
-		$prod = Producto::findOrFail($id);
+		$user 				= User::fromToken();
+
+		$prod 				= Producto::findOrFail($id);
+		$prod->deleted_by 	= $user['id'];
+		$prod->save();
 		$prod->delete();
 		return $prod;
 	}

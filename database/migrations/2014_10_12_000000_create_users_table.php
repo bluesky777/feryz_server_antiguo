@@ -40,6 +40,7 @@ class CreateUsersTable extends Migration
             $table->integer('ciudad_nac')->unsigned()->nullable();
             $table->string('telefono1')->nullable();
             $table->string('telefono2')->nullable();
+            $table->string('idioma')->nullable()->default('ES');
             $table->boolean('is_superuser')->default(false);
             $table->integer('created_by')->unsigned()->nullable();
             $table->integer('deleted_by')->unsigned()->nullable();
