@@ -22,6 +22,7 @@ Route::controller('proveedores', 'ProveedoresController');
 Route::controller('clientes', 'ClientesController');
 Route::controller('categorias', 'CategoriasController');
 Route::controller('productos', 'ProductosController');
+Route::controller('compras', 'ComprasController');
 Route::controller('imagenes', 'ImagesController');
 Route::controller('paises', 'PaisesController');
 Route::controller('ciudades', 'CiudadesController');
