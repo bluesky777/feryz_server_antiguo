@@ -4,3 +4,5 @@
 Homestead.yaml
 Homestead.json
 .env
+/public/images/perfil
+!/public/images/perfil/system
