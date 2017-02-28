@@ -17,7 +17,7 @@ class CreateComprasTable extends Migration
             $table->increments('id');
             $table->date('fecha')->nullable(); 
             $table->integer('proveedor_id')->unsigned()->nullable();
-            $table->integer('total_monto')->nullable();
+            $table->boolean('cancelada')->default(false);
             $table->integer('created_by')->unsigned()->nullable();
             $table->integer('updated_by')->unsigned()->nullable();
             $table->integer('deleted_by')->unsigned()->nullable();
@@ -29,6 +29,7 @@ class CreateComprasTable extends Migration
         Schema::create('compra_detalles', function (Blueprint $table) {
             $table->engine = "InnoDB";
             $table->increments('id');
+            $table->integer('compra_id')->unsigned();
             $table->integer('producto_id')->unsigned();
             $table->integer('cantidad');
             $table->double('precio_compra', 11, 3);

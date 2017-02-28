@@ -5,6 +5,8 @@ use Hash;
 use App\Models\User;
 use App\Models\Cliente;
 
+use DB;
+
 class ClientesController extends Controller {
 
 	public function getAll()

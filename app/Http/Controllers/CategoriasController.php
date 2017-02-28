@@ -5,6 +5,7 @@ use Hash;
 use App\Models\User;
 use App\Models\Categoria;
 
+use DB;
 
 class CategoriasController extends Controller {
 

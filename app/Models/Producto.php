@@ -9,5 +9,6 @@ class Producto extends Model {
 	protected $softDelete = true;
 	
 	protected $table = 'productos';
+	protected $dates = ['deleted_at', 'created_at', 'updated_at'];
 
 }

@@ -3,6 +3,9 @@
 use Request;
 use App\Models\Pais;
 
+
+use DB;
+
 class PaisesController extends Controller {
 
 	public function getAll()

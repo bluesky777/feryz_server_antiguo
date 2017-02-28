@@ -4,11 +4,20 @@ use Request;
 use Hash;
 use App\Models\User;
 
+
+use DB;
+
 class UsuariosController extends Controller {
 
 	public function getAll()
 	{
-		return User::where('is_superuser',false)->get();
+		$user = User::fromToken();
+
+		$cons = "SELECT *, NULL as password FROM users u WHERE (u.is_superuser=false or u.id=:user_id) and u.deleted_at is null";
+		$users = DB::select($cons, [':user_id' => $user['id']]);
+
+		
+		return $users;
 	}
 
 	public function postGuardar()

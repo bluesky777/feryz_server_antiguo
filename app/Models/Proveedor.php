@@ -9,5 +9,6 @@ class Proveedor extends Model {
 	protected $softDelete = true;
 	
 	protected $table = 'proveedores';
+	protected $dates = ['deleted_at', 'created_at', 'updated_at'];
 
 }

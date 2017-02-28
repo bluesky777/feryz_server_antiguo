@@ -5,6 +5,8 @@ use Hash;
 use App\Models\User;
 use App\Models\Proveedor;
 
+use DB;
+
 class ProveedoresController extends Controller {
 
 	public function getAll()

@@ -4,6 +4,8 @@ use Request;
 use DB;
 use App\Models\Configuracion;
 
+
+
 class ConfiguracionController extends Controller {
 
 	public function getAll()

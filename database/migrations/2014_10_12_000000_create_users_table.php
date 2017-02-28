@@ -31,7 +31,7 @@ class CreateUsersTable extends Migration
             $table->string('username')->unique();
             $table->string('password', 60)->default('');
             $table->integer('imagen_id')->unsigned()->nullable();
-            $table->string('tipo')->nullable(); // Administrador, Vendedor, Tecnico
+            $table->string('tipo')->nullable(); // administrador, vendedor, tecnico
             $table->string('email')->nullable()->unique();
             $table->string('tipo_doc')->nullable()->default('Cédula');
             $table->integer('num_doc')->nullable();

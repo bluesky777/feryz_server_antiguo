@@ -13,7 +13,7 @@ class CreateVentasTable extends Migration
             $table->increments('id');
             $table->date('fecha')->nullable(); 
             $table->integer('cliente_id')->unsigned()->nullable();
-            $table->integer('total_monto')->nullable();
+            $table->boolean('cancelada')->default(false);
             $table->integer('created_by')->unsigned()->nullable();
             $table->integer('updated_by')->unsigned()->nullable();
             $table->integer('deleted_by')->unsigned()->nullable();
@@ -25,6 +25,7 @@ class CreateVentasTable extends Migration
         Schema::create('ventas_detalles', function (Blueprint $table) {
             $table->engine = "InnoDB";
             $table->increments('id');
+            $table->integer('venta_id')->unsigned();
             $table->integer('producto_id')->unsigned();
             $table->integer('cantidad');
             $table->double('precio_compra', 11, 3);
@@ -43,6 +44,7 @@ class CreateVentasTable extends Migration
             $table->foreign('deleted_by')->references('id')->on('users')->onDelete('cascade');
         });
         Schema::table('ventas_detalles', function(Blueprint $table) {
+            $table->foreign('venta_id')->references('id')->on('ventas')->onDelete('cascade');
             $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade');
         });
 

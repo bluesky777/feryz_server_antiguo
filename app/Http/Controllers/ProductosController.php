@@ -7,11 +7,27 @@ use App\Models\Proveedor;
 use App\Models\Categoria;
 use App\Models\Producto;
 
+use DB;
+
 class ProductosController extends Controller {
 
 	public function getAll()
 	{
 		return Producto::all();
+	}
+
+	public function putDatos()
+	{
+		$res = [];
+		$res['productos'] 	= Producto::all();
+		$res['categorias'] 	= Categoria::all();
+
+		$cons = "SELECT id, codigo_barras, nombre FROM productos WHERE codigo_barras is not null and deleted_at is null";
+		$codigos_barras = DB::select($cons);
+
+		$res['codigos_barras'] 	= $codigos_barras;
+
+		return $res;
 	}
 
 	public function postGuardar()

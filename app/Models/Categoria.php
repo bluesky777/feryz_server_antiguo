@@ -9,5 +9,6 @@ class Categoria extends Model {
 	protected $softDelete = true;
 	
 	protected $table = 'categorias';
+	protected $dates = ['deleted_at', 'created_at', 'updated_at'];
 
 }

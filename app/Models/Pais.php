@@ -8,4 +8,5 @@ class Pais extends Model {
 
 	use SoftDeletes;
 	protected $softDelete = true;
+	protected $dates = ['deleted_at', 'created_at', 'updated_at'];
 }
