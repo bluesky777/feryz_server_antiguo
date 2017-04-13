@@ -155,9 +155,11 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        
         'Barryvdh\Cors\ServiceProvider',
         'Tymon\JWTAuth\Providers\JWTAuthServiceProvider',
         'Intervention\Image\ImageServiceProvider',
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
     ],
 
@@ -204,8 +206,10 @@ return [
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
-        'JWTAuth' => 'Tymon\JWTAuth\Facades\JWTAuth',
-        'Image' => 'Intervention\Image\Facades\Image',
+        
+        'JWTAuth'   => 'Tymon\JWTAuth\Facades\JWTAuth',
+        'Image'     => 'Intervention\Image\Facades\Image',
+        'Excel'     => Maatwebsite\Excel\Facades\Excel::class,
     ],
 
 ];

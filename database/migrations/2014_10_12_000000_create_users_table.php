@@ -26,8 +26,8 @@ class CreateUsersTable extends Migration
             $table->integer('utilidad1')->nullable(); // Posibles ganancias
             $table->integer('utilidad2')->nullable();
             $table->integer('utilidad3')->nullable();
-            $table->integer('deci_compra')->nullable()->default(0); // Cantidad de decimales en precio compra
-            $table->integer('deci_venta')->nullable()->default(0); // Cantidad de decimales en precio venta
+            $table->integer('deci_entrada')->nullable()->default(0); // Cantidad de decimales en precio compra
+            $table->integer('deci_salida')->nullable()->default(0); // Cantidad de decimales en precio venta
             $table->integer('deci_total')->nullable()->default(0); // Cantidad de decimales en Totales
             $table->timestamps();
         });

@@ -25,7 +25,7 @@ class CreateProductosTable extends Migration
             $table->string('nombre'); 
             $table->string('unidad_medida')->nullable()->default('-');
             $table->integer('categoria_id')->unsigned()->nullable();
-            $table->double('precio_compra', 15, 3)->nullable();
+            $table->double('precio_costo', 15, 3)->nullable();
             $table->double('precio_venta', 15, 3)->nullable();
             $table->decimal('iva', 4, 1)->nullable()->default(0);
             $table->integer('cantidad_minima')->nullable()->default(5);

@@ -6,12 +6,12 @@ use App\Models\User;
 use App\Models\Proveedor;
 use App\Models\Categoria;
 use App\Models\Producto;
-use App\Models\Compra;
+use App\Models\Entrada;
 
 use DB;
 use Carbon\Carbon;
 
-class ComprasController extends Controller {
+class EntradasController extends Controller {
 
 	public function getAll()
 	{
@@ -22,10 +22,10 @@ class ComprasController extends Controller {
 	{
 		$res = [];
 
-		$cons = "SELECT * FROM compras c WHERE c.deleted_at is null";
-		$compras = DB::select($cons);
+		$cons = "SELECT * FROM entradas c WHERE c.deleted_at is null";
+		$entradas = DB::select($cons);
 
-		$res['compras'] = $compras;
+		$res['entradas'] = $entradas;
 
 		return $res;
 	}
@@ -34,11 +34,22 @@ class ComprasController extends Controller {
 	public function putDatos()
 	{
 		$res = [];
-		$res['productos'] 	= Producto::all();
+
+
+
+		$cons = "SELECT i.id as det_id, i.producto_id, i.precio_costo, i.precio_venta, i.cantidad, i.updated_by, i.updated_at, p.nombre, p.unidad_medida, p.categoria_id, p.iva
+						FROM inventarios_detalles i
+						INNER JOIN productos p ON p.id=i.producto_id
+						INNER JOIN inventarios inv ON inv.id=i.inventario_id and inv.actual=true
+						WHERE i.deleted_at is null";
+						
+		$res['productos'] = DB::select($cons);
+			
+
 		$res['proveedores'] = Proveedor::all();
 		$res['categorias'] 	= Categoria::all();
 
-		$cons = "SELECT id, codigo_barras, nombre FROM productos WHERE codigo_barras is not null and deleted_at is null";
+		$cons = "SELECT id, codigo_barras, nombre FROM productos WHERE codigo_barras is not null and codigo_barras!='' and deleted_at is null";
 		$codigos_barras = DB::select($cons);
 
 		$res['codigos_barras'] 	= $codigos_barras;
@@ -50,17 +61,17 @@ class ComprasController extends Controller {
 	{
 		$user = User::fromToken();
 
-		$fecha 			= Request::input('compra')['fecha'];
-		$proveedor_id 	= Request::input('compra')['proveedor']['id'];
+		$fecha 			= Request::input('entrada')['fecha'];
+		$proveedor_id 	= Request::input('entrada')['proveedor']['id'];
 
 		//$date = Carbon::createFromFormat('Y-m-d H:i:s', new \DateTime());
 		$now = new \DateTime();
 		$now->format('Y-m-d H:i:s');
 
-		$consulta = "INSERT INTO compras(fecha, proveedor_id, created_by, created_at, updated_at) VALUES (:fecha, :proveedor_id, :user_id, :created_at, :updated_at)";
+		$consulta = "INSERT INTO entradas(fecha, proveedor_id, created_by, created_at, updated_at) VALUES (:fecha, :proveedor_id, :user_id, :created_at, :updated_at)";
 		$insertado = DB::insert($consulta, [ ':fecha' => $fecha, ':proveedor_id' => $proveedor_id, ':user_id' => $user['id'], ':created_at' => $now, ':updated_at' => $now ]);
 
-		$compra_id = DB::getPdo()->lastInsertId();
+		$entrada_id = DB::getPdo()->lastInsertId();
 
 		
 		$productos 	= Request::input('productos');
@@ -68,16 +79,16 @@ class ComprasController extends Controller {
 
 		for ($i=0; $i < $cant; $i++) { 
 			
-			$consulta = "INSERT INTO compra_detalles(compra_id, producto_id, cantidad, precio_compra, precio_venta) VALUES (:compra_id, :producto_id, :cantidad, :precio_compra, :precio_venta)";
-			$insertado = DB::insert($consulta, [ ':compra_id' 		=> $compra_id, 
+			$consulta = "INSERT INTO entradas_detalles(entrada_id, producto_id, cantidad, precio_costo, precio_venta) VALUES (:costo_id, :producto_id, :cantidad, :precio_costo, :precio_venta)";
+			$insertado = DB::insert($consulta, [ ':entrada_id' 		=> $entrada_id, 
 												':producto_id' 		=> $productos[$i]['producto_id'], 
 												':cantidad' 		=> $productos[$i]['cantidad'], 
-												':precio_compra' 	=> $productos[$i]['precio_compra'], 
+												':precio_costo' 	=> $productos[$i]['precio_costo'], 
 												':precio_venta' 	=> $productos[$i]['precio_venta'] ]);
 
 		}
 
-		return $compra_id;
+		return $entrada_id;
 	}
 
 
@@ -98,7 +109,7 @@ class ComprasController extends Controller {
 		$prod->unidad_medida 	= Request::input('unidad_medida');
 		$prod->codigo_barras 	= Request::input('codigo_barras');
 		$prod->categoria_id 	= Request::input('categoria_id');
-		$prod->precio_compra 	= Request::input('precio_compra');
+		$prod->precio_costo 	= Request::input('precio_costo');
 		$prod->precio_venta 	= Request::input('precio_venta');
 		$prod->cantidad_minima 	= Request::input('cantidad_minima');
 		$prod->iva 				= Request::input('iva');

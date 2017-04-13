@@ -3,16 +3,22 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVentasTable extends Migration
+class CreateEntradasTable extends Migration
 {
-
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
     public function up()
     {
-        Schema::create('ventas', function (Blueprint $table) {
+        Schema::create('entradas', function (Blueprint $table) {
             $table->engine = "InnoDB";
             $table->increments('id');
             $table->date('fecha')->nullable(); 
-            $table->integer('cliente_id')->unsigned()->nullable();
+            $table->string('tipo', 100);
+            $table->integer('proveedor_id')->unsigned()->nullable();
+            $table->integer('inventario_id')->unsigned()->nullable();
             $table->boolean('cancelada')->default(false);
             $table->integer('created_by')->unsigned()->nullable();
             $table->integer('updated_by')->unsigned()->nullable();
@@ -22,13 +28,13 @@ class CreateVentasTable extends Migration
         });
 
 
-        Schema::create('ventas_detalles', function (Blueprint $table) {
+        Schema::create('entradas_detalles', function (Blueprint $table) {
             $table->engine = "InnoDB";
             $table->increments('id');
-            $table->integer('venta_id')->unsigned();
+            $table->integer('entrada_id')->unsigned();
             $table->integer('producto_id')->unsigned();
             $table->integer('cantidad');
-            $table->double('precio_compra', 11, 3);
+            $table->double('precio_costo', 11, 3);
             $table->double('precio_venta', 11, 3)->nullable();
             $table->integer('total')->nullable();
             $table->timestamps();
@@ -37,23 +43,29 @@ class CreateVentasTable extends Migration
 
 
         // Relaciones:
-        Schema::table('ventas', function(Blueprint $table) {
-            $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');
+        Schema::table('entradas', function(Blueprint $table) {
+            $table->foreign('proveedor_id')->references('id')->on('proveedores')->onDelete('cascade');
+            $table->foreign('inventario_id')->references('id')->on('inventarios')->onDelete('cascade');
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('updated_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('deleted_by')->references('id')->on('users')->onDelete('cascade');
         });
-        Schema::table('ventas_detalles', function(Blueprint $table) {
-            $table->foreign('venta_id')->references('id')->on('ventas')->onDelete('cascade');
+        Schema::table('entradas_detalles', function(Blueprint $table) {
+            $table->foreign('entrada_id')->references('id')->on('entradas')->onDelete('cascade');
             $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade');
         });
 
+
     }
 
-
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
-        Schema::drop('ventas_detalles');
-        Schema::drop('ventas');
+        Schema::drop('entradas_detalles');
+        Schema::drop('entradas');
     }
 }

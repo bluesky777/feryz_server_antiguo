@@ -40,7 +40,7 @@ class ProductosController extends Controller {
 		$prod->unidad_medida 	= Request::input('unidad_medida')['unidad'];
 		$prod->codigo_barras 	= Request::input('codigo_barras');
 		$prod->categoria_id 	= Request::input('categoria')['id'];
-		$prod->precio_compra 	= Request::input('precio_compra');
+		$prod->precio_costo 	= Request::input('precio_costo');
 		$prod->precio_venta 	= Request::input('precio_venta');
 		$prod->cantidad_minima 	= Request::input('cantidad_minima');
 		$prod->iva 				= Request::input('iva');
@@ -70,7 +70,7 @@ class ProductosController extends Controller {
 		$prod->unidad_medida 	= Request::input('unidad_medida');
 		$prod->codigo_barras 	= Request::input('codigo_barras');
 		$prod->categoria_id 	= Request::input('categoria_id');
-		$prod->precio_compra 	= Request::input('precio_compra');
+		$prod->precio_costo 	= Request::input('precio_costo');
 		$prod->precio_venta 	= Request::input('precio_venta');
 		$prod->cantidad_minima 	= Request::input('cantidad_minima');
 		$prod->iva 				= Request::input('iva');

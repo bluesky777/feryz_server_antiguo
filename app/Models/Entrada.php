@@ -3,11 +3,12 @@
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Venta extends Model {
+class Entrada extends Model {
 	use SoftDeletes;
 
 	protected $softDelete = true;
 	
-	protected $table = 'ventas';
+	protected $table = 'entradas';
+	protected $dates = ['deleted_at', 'created_at', 'updated_at'];
 
 }

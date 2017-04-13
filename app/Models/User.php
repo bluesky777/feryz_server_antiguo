@@ -87,7 +87,7 @@ class User extends Authenticatable
 
         
          $cons = 'SELECT c.nombre_empresa, c.telefono, c.logo_id, c.ciudad_id, c.direccion, c.impuesto1, c.impuesto2, c.impuesto3, 
-                    c.utilidad1, c.utilidad2, c.utilidad3, c.deci_compra, c.deci_venta, c.deci_total, 
+                    c.utilidad1, c.utilidad2, c.utilidad3, c.deci_entrada, c.deci_salida, c.deci_total, 
                     u.id, u.username, u.nombres, u.apellidos, u.sexo, u.email, i.id as image_id, u.is_superuser, u.tipo,  
                      IFNULL(i.nombre, if(u.sexo="F", "'.User::$default_female.'", "'.User::$default_male.'") ) as image_nombre
                   FROM configuracion c, users u
