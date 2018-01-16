@@ -13,13 +13,13 @@ class ProductosController extends Controller {
 
 	public function getAll()
 	{
-		return Producto::all();
+		return Producto::orderBy('nombre')->get();
 	}
 
 	public function putDatos()
 	{
 		$res = [];
-		$res['productos'] 	= Producto::all();
+		$res['productos'] 	= Producto::orderBy('nombre')->get();
 		$res['categorias'] 	= Categoria::all();
 
 		$cons = "SELECT id, codigo_barras, nombre FROM productos WHERE codigo_barras is not null and deleted_at is null";
