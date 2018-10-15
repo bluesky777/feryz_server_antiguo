@@ -195,7 +195,7 @@ class DatosIniciales {
 			$now = Carbon::now('America/Bogota');
 			
 			$consulta = "INSERT INTO tx_carreras
-					(taxi_id, taxista_id, zona, fecha_ini, lugar_inicio, lugar_fin, fecha_fin, estado, created_at, updated_at)
+					(taxi_id, taxista_id, zona, fecha_ini, lugar_ini, lugar_fin, fecha_fin, estado, created_at, updated_at)
 				VALUES
 					(2,2,'z1','2018-07-22 16:26','el parque','el parque2','2018-07-22','Cancelada', '".$now."', '".$now."'),
 					(3,3,'z1','2018-07-22','los lanceros','el parque2','2018-07-22','Cancelada', '".$now."', '".$now."')
