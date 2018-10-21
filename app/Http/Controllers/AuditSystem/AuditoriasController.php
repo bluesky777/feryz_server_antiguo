@@ -1,23 +1,23 @@
-<?php namespace App\Http\Controllers\TaxiDriver;
+<?php namespace App\Http\Controllers\AuditSystem;
 
 use Request;
 use Hash;
 use App\Models\User;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\TaxiDriver\DatosIniciales;
-use App\Http\Controllers\TaxiDriver\Sincronizar;
+use App\Http\Controllers\AuditSystem\DatosIniciales;
+use App\Http\Controllers\AuditSystem\Sincronizar;
 use Carbon\Carbon;
 
 use DB;
 
-class TaxisController extends Controller {
+class AuditoriasController extends Controller {
 
 	public function getLoguear()
 	{
 		$username 	= Request::input('username');
 		$password 	= Request::input('password');
 		
-		$consulta 	= 'SELECT * FROM tx_users WHERE username=? and password=?;';
+		$consulta 	= 'SELECT * FROM au_users WHERE username=? and password=?;';
 		$usuario 	= DB::select($consulta, [$username, $password]);
 		
 		if (count($usuario) > 0) {
@@ -33,10 +33,19 @@ class TaxisController extends Controller {
 	{
 		$res = [];
 		
-		$res['taxis'] 		= DB::select('SELECT * from tx_taxis;');
-		$res['taxistas'] 	= DB::select('SELECT * from tx_taxistas;');
-		$res['carreras'] 	= DB::select('SELECT * from tx_carreras;');
-		$res['usuarios'] 	= DB::select('SELECT * from tx_users;');
+		$res['respuestas'] 		= DB::select('SELECT * from au_respuestas;');
+		$res['preguntas'] 		= DB::select('SELECT * from au_preguntas;');
+		$res['gastos_mes'] 		= DB::select('SELECT * from au_gastos_mes;');
+		$res['destinos_pagos'] 	= DB::select('SELECT * from au_destinos_pagos;');
+		$res['destinos'] 		= DB::select('SELECT * from au_destinos;');
+		$res['lib_semanales'] 	= DB::select('SELECT * from au_lib_semanales;');
+		$res['lib_mensuales'] 	= DB::select('SELECT * from au_lib_mensuales;');
+		$res['auditorias'] 		= DB::select('SELECT * from au_auditorias;');
+		$res['iglesias'] 		= DB::select('SELECT * from au_iglesias;');
+		$res['distritos'] 		= DB::select('SELECT * from au_distritos;');
+		$res['asociaciones'] 	= DB::select('SELECT * from au_asociaciones;');
+		$res['uniones'] 		= DB::select('SELECT * from au_uniones;');
+		$res['users'] 			= DB::select('SELECT * from au_users;');
 		
 		return $res;
 	}
