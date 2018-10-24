@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\TaxiDriver\DatosIniciales;
 use App\Http\Controllers\TaxiDriver\Sincronizar;
 use Carbon\Carbon;
+use \Log;
 
 use DB;
 
@@ -40,7 +41,8 @@ class TaxisController extends Controller {
 		
 		return $res;
 	}
-
+	
+	// /feryz_server/public/taxis/insertar-datos-iniciales
 	public function getInsertarDatosIniciales()
 	{
 		$datos 		= new DatosIniciales;
@@ -52,6 +54,7 @@ class TaxisController extends Controller {
 	}
 
 
+	// /feryz_server/public/taxis/borrar-datos-iniciales
 	// Función muy peligrosa. Debo borrarla!!!
 	public function getBorrarDatosIniciales()
 	{
@@ -73,15 +76,81 @@ class TaxisController extends Controller {
 		
 		$now 		= Carbon::now('America/Bogota');
 		
+		$rTaxis 		= [];
+		$rTaxistas 		= [];
+		$rCarreras 		= [];
+		
+		$sqlTaxis 		= '';
+		$sqlTaxistas 	= '';
+		$sqlCarreras 	= '';
+
 		for ($i=0; $i < count($taxistas); $i++) { 
 			$taxista 	= $taxistas[$i];
+			
 			$sincro 	= new Sincronizar();
 			$sincro->syncTaxista($taxista, $now);
 			
+			if (!$taxista['id']) {
+				if (strlen($sqlTaxis) > 0) {
+					$sqlTaxis .= ' OR id=' . $taxista['rowid'];
+				}else{
+					$sqlTaxis .= ' id=' . $taxista['rowid'];
+				}
+			}
+		}
+		Log::info('Despues PRIMER for');
+		
+		for ($i=0; $i < count($taxis); $i++) { 
+			$taxi 	= $taxis[$i];
+			$sincro 	= new Sincronizar();
+			$sincro->syncTaxis($taxi, $now);
 			
+			if (!$taxi['id']) {
+				if (strlen($sqlTaxistas) > 0) {
+					$sqlTaxistas .= ' OR id=' . $taxi['rowid'];
+				}else{
+					$sqlTaxistas .= ' id=' . $taxi['rowid'];
+				}
+			}
+		}
+
+		
+		for ($i=0; $i < count($carreras); $i++) { 
+			$carrera 	= $carreras[$i];
+			$sincro 	= new Sincronizar();
+			$sincro->syncCarreras($carrera, $now);
+			
+			if (!$carrera['id']) {
+				if (strlen($sqlCarreras) > 0) {
+					$sqlCarreras .= ' OR id=' . $carrera['rowid'];
+				}else{
+					$sqlCarreras .= ' id=' . $carrera['rowid'];
+				}
+			}
+		}
+
+		
+		
+		if (strlen($sqlTaxis) > 0) {
+			$consulta = 'SELECT * FROM tx_taxis WHERE ' . $sqlTaxis;
+			$rTaxis = DB::select($consulta);
 		}
 		
-		return 'Subiendo';
+		if (strlen($sqlTaxistas) > 0) {
+			$consulta = 'SELECT * FROM tx_taxistas WHERE ' . $sqlTaxistas;
+			$rTaxistas = DB::select($consulta);
+		}
+		
+		if (strlen($sqlCarreras) > 0) {
+			$consulta = 'SELECT * FROM tx_carreras WHERE ' . $sqlCarreras;
+			$rCarreras = DB::select($consulta);
+		}
+		
+
+		return ['taxis' => $rTaxis,
+			'taxistas' => $rTaxistas,
+			'carreras' => $rCarreras,
+			];
 	}
 
 }

@@ -5,9 +5,11 @@ use Hash;
 
 use DB;
 use Carbon\Carbon;
+use \Log;
 
 class Sincronizar {
 
+    
 	public function syncTaxista($tax, $now)
 	{
 		if (!$tax['id']) {
@@ -16,6 +18,7 @@ class Sincronizar {
             DB::insert($consulta, [$tax['nombres'], $tax['apellidos'], $tax['sexo'], $tax['usuario'], $tax['documento'], $tax['celular'], $tax['password'], $now, $now ]);
         }
         elseif($tax['modificado']){
+            Log::info($tax);
             $consulta = 'UPDATE tx_taxistas SET 
                 nombres=?, apellidos=?, sexo=?, usuario=?, documento=?, celular=?, password=?, updated_at=? 
                 WHERE id=?;';
@@ -58,7 +61,7 @@ class Sincronizar {
 	public function syncCarreras($tax, $now)
 	{
 		if (!$tax['id']) {
-            $consulta = 'INSERT INTO tx_carreras(taxi_id, taxista_id, zona, fecha_ini, lugar_inicio, lugar_fin, fecha_fin, estado, created_at, updated_at) 
+            $consulta = 'INSERT INTO tx_carreras(taxi_id, taxista_id, zona, fecha_ini, lugar_ini, lugar_fin, fecha_fin, estado, created_at, updated_at) 
                 VALUES(?,?,?,?,?,?,?,?,?,?);';
             DB::insert($consulta, [$tax['taxi_id'], $tax['taxista_id'], $tax['zona'], $tax['fecha_ini'], $tax['lugar_inicio'], $tax['lugar_fin'], $tax['fecha_fin'], $tax['estado'], $now, $now ]);
         }
