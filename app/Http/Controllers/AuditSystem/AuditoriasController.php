@@ -50,24 +50,36 @@ class AuditoriasController extends Controller {
 		return $res;
 	}
 
+	// /feryz_server/public/auditorias/insertar-datos-iniciales
 	public function getInsertarDatosIniciales()
 	{
 		$datos 		= new DatosIniciales;
 		
-		$datos->insertarTaxistas();
-		$datos->insertarTaxis();
-		$datos->insertarCarreras();
+		$datos->insertarUnionAudit();
+		$datos->insertarAsociaciones();
+		$datos->insertarDistritos();
+		$datos->insertarIglesias();
 		return 'Insertados';
 	}
 
 
+	// /feryz_server/public/auditorias/borrar-datos-iniciales
 	// Función muy peligrosa. Debo borrarla!!!
 	public function getBorrarDatosIniciales()
 	{
-		DB::delete('DELETE FROM tx_taxistas;');
-		DB::delete('DELETE FROM tx_taxis;');
-		DB::delete('DELETE FROM tx_carreras;');
-		DB::delete('DELETE FROM tx_users;');
+		DB::delete('DELETE FROM au_users;');
+		DB::delete('DELETE FROM au_uniones;');
+		DB::delete('DELETE FROM au_asociaciones;');
+		DB::delete('DELETE FROM au_distritos;');
+		DB::delete('DELETE FROM au_iglesias;');
+		DB::delete('DELETE FROM au_auditorias;');
+		DB::delete('DELETE FROM au_lib_mensuales;');
+		DB::delete('DELETE FROM au_lib_semanales;');
+		DB::delete('DELETE FROM au_destinos;');
+		DB::delete('DELETE FROM au_destinos_pagos;');
+		DB::delete('DELETE FROM au_gastos_mes;');
+		DB::delete('DELETE FROM au_preguntas;');
+		DB::delete('DELETE FROM au_respuestas;');
 		return 'BORRADOS';
 	}
 

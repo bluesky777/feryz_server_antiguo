@@ -31,7 +31,7 @@ class CreateAuditoriasTable extends Migration
         Schema::create('au_uniones', function (Blueprint $table) {
             $table->engine = "InnoDB";
             $table->increments('id');
-            $table->string('nombres'); 
+            $table->string('nombre'); 
             $table->string('alias')->nullable();
             $table->string('codigo')->nullable();
             $table->integer('presidente')->nullable();
@@ -44,7 +44,7 @@ class CreateAuditoriasTable extends Migration
         Schema::create('au_asociaciones', function (Blueprint $table) {
             $table->engine = "InnoDB";
             $table->increments('id');
-            $table->string('nombres'); 
+            $table->string('nombre'); 
             $table->string('alias')->nullable();
             $table->string('codigo')->nullable();
             $table->string('zona')->nullable();
@@ -57,10 +57,11 @@ class CreateAuditoriasTable extends Migration
         Schema::create('au_distritos', function (Blueprint $table) {
             $table->engine = "InnoDB";
             $table->increments('id');
-            $table->string('nombres'); 
+            $table->string('nombre'); 
             $table->string('alias')->nullable();
             $table->string('codigo')->nullable();
             $table->string('zona')->nullable();
+            $table->integer('asociacion_id')->nullable();
             $table->integer('pastor_id')->nullable();
             $table->integer('tesorero_id')->nullable(); // Tesorero del distrito
             $table->timestamps();
