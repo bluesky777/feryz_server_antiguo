@@ -69,6 +69,18 @@ class CreateTaxisTable extends Migration
         });
 
 
+        Schema::create('tx_posiciones', function (Blueprint $table) {
+            $table->engine = "InnoDB";
+            $table->increments('id');
+            $table->integer('taxi_id')->unsigned(); 
+            $table->string('latitud')->nullable(); 
+            $table->string('longitud')->nullable();
+            $table->string('altitud')->nullable();
+            $table->string('fecha_hora')->nullable();
+            $table->timestamps();
+        });
+
+
 
 
 
@@ -77,6 +89,7 @@ class CreateTaxisTable extends Migration
 
     public function down()
     {
+        Schema::drop('tx_posiciones');
         Schema::drop('tx_carreras');
         Schema::drop('tx_taxistas');
         Schema::drop('tx_taxis');

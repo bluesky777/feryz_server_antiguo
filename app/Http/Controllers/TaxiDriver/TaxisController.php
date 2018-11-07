@@ -50,6 +50,7 @@ class TaxisController extends Controller {
 		$datos->insertarTaxistas();
 		$datos->insertarTaxis();
 		$datos->insertarCarreras();
+		$datos->insertarUsuarios();
 		return 'Insertados';
 	}
 
@@ -63,6 +64,34 @@ class TaxisController extends Controller {
 		DB::delete('DELETE FROM tx_carreras;');
 		DB::delete('DELETE FROM tx_users;');
 		return 'BORRADOS';
+	}
+
+
+	public function putGuardarPosicion()
+	{
+		$now 		= Carbon::now('America/Bogota');
+		
+		$consulta 	= 'INSERT INTO tx_posiciones(taxi_id, latitud, longitud, altitud, fecha_hora) VALUES(?,?,?,?,?);';
+		
+		DB::insert($consulta, 
+			[Request::input('taxi_id'), Request::input('latitud'), Request::input('longitud'), Request::input('altitud'), $now]);
+		
+			
+		$id = DB::getPdo()->lastInsertId();
+		$posicion = DB::select('SELECT * FROM tx_posiciones WHERE id='.$id);
+			
+		return ['posicion' => $posicion];
+	}
+
+
+	public function putTraerPosiciones()
+	{
+		$now 		= Carbon::now('America/Bogota');
+		$taxi_id 	= Request::input('taxi_id');
+		
+		$posiciones = DB::select('SELECT * FROM tx_posiciones WHERE taxi_id=? limit 30', [$taxi_id]);
+			
+		return ['posiciones' => $posiciones];
 	}
 
 

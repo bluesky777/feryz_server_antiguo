@@ -107,6 +107,14 @@ class CreateAuditoriasTable extends Migration
             $table->date('fecha')->nullable();
             $table->string('hora')->nullable();
             $table->integer('saldo_ant')->nullable();
+            $table->integer('ingre_por_registrar')->nullable();
+            $table->integer('ingre_sabados')->nullable();
+            $table->integer('cta_por_pagar')->nullable();
+            $table->integer('saldo_banco')->nullable();
+            $table->integer('consig_fondos_confia')->nullable();
+            $table->integer('gastos_mes_por_regis')->nullable();
+            $table->integer('dinero_efectivo')->nullable();
+            $table->integer('cta_por_cobrar')->nullable();
             $table->integer('iglesia_id')->nullable();
             $table->timestamps();
         });
@@ -186,7 +194,17 @@ class CreateAuditoriasTable extends Migration
         Schema::create('au_gastos_mes', function (Blueprint $table) {
             $table->engine = "InnoDB";
             $table->increments('id');
-            $table->integer('libro_mes_id');
+            $table->integer('libro_mes_id')->nullable();
+            $table->integer('auditoria_id')->nullable();
+            $table->integer('valor');
+            $table->date('descripcion')->nullable();
+            $table->timestamps();
+        });
+
+        Schema::create('au_dinero_efectivo', function (Blueprint $table) {
+            $table->engine = "InnoDB";
+            $table->increments('id');
+            $table->integer('auditoria_id')->nullable();
             $table->integer('valor');
             $table->date('descripcion')->nullable();
             $table->timestamps();
@@ -213,12 +231,28 @@ class CreateAuditoriasTable extends Migration
             $table->string('respuestas')->nullable();
             $table->timestamps();
         });
+        
+        
+        Schema::create('au_recomendaciones', function (Blueprint $table) {
+            $table->engine = "InnoDB";
+            $table->increments('id');
+            $table->integer('auditoria_id');
+            $table->text('hallazgo')->nullable();
+            $table->text('recomendacion')->nullable();
+            $table->text('justificacion')->nullable();
+            $table->boolean('superada')->default(0);
+            $table->string('fecha')->nullable();
+            $table->string('tipo')->nullable();
+            $table->timestamps();
+        });
 
     }
 
 
     public function down()
     {
+        Schema::drop('au_dinero_efectivo');
+        Schema::drop('au_recomendaciones');
         Schema::drop('au_respuestas');
         Schema::drop('au_preguntas');
         Schema::drop('au_gastos_mes');
