@@ -110,6 +110,7 @@ class CreateAuditoriasTable extends Migration
             $table->integer('ingre_por_registrar')->nullable();
             $table->integer('ingre_sabados')->nullable();
             $table->integer('cta_por_pagar')->nullable();
+            $table->integer('ajuste_por_enviar')->nullable();
             $table->integer('saldo_banco')->nullable();
             $table->integer('consig_fondos_confia')->nullable();
             $table->integer('gastos_mes_por_regis')->nullable();
