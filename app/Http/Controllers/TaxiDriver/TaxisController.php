@@ -157,6 +157,7 @@ class TaxisController extends Controller {
 				}
 			}
 		}
+		Log::info($sqlCarreras);
 
 		
 		
@@ -170,8 +171,10 @@ class TaxisController extends Controller {
 			$rTaxistas = DB::select($consulta);
 		}
 		
+		
 		if (strlen($sqlCarreras) > 0) {
 			$consulta = 'SELECT * FROM tx_carreras WHERE ' . $sqlCarreras;
+			Log::info($consulta);
 			$rCarreras = DB::select($consulta);
 		}
 		
