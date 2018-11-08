@@ -40,7 +40,7 @@ class Sincronizar {
         }
         elseif($elem['modificado']){
             $consulta = 'UPDATE au_asociaciones SET 
-                nombre=?, alias=?, codigo=?, zona=?, pais=?, union_id=?, tesorero_id=?, updated_at=? 
+                nombre=?, alias=?, codigo=?, zona=?, union_id=?, tesorero_id=?, updated_at=? 
                 WHERE id=?;';
             DB::update($consulta, [$elem['nombre'], $elem['alias'], $elem['codigo'], $elem['zona'], $elem['union_id'], $elem['tesorero_id'], $now, $elem['id'] ]);
         }
@@ -62,7 +62,7 @@ class Sincronizar {
         }
         elseif($elem['modificado']){
             $consulta = 'UPDATE au_distritos SET 
-                nombre=?, alias=?, codigo=?, zona=?, pais=?, pastor_id=?, tesorero_id=?, updated_at=? 
+                nombre=?, alias=?, codigo=?, zona=?, pastor_id=?, tesorero_id=?, updated_at=? 
                 WHERE id=?;';
             DB::update($consulta, [$elem['nombre'], $elem['alias'], $elem['codigo'], $elem['zona'], $elem['pastor_id'], $elem['tesorero_id'], $now, $elem['id'] ]);
         }
@@ -108,7 +108,7 @@ class Sincronizar {
         }
         elseif($elem['modificado']){
             $consulta = 'UPDATE au_users SET 
-                nombres=?, apellidos=?, email=?, sexo=?, pais=?, fecha=?, tipo=?, is_active=?, updated_at=?, distrito_id=?, iglesia_id=?, auditoria_id=?, celular=?, usuario=?, password=? 
+                nombres=?, apellidos=?, email=?, sexo=?, fecha=?, tipo=?, is_active=?, updated_at=?, distrito_id=?, iglesia_id=?, auditoria_id=?, celular=?, usuario=?, password=? 
                 WHERE id=?;';
             DB::update($consulta, [$elem['nombres'], $elem['apellidos'], $elem['email'], $elem['sexo'], $elem['fecha'], $elem['tipo'], $elem['is_active'], $now, $elem['distrito_id'], $elem['iglesia_id'], $elem['auditoria_id'], $elem['celular'], $elem['username'], $elem['password'] ]);
         }
