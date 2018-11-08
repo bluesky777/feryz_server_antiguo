@@ -125,7 +125,7 @@ class Sincronizar {
 	{
 		if (!isset($elem['id'])) {
             $consulta = 'INSERT INTO au_auditorias(fecha, hora, saldo_ant, ingre_por_registrar, ingre_sabados, cta_por_pagar, ajuste_por_enviar, saldo_banco, consig_fondos_confia, gastos_mes_por_regis, dinero_efectivo, cta_por_cobrar, iglesia_id, created_at, updated_at) 
-                VALUES(?,?,?,?,?,?);';
+                VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);';
             DB::insert($consulta, [$elem['fecha'], $elem['hora'], $elem['saldo_ant'], $elem['ingre_por_registrar'], $elem['ingre_sabados'], $elem['cta_por_pagar'], $elem['ajuste_por_enviar'], $elem['saldo_banco'], $elem['consig_fondos_confia'], $elem['gastos_mes_por_regis'], $elem['dinero_efectivo'], $elem['cta_por_cobrar'], $elem['iglesia_id'], $now, $now ]);
         }
         elseif($elem['modificado']){
