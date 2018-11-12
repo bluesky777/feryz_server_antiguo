@@ -13,7 +13,7 @@ use DB;
 
 class AuditoriasController extends Controller {
 
-	public function getLoguear()
+	public function postLoguear()
 	{
 		$username 	= Request::input('username');
 		$password 	= Request::input('password');
@@ -32,7 +32,9 @@ class AuditoriasController extends Controller {
 
 	public function getAll()
 	{
-		$res = [];
+		$res 		= [];
+		$username 	= Request::input('username');
+		$password 	= Request::input('password');
 		
 		$res['respuestas'] 		= DB::select('SELECT * from au_respuestas;');
 		$res['preguntas'] 		= DB::select('SELECT * from au_preguntas;');
@@ -46,7 +48,7 @@ class AuditoriasController extends Controller {
 		$res['distritos'] 		= DB::select('SELECT * from au_distritos;');
 		$res['asociaciones'] 	= DB::select('SELECT * from au_asociaciones;');
 		$res['uniones'] 		= DB::select('SELECT * from au_uniones;');
-		$res['users'] 			= DB::select('SELECT * from au_users;');
+		$res['usuarios'] 		= DB::select('SELECT * FROM au_users WHERE username=? and password=?;', [$username, $password]);
 		$res['recomendaciones'] = DB::select('SELECT * from au_recomendaciones;');
 		$res['dinero_efectivo'] = DB::select('SELECT * from au_dinero_efectivo;');
 		
@@ -62,6 +64,7 @@ class AuditoriasController extends Controller {
 		$datos->insertarAsociaciones();
 		$datos->insertarDistritos();
 		$datos->insertarIglesias();
+		$datos->insertarUsuarios();
 		return 'Insertados';
 	}
 

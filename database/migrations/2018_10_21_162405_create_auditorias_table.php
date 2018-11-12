@@ -22,7 +22,7 @@ class CreateAuditoriasTable extends Migration
             $table->integer('iglesia_id')->nullable();
             $table->integer('auditoria_id')->nullable();
             $table->string('celular')->nullable();
-            $table->string('usuario');
+            $table->string('username');
             $table->string('password')->nullable();
             $table->timestamps();
         });
