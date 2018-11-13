@@ -114,7 +114,7 @@ class DatosIniciales {
 	public function insertarUsuarios()
 	{
 		
-		$users 		= DB::select('SELECT * from tx_users;');
+		$users 		= DB::select('SELECT * from au_users;');
 		
 		if (count($users) == 0) {
 			$now = Carbon::now('America/Bogota');
