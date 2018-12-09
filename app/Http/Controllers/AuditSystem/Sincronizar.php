@@ -101,14 +101,13 @@ class Sincronizar {
 	public function syncUsuarios($elem, $now)
 	{
 		if (!isset($elem['id'])) {
-            $consulta = 'INSERT INTO au_users(nombres, apellidos, email, sexo, fecha, tipo, is_active, created_at, updated_at, distrito_id, iglesia_id, auditoria_id, celular, usuario, password) 
+            $consulta = 'INSERT INTO au_users(nombres, apellidos, email, sexo, fecha, tipo, is_active, created_at, updated_at, distrito_id, iglesia_id, auditoria_id, celular, username, password) 
                 VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);';
             DB::insert($consulta, [$elem['nombres'], $elem['apellidos'], $elem['email'], $elem['sexo'], $elem['fecha'], $elem['tipo'], $elem['is_active'], $now, $now, $elem['distrito_id'], $elem['iglesia_id'], $elem['auditoria_id'], $elem['celular'], $elem['username'], $elem['password'] ]);
-            Log::info($consulta. $elem['nombres'].' - '. $elem['apellidos'].' - '. $elem['email'].' - '. $elem['sexo'].' - '. $elem['fecha'].' - '. $elem['tipo'].' - '. $elem['is_active'].' - '. $elem['distrito_id'].' - '. $elem['iglesia_id'].' - '. $elem['auditoria_id'].' - '. $elem['celular'].' - '. $elem['username'].' - '.$elem['password']);
         }
         elseif($elem['modificado']){
             $consulta = 'UPDATE au_users SET 
-                nombres=?, apellidos=?, email=?, sexo=?, fecha=?, tipo=?, is_active=?, updated_at=?, distrito_id=?, iglesia_id=?, auditoria_id=?, celular=?, usuario=?, password=? 
+                nombres=?, apellidos=?, email=?, sexo=?, fecha=?, tipo=?, is_active=?, updated_at=?, distrito_id=?, iglesia_id=?, auditoria_id=?, celular=?, username=?, password=? 
                 WHERE id=?;';
             DB::update($consulta, [$elem['nombres'], $elem['apellidos'], $elem['email'], $elem['sexo'], $elem['fecha'], $elem['tipo'], $elem['is_active'], $now, $elem['distrito_id'], $elem['iglesia_id'], $elem['auditoria_id'], $elem['celular'], $elem['username'], $elem['password'] ]);
         }
@@ -146,15 +145,15 @@ class Sincronizar {
 	public function syncLib_mensuales($elem, $now)
 	{
 		if (!isset($elem['id'])) {
-            $consulta = 'INSERT INTO au_lib_mensuales(year, mes, orden, auditoria_id, diezmos, ofrendas, especiales, gastos, gastos_soportados, remesa_enviada, created_at, updated_at) 
-                VALUES(?,?,?,?,?,?,?,?,?,?,?,?);';
-            DB::insert($consulta, [$elem['year'], $elem['mes'], $elem['orden'], $elem['auditoria_id'], $elem['diezmos'], $elem['ofrendas'], $elem['especiales'], $elem['gastos'], $elem['gastos_soportados'], $elem['remesa_enviada'], $now, $now ]);
+            $consulta = 'INSERT INTO au_lib_mensuales(year, mes, periodo, orden, auditoria_id, diezmos, ofrendas, especiales, gastos, gastos_soportados, remesa_enviada, created_at, updated_at) 
+                VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?);';
+            DB::insert($consulta, [$elem['year'], $elem['mes'], $elem['periodo'], $elem['orden'], $elem['auditoria_id'], $elem['diezmos'], $elem['ofrendas'], $elem['especiales'], $elem['gastos'], $elem['gastos_soportados'], $elem['remesa_enviada'], $now, $now ]);
         }
         elseif($elem['modificado']){
             $consulta = 'UPDATE au_lib_mensuales SET 
-                year=?, mes=?, orden=?, auditoria_id=?, diezmos=?, ofrendas=?, especiales=?, gastos=?, gastos_soportados=?, remesa_enviada=?, updated_at=? 
+                year=?, mes=?, periodo=?, orden=?, auditoria_id=?, diezmos=?, ofrendas=?, especiales=?, gastos=?, gastos_soportados=?, remesa_enviada=?, updated_at=? 
                 WHERE id=?;';
-            DB::update($consulta, [$elem['year'], $elem['mes'], $elem['orden'], $elem['auditoria_id'], $elem['diezmos'], $elem['ofrendas'], $elem['especiales'], $elem['gastos'], $elem['gastos_soportados'], $elem['remesa_enviada'], $now, $elem['id'] ]);
+            DB::update($consulta, [$elem['year'], $elem['mes'], $elem['periodo'], $elem['orden'], $elem['auditoria_id'], $elem['diezmos'], $elem['ofrendas'], $elem['especiales'], $elem['gastos'], $elem['gastos_soportados'], $elem['remesa_enviada'], $now, $elem['id'] ]);
         }
         elseif($elem['eliminado']){
             DB::delete('DELETE FROM au_lib_mensuales WHERE id=?;', [$elem['id']]);

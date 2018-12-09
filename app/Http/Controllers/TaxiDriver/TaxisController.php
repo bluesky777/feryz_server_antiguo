@@ -13,12 +13,12 @@ use DB;
 
 class TaxisController extends Controller {
 
-	public function getLoguear()
+	public function postLoguear()
 	{
 		$username 	= Request::input('username');
 		$password 	= Request::input('password');
 		
-		$consulta 	= 'SELECT * FROM tx_users WHERE username=? and password=?;';
+		$consulta 	= 'SELECT * FROM tx_users WHERE usuario=? and password=?;';
 		$usuario 	= DB::select($consulta, [$username, $password]);
 		
 		if (count($usuario) > 0) {
@@ -34,10 +34,14 @@ class TaxisController extends Controller {
 	{
 		$res = [];
 		
+		$username 	= Request::input('username');
+		$password 	= Request::input('password');
+		
 		$res['taxis'] 		= DB::select('SELECT * from tx_taxis;');
 		$res['taxistas'] 	= DB::select('SELECT * from tx_taxistas;');
 		$res['carreras'] 	= DB::select('SELECT * from tx_carreras;');
-		$res['usuarios'] 	= DB::select('SELECT * from tx_users;');
+		$res['usuarios'] 	= DB::select('SELECT * from tx_users WHERE usuario=? and password=?;', [$username, $password]);
+
 		
 		return $res;
 	}
@@ -102,16 +106,19 @@ class TaxisController extends Controller {
 		$taxistas 	= Request::input('taxistas');
 		$taxis 		= Request::input('taxis');
 		$carreras 	= Request::input('carreras');
+		$usuarios 	= Request::input('usuarios');
 		
 		$now 		= Carbon::now('America/Bogota');
 		
 		$rTaxis 		= [];
 		$rTaxistas 		= [];
 		$rCarreras 		= [];
+		$rUsuarios 		= [];
 		
 		$sqlTaxis 		= '';
 		$sqlTaxistas 	= '';
 		$sqlCarreras 	= '';
+		$sqlUsuarios 	= '';
 
 		for ($i=0; $i < count($taxistas); $i++) { 
 			$taxista 	= $taxistas[$i];
@@ -127,7 +134,7 @@ class TaxisController extends Controller {
 				}
 			}
 		}
-		Log::info('Despues PRIMER for');
+
 		
 		for ($i=0; $i < count($taxis); $i++) { 
 			$taxi 	= $taxis[$i];
@@ -157,7 +164,21 @@ class TaxisController extends Controller {
 				}
 			}
 		}
-		Log::info($sqlCarreras);
+		
+		for ($i=0; $i < count($usuarios); $i++) { 
+			$usuario 	= $usuarios[$i];
+			$sincro 	= new Sincronizar();
+			$sincro->syncUsers($usuario, $now);
+			
+			if (!$usuario['id']) {
+				if (strlen($sqlUsuarios) > 0) {
+					$sqlUsuarios .= ' OR id=' . $usuario['rowid'];
+				}else{
+					$sqlUsuarios .= ' id=' . $usuario['rowid'];
+				}
+			}
+		}
+
 
 		
 		
@@ -174,15 +195,20 @@ class TaxisController extends Controller {
 		
 		if (strlen($sqlCarreras) > 0) {
 			$consulta = 'SELECT * FROM tx_carreras WHERE ' . $sqlCarreras;
-			Log::info($consulta);
 			$rCarreras = DB::select($consulta);
+		}
+		
+		if (strlen($sqlUsuarios) > 0) {
+			$consulta = 'SELECT * FROM tx_users WHERE ' . $sqlUsuarios;
+			$rUsuarios = DB::select($consulta);
 		}
 		
 
 		return ['taxis' => $rTaxis,
 			'taxistas' => $rTaxistas,
 			'carreras' => $rCarreras,
-			];
+			'usuarios' => $rUsuarios,
+		];
 	}
 
 }

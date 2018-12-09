@@ -126,6 +126,7 @@ class CreateAuditoriasTable extends Migration
             $table->increments('id');
             $table->integer('year')->nullable();
             $table->string('mes')->nullable();
+            $table->string('periodo')->nullable(); // 2018/009
             $table->integer('orden')->nullable();
             $table->integer('auditoria_id')->nullable();
             $table->integer('diezmos')->nullable()->defaul(0);

@@ -81,5 +81,28 @@ class Sincronizar {
 
 
 
+	public function syncUsers($tax, $now)
+	{
+		if (!$tax['id']) {
+            $consulta = 'INSERT INTO tx_users(nombres, apellidos, sexo, username, password, email, fecha_nac, tipo, celular, created_at, updated_at) 
+                VALUES(?,?,?,?,?,?,?,?,?,?,?);';
+            DB::insert($consulta, [$tax['nombres'], $tax['apellidos'], $tax['sexo'], $tax['username'], $tax['password'], $tax['email'], $tax['fecha_nac'], $tax['tipo'], $tax['celular'], $now, $now ]);
+        }
+        elseif($tax['modificado']){
+            $consulta = 'UPDATE tx_users SET 
+                nombres=?, apellidos=?, sexo=?, username=?, password=?, email=?, fecha_nac=?, tipo=?, celular=?, created_at=?
+                WHERE id=?;';
+            DB::update($consulta, [$tax['nombres'], $tax['apellidos'], $tax['sexo'], $tax['username'], $tax['password'], $tax['email'], $tax['fecha_nac'], $tax['tipo'], $tax['celular'], $now, $tax['id'] ]);
+        }
+        elseif($tax['eliminado']){
+            DB::delete('DELETE FROM tx_users WHERE id=?;', [$tax['id']]);
+        }
+		
+		
+		return 'Sync';
+	}
+
+
+
 
 }

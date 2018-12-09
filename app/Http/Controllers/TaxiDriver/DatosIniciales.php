@@ -197,8 +197,8 @@ class DatosIniciales {
 			$consulta = "INSERT INTO tx_carreras
 					(id, taxi_id, taxista_id, zona, fecha_ini, lugar_ini, lugar_fin, fecha_fin, estado, created_at, updated_at)
 				VALUES
-					(1, 2,2,'z1','2018-07-22 16:26','el parque','el parque2','2018-07-22','Cancelada', '".$now."', '".$now."'),
-					(2, 3,3,'z1','2018-07-22','los lanceros','el parque2','2018-07-22','Cancelada', '".$now."', '".$now."')
+					(1, 2,2,'Z1','2018/07/22 16:26','el parque','el parque2','2018/07/22','Cancelada', '".$now."', '".$now."'),
+					(2, 3,3,'Z1','2018/08/22','los lanceros','el parque2','2018/07/22','Cancelada', '".$now."', '".$now."')
 					;";
 					
 			DB::insert($consulta);
@@ -216,11 +216,10 @@ class DatosIniciales {
 			$now = Carbon::now('America/Bogota');
 			
 			$consulta = "INSERT INTO tx_users
-					(id, nombres, apellidos, usuario, password, tipo, sexo, created_at, updated_at)
+					(id, nombres, apellidos, usuario, password, email, tipo, sexo, created_at, updated_at)
 				VALUES
-					(1, 'Admin', 'Peñarredonda Silva', 'Guillermo',  '123', 'Admin', 'M', '".$now."', '".$now."'),
-					(2, 'Marinella', 'Silva Gonzalez', 'Mary',  '123', 'Admin', 'F', '".$now."', '".$now."'),
-					(3, 'Jenny', 'Villareal', 'jenny',  '123', 'Operador', 'F', '".$now."', '".$now."')
+					(1, 'Guillermo', 'Peñarredonda', 'admin',  '123', 'anguipesi@gmail.com', 'Admin', 'M', '".$now."', '".$now."'),
+					(2, 'Joseth', 'Guerrero', 'joseth',  '123', 'davidguerrero777@gmail.com', 'Admin', 'M', '".$now."', '".$now."')
 					;";
 					
 			DB::insert($consulta);

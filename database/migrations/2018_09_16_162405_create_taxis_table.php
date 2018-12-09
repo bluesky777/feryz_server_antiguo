@@ -14,6 +14,7 @@ class CreateTaxisTable extends Migration
             $table->string('nombres'); 
             $table->string('apellidos');
             $table->string('sexo')->nullable();
+            $table->string('email')->nullable();
             $table->string('fecha_nac')->nullable();
             $table->string('celular')->nullable();
             $table->string('documento')->nullable();
