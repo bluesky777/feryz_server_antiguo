@@ -18,6 +18,8 @@ class CreateAuditoriasTable extends Migration
             $table->date('fecha')->nullable(); // fecha nac
             $table->string('tipo');
             $table->boolean('is_active')->default(true);
+            $table->integer('union_id')->nullable();
+            $table->integer('asociacion_id')->nullable();
             $table->integer('distrito_id')->nullable();
             $table->integer('iglesia_id')->nullable();
             $table->integer('auditoria_id')->nullable();
@@ -79,20 +81,17 @@ class CreateAuditoriasTable extends Migration
             $table->string('tipo')->nullable()->defaul('IGLESIA'); // IGLESIA O GRUPO
             $table->string('zona')->nullable();
             
-            $table->string('tipo_propiedad')->nullable();
+            $table->string('estado_propiedad')->nullable();
+            $table->string('estado_propiedad_pastor')->nullable();
+            $table->string('tipo_doc_propiedad')->nullable();
+            $table->string('tipo_doc_propiedad_pastor')->nullable();
             $table->string('anombre_propiedad')->nullable();
-            $table->date('fecha_propiedad')->nullable();
-            $table->date('fecha_fin')->nullable();
-            
-            $table->string('tipo_propiedad2')->nullable();
-            $table->string('anombre_propiedad2')->nullable();
-            $table->date('fecha_propiedad2')->nullable();
-            $table->date('fecha_fin2')->nullable();
-            
-            $table->string('tipo_propiedad3')->nullable();
-            $table->string('anombre_propiedad3')->nullable();
-            $table->date('fecha_propiedad3')->nullable();
-            $table->date('fecha_fin3')->nullable();
+            $table->string('anombre_propiedad_pastor')->nullable();
+            $table->string('num_matricula')->nullable();
+            $table->string('predial')->nullable();
+            $table->string('municipio')->nullable();
+            $table->string('direccion')->nullable();
+            $table->string('observaciones')->nullable();
             
             $table->integer('tesorero_id')->nullable();
             $table->integer('secretario_id')->nullable();
@@ -188,7 +187,7 @@ class CreateAuditoriasTable extends Migration
             $table->integer('libro_mes_id');
             $table->integer('pago');
             $table->date('fecha')->nullable();
-            $table->date('descripcion')->nullable();
+            $table->string('descripcion')->nullable();
             $table->timestamps();
         });
 
@@ -199,7 +198,7 @@ class CreateAuditoriasTable extends Migration
             $table->integer('libro_mes_id')->nullable();
             $table->integer('auditoria_id')->nullable();
             $table->integer('valor');
-            $table->date('descripcion')->nullable();
+            $table->string('descripcion')->nullable();
             $table->timestamps();
         });
 
@@ -208,7 +207,7 @@ class CreateAuditoriasTable extends Migration
             $table->increments('id');
             $table->integer('auditoria_id')->nullable();
             $table->integer('valor');
-            $table->date('descripcion')->nullable();
+            $table->string('descripcion')->nullable();
             $table->timestamps();
         });
 
@@ -244,6 +243,7 @@ class CreateAuditoriasTable extends Migration
             $table->text('justificacion')->nullable();
             $table->boolean('superada')->default(0);
             $table->string('fecha')->nullable();
+            $table->string('fecha_respuesta')->nullable();
             $table->string('tipo')->nullable();
             $table->timestamps();
         });

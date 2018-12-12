@@ -428,8 +428,12 @@ class AuditoriasController extends Controller {
 			$rDestinos_pagos = DB::select($consulta);
 		}
 		if (strlen($sqlLib_semanales) > 0) {
-			$consulta = 'SELECT * FROM au_lib_mensuales WHERE ' . $sqlLib_semanales;
-			$rLib_mensuales = DB::select($consulta);
+			$consulta = 'SELECT * FROM au_lib_semanales WHERE ' . $sqlLib_semanales;
+			$rLib_semanales = DB::select($consulta);
+		}
+		if (strlen($sqlGastos_mes) > 0) {
+			$consulta = 'SELECT * FROM au_gastos_mes WHERE ' . $sqlGastos_mes;
+			$rGastos_mes = DB::select($consulta);
 		}
 		if (strlen($sqlPreguntas) > 0) {
 			$consulta = 'SELECT * FROM au_preguntas WHERE ' . $sqlPreguntas;

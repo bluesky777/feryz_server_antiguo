@@ -79,15 +79,15 @@ class Sincronizar {
 	public function syncIglesias($elem, $now)
 	{
 		if (!isset($elem['id'])) {
-            $consulta = 'INSERT INTO au_iglesias(nombre, alias, codigo, zona, distrito_id, tesorero_id, secretario_id, created_at, updated_at, tipo_propiedad, anombre_propiedad, fecha_propiedad, fecha_fin, tipo_propiedad2, anombre_propiedad2, fecha_propiedad2, fecha_fin2, tipo_propiedad3, anombre_propiedad3, fecha_propiedad3, fecha_fin3) 
+            $consulta = 'INSERT INTO au_iglesias(nombre, alias, codigo, zona, distrito_id, tesorero_id, secretario_id, created_at, updated_at, estado_propiedad, estado_propiedad_pastor, tipo_doc_propiedad, tipo_doc_propiedad_pastor, anombre_propiedad, anombre_propiedad_pastor, num_matricula, predial, municipio, direccion, observaciones) 
                 VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);';
-            DB::insert($consulta, [$elem['nombre'], $elem['alias'], $elem['codigo'], $elem['zona'], $elem['distrito_id'], $elem['tesorero_id'], $elem['secretario_id'], $now, $now, $elem['tipo_propiedad'], $elem['anombre_propiedad'], $elem['fecha_propiedad'], $elem['fecha_fin'], $elem['tipo_propiedad2'], $elem['anombre_propiedad2'], $elem['fecha_propiedad2'], $elem['fecha_fin2'], $elem['tipo_propiedad3'], $elem['anombre_propiedad3'], $elem['fecha_propiedad3'], $elem['fecha_fin3'] ]);
+            DB::insert($consulta, [$elem['nombre'], $elem['alias'], $elem['codigo'], $elem['zona'], $elem['distrito_id'], $elem['tesorero_id'], $elem['secretario_id'], $now, $now, $elem['estado_propiedad'], $elem['estado_propiedad_pastor'], $elem['tipo_doc_propiedad'], $elem['tipo_doc_propiedad_pastor'], $elem['anombre_propiedad'], $elem['anombre_propiedad_pastor'], $elem['num_matricula'], $elem['predial'], $elem['municipio'], $elem['direccion'], $elem['observaciones'] ]);
         }
         elseif($elem['modificado']){
             $consulta = 'UPDATE au_iglesias SET 
-                nombre=?, alias=?, codigo=?, zona=?, distrito_id=?, tesorero_id=?, secretario_id=?, updated_at=?, tipo_propiedad=?, anombre_propiedad=?, fecha_propiedad=?, fecha_fin=?, tipo_propiedad2=?, anombre_propiedad2=?, fecha_propiedad2=?, fecha_fin2=?, tipo_propiedad3=?, anombre_propiedad3=?, fecha_propiedad3=?, fecha_fin3=? 
+                nombre=?, alias=?, codigo=?, zona=?, distrito_id=?, tesorero_id=?, secretario_id=?, updated_at=?, estado_propiedad=?, estado_propiedad_pastor=?, tipo_doc_propiedad=?, tipo_doc_propiedad_pastor=?, anombre_propiedad=?, anombre_propiedad_pastor=?, num_matricula=?, predial=?, municipio=?, direccion=?, observaciones=? 
                 WHERE id=?;';
-            DB::update($consulta, [$elem['nombre'], $elem['alias'], $elem['codigo'], $elem['zona'], $elem['distrito_id'], $elem['tesorero_id'], $elem['secretario_id'], $now, $elem['tipo_propiedad'], $elem['anombre_propiedad'], $elem['fecha_propiedad'], $elem['fecha_fin'], $elem['tipo_propiedad2'], $elem['anombre_propiedad2'], $elem['fecha_propiedad2'], $elem['fecha_fin2'], $elem['tipo_propiedad3'], $elem['anombre_propiedad3'], $elem['fecha_propiedad3'], $elem['fecha_fin3'], $elem['id'] ]);
+            DB::update($consulta, [$elem['nombre'], $elem['alias'], $elem['codigo'], $elem['zona'], $elem['distrito_id'], $elem['tesorero_id'], $elem['secretario_id'], $now, $elem['estado_propiedad'], $elem['estado_propiedad_pastor'], $elem['tipo_doc_propiedad'], $elem['tipo_doc_propiedad_pastor'], $elem['anombre_propiedad'], $elem['anombre_propiedad_pastor'], $elem['num_matricula'], $elem['predial'], $elem['municipio'], $elem['direccion'], $elem['observaciones'], $elem['id'] ]);
         }
         elseif($elem['eliminado']){
             DB::delete('DELETE FROM au_iglesias WHERE id=?;', [$elem['id']]);
@@ -167,15 +167,15 @@ class Sincronizar {
 	public function syncLib_semanales($elem, $now)
 	{
 		if (!isset($elem['id'])) {
-            $consulta = 'INSERT INTO au_lib_semanales(year, mes, orden, auditoria_id, diezmos, ofrendas, especiales, gastos, gastos_soportados, remesa_enviada, created_at, updated_at) 
-                VALUES(?,?,?,?,?,?,?,?,?,?,?,?);';
-            DB::insert($consulta, [$elem['year'], $elem['mes'], $elem['orden'], $elem['auditoria_id'], $elem['diezmos'], $elem['ofrendas'], $elem['especiales'], $elem['gastos'], $elem['gastos_soportados'], $elem['remesa_enviada'], $now, $now ]);
+            $consulta = 'INSERT INTO au_lib_semanales(libro_mes_id, diezmo_1, ofrenda_1, especial_1, diezmo_2, ofrenda_2, especial_2, diezmo_3, ofrenda_3, especial_3, diezmo_4, ofrenda_4, especial_4, diezmo_5, ofrenda_5, especial_5, diaconos_1, diaconos_2, diaconos_3, diaconos_4, diaconos_5, total_diezmos, total_ofrendas, total_especiales, por_total, created_at, updated_at)  
+                VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);';
+            DB::insert($consulta, [$elem['libro_mes_id'], $elem['diezmo_1'], $elem['ofrenda_1'], $elem['especial_1'], $elem['diezmo_2'], $elem['ofrenda_2'], $elem['especial_2'], $elem['diezmo_3'], $elem['ofrenda_3'], $elem['especial_3'], $elem['diezmo_4'], $elem['ofrenda_4'], $elem['especial_4'], $elem['diezmo_5'], $elem['ofrenda_5'], $elem['especial_5'], $elem['diaconos_1'], $elem['diaconos_2'], $elem['diaconos_3'], $elem['diaconos_4'], $elem['diaconos_5'], $elem['total_diezmos'], $elem['total_ofrendas'], $elem['total_especiales'], $elem['por_total'], $now, $now ]);
         }
         elseif($elem['modificado']){
             $consulta = 'UPDATE au_lib_semanales SET 
-                year=?, mes=?, orden=?, auditoria_id=?, diezmos=?, ofrendas=?, especiales=?, gastos=?, gastos_soportados=?, remesa_enviada=?, updated_at=? 
+                libro_mes_id=?, diezmo_1=?, ofrenda_1=?, especial_1=?, diezmo_2=?, ofrenda_2=?, especial_2=?, diezmo_3=?, ofrenda_3=?, especial_3=?, diezmo_4=?, ofrenda_4=?, especial_4=?, diezmo_5=?, ofrenda_5=?, especial_5=?, diaconos_1=?, diaconos_2=?, diaconos_3=?, diaconos_4=?, diaconos_5=?, total_diezmos=?, total_ofrendas=?, total_especiales=?, por_total=?, updated_at=? 
                 WHERE id=?;';
-            DB::update($consulta, [$elem['year'], $elem['mes'], $elem['orden'], $elem['auditoria_id'], $elem['diezmos'], $elem['ofrendas'], $elem['especiales'], $elem['gastos'], $elem['gastos_soportados'], $elem['remesa_enviada'], $now ]);
+            DB::update($consulta, [$elem['libro_mes_id'], $elem['diezmo_1'], $elem['ofrenda_1'], $elem['especial_1'], $elem['diezmo_2'], $elem['ofrenda_2'], $elem['especial_2'], $elem['diezmo_3'], $elem['ofrenda_3'], $elem['especial_3'], $elem['diezmo_4'], $elem['ofrenda_4'], $elem['especial_4'], $elem['diezmo_5'], $elem['ofrenda_5'], $elem['especial_5'], $elem['diaconos_1'], $elem['diaconos_2'], $elem['diaconos_3'], $elem['diaconos_4'], $elem['diaconos_5'], $elem['total_diezmos'], $elem['total_ofrendas'], $elem['total_especiales'], $elem['por_total'], $now, $elem['id'] ]);
         }
         elseif($elem['eliminado']){
             DB::delete('DELETE FROM au_lib_semanales WHERE id=?;', [$elem['id']]);
@@ -235,6 +235,7 @@ class Sincronizar {
 		if (!isset($elem['id'])) {
             $consulta = 'INSERT INTO au_gastos_mes(libro_mes_id, auditoria_id, valor, descripcion, created_at, updated_at) 
                 VALUES(?,?,?,?,?,?);';
+                Log::info('descripcion: ' .$elem['descripcion']);
             DB::insert($consulta, [$elem['libro_mes_id'], $elem['auditoria_id'], $elem['valor'], $elem['descripcion'], $now, $now ]);
         }
         elseif($elem['modificado']){
@@ -315,15 +316,15 @@ class Sincronizar {
 	{
 		if (!isset($elem['id'])) {
             Log::info('Recomendacion: '.$elem['auditoria_id']. ' - '. $elem['recomendacion']);
-            $consulta = 'INSERT INTO au_recomendaciones(auditoria_id, hallazgo, recomendacion, justificacion, superada, fecha, tipo, created_at, updated_at) 
-                VALUES(?,?,?,?,?,?,?,?,?);';
-            DB::insert($consulta, [$elem['auditoria_id'], $elem['hallazgo'], $elem['recomendacion'], $elem['justificacion'], $elem['superada'], $elem['fecha'], $elem['tipo'], $now, $now ]);
+            $consulta = 'INSERT INTO au_recomendaciones(auditoria_id, hallazgo, recomendacion, justificacion, superada, fecha, fecha_respuesta, tipo, created_at, updated_at) 
+                VALUES(?,?,?,?,?,?,?,?,?,?);';
+            DB::insert($consulta, [$elem['auditoria_id'], $elem['hallazgo'], $elem['recomendacion'], $elem['justificacion'], $elem['superada'], $elem['fecha'], $elem['fecha_respuesta'], $elem['tipo'], $now, $now ]);
         }
         elseif($elem['modificado']){
             $consulta = 'UPDATE au_recomendaciones SET 
-                auditoria_id=?, hallazgo=?, recomendacion=?, justificacion=?, superada=?, fecha=?, tipo=?, updated_at=? 
+                auditoria_id=?, hallazgo=?, recomendacion=?, justificacion=?, superada=?, fecha=?, fecha_respuesta=?, tipo=?, updated_at=? 
                 WHERE id=?;';
-            DB::update($consulta, [$elem['auditoria_id'], $elem['hallazgo'], $elem['recomendacion'], $elem['justificacion'], $elem['superada'], $elem['fecha'], $elem['tipo'], $now, $elem['id'] ]);
+            DB::update($consulta, [$elem['auditoria_id'], $elem['hallazgo'], $elem['recomendacion'], $elem['justificacion'], $elem['superada'], $elem['fecha'], $elem['fecha_respuesta'], $elem['tipo'], $now, $elem['id'] ]);
         }
         elseif($elem['eliminado']){
             DB::delete('DELETE FROM au_recomendaciones WHERE id=?;', [$elem['id']]);

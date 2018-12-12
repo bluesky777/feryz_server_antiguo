@@ -72,36 +72,36 @@ class DatosIniciales {
 			$now = Carbon::now('America/Bogota');
 			
 			$consulta = "INSERT INTO au_distritos
-					(id, nombre, alias, codigo, pastor_id, created_at, updated_at)
+					(id, nombre, alias, codigo, asociacion_id, pastor_id, created_at, updated_at)
 				VALUES
-					(1, 'Arauca Central', 'DSARAUC01', 'DSARAUC01', 1, '".$now."', '".$now."'),
-					(2, 'Arauca Betania', 'DSARABE01', 'DSARABE01',  1, '".$now."', '".$now."'),
-					(3, 'Arauquita', 'DSARAUQ01', 'DSARAUQ01',  1, '".$now."', '".$now."'),
-					(4, 'Arauquita Maranatha', 'DSARAUQ02', 'DSARAUQ02',  1, '".$now."', '".$now."'),
-					(5, 'Bethel', 'DSBETHE01', 'DSBETHE01',  1, '".$now."', '".$now."'),
-					(6, 'Cúcuta Central', 'DSCUCUC01', 'DSCUCUC01',  1, '".$now."', '".$now."'),
-					(7, 'Canaán', 'DSCANAA01', 'DSCANAA01',  1, '".$now."', '".$now."'),
-					(8, 'Fortul', 'DSFORTU01', 'DSFORTU01',  1, '".$now."', '".$now."'),
-					(9, 'Juan Atalaya', 'DSJUANA01', 'DSJUANA01',  1, '".$now."', '".$now."'),
-					(10, 'Libertad', 'DSLIBER01', 'DSLIBER01',  1, '".$now."', '".$now."'),
-					(11, 'Nuevo Caranal', 'DSCARAN01', 'DSCARAN01',  1, '".$now."', '".$now."'),
-					(12, 'Ocaña', 'DSOCAÑA01', 'DSOCAÑA01',  1, '".$now."', '".$now."'),
-					(13, 'Palestina', 'DSPALES01', 'DSPALES01',  1, '".$now."', '".$now."'),
-					(14, 'Pamplona', 'DSPAMPL01', 'DSPAMPL01',  1, '".$now."', '".$now."'),
-					(15, 'Patios', 'DSPATIO01', 'DSPATIO01',  1, '".$now."', '".$now."'),
-					(16, 'Pueblo Nuevo', 'DSPUEBL01', 'DSPUEBL01',  1, '".$now."', '".$now."'),
-					(17, 'Redención', 'DSREDEN01', 'DSREDEN01',  1, '".$now."', '".$now."'),
-					(18,'Renacer', 'DSRENAC01', 'DSRENAC01',  1, '".$now."', '".$now."'),
-					(19,'Cubará', 'DSREDCU01', 'DSREDCU01',  1, '".$now."', '".$now."'),
-					(20,'Saravena Central', 'DSSARAV01', 'DSSARAV01',  1, '".$now."', '".$now."'),
-					(21,'Tame Central', 'DSTAMEA01', 'DSTAMEA01',  1, '".$now."', '".$now."'),
-					(22,'Tame Oriental', 'DSTAMET01', 'DSTAMET01',  1, '".$now."', '".$now."'),
-					(23,'Tibú', 'DSTIBUN01', 'DSTIBUN01',  1, '".$now."', '".$now."'),
-					(24,'Cúcuta Sión', 'DSSIONA01', 'DSSIONA01',  1, '".$now."', '".$now."'),
-					(25,'Vichada', 'DSVICHA01', 'DSVICHA01',  1, '".$now."', '".$now."'),
-					(26,'Getsemani', 'DSVILGE01', 'DSVILGE01',  1, '".$now."', '".$now."'),
-					(27,'Villa del Rosario', 'DSVILLA01', 'DSVILLA01',  1, '".$now."', '".$now."'),
-					(28,'Tame Enmanuel', 'DSTAMEE01', 'DSTAMEE01',  1, '".$now."', '".$now."')
+					(1, 'Arauca Central', 'DSARAUC01', 'DSARAUC01', 2, 1, '".$now."', '".$now."'),
+					(2, 'Arauca Betania', 'DSARABE01', 'DSARABE01', 2,  1, '".$now."', '".$now."'),
+					(3, 'Arauquita', 'DSARAUQ01', 'DSARAUQ01', 2,  1, '".$now."', '".$now."'),
+					(4, 'Arauquita Maranatha', 'DSARAUQ02', 'DSARAUQ02', 2,  1, '".$now."', '".$now."'),
+					(5, 'Bethel', 'DSBETHE01', 'DSBETHE01', 2,  1, '".$now."', '".$now."'),
+					(6, 'Cúcuta Central', 'DSCUCUC01', 'DSCUCUC01', 2,  1, '".$now."', '".$now."'),
+					(7, 'Canaán', 'DSCANAA01', 'DSCANAA01', 2,  1, '".$now."', '".$now."'),
+					(8, 'Fortul', 'DSFORTU01', 'DSFORTU01', 2,  1, '".$now."', '".$now."'),
+					(9, 'Juan Atalaya', 'DSJUANA01', 'DSJUANA01', 2,  1, '".$now."', '".$now."'),
+					(10, 'Libertad', 'DSLIBER01', 'DSLIBER01', 2,  1, '".$now."', '".$now."'),
+					(11, 'Nuevo Caranal', 'DSCARAN01', 'DSCARAN01', 2,  1, '".$now."', '".$now."'),
+					(12, 'Ocaña', 'DSOCAÑA01', 'DSOCAÑA01', 2,  1, '".$now."', '".$now."'),
+					(13, 'Palestina', 'DSPALES01', 'DSPALES01', 2,  1, '".$now."', '".$now."'),
+					(14, 'Pamplona', 'DSPAMPL01', 'DSPAMPL01', 2,  1, '".$now."', '".$now."'),
+					(15, 'Patios', 'DSPATIO01', 'DSPATIO01', 2,  1, '".$now."', '".$now."'),
+					(16, 'Pueblo Nuevo', 'DSPUEBL01', 'DSPUEBL01', 2,  1, '".$now."', '".$now."'),
+					(17, 'Redención', 'DSREDEN01', 'DSREDEN01', 2,  1, '".$now."', '".$now."'),
+					(18,'Renacer', 'DSRENAC01', 'DSRENAC01', 2,  1, '".$now."', '".$now."'),
+					(19,'Cubará', 'DSREDCU01', 'DSREDCU01', 2,  1, '".$now."', '".$now."'),
+					(20,'Saravena Central', 'DSSARAV01', 'DSSARAV01', 2,  1, '".$now."', '".$now."'),
+					(21,'Tame Central', 'DSTAMEA01', 'DSTAMEA01', 2,  1, '".$now."', '".$now."'),
+					(22,'Tame Oriental', 'DSTAMET01', 'DSTAMET01', 2,  1, '".$now."', '".$now."'),
+					(23,'Tibú', 'DSTIBUN01', 'DSTIBUN01', 2,  1, '".$now."', '".$now."'),
+					(24,'Cúcuta Sión', 'DSSIONA01', 'DSSIONA01', 2,  1, '".$now."', '".$now."'),
+					(25,'Vichada', 'DSVICHA01', 'DSVICHA01', 2,  1, '".$now."', '".$now."'),
+					(26,'Getsemani', 'DSVILGE01', 'DSVILGE01', 2,  1, '".$now."', '".$now."'),
+					(27,'Villa del Rosario', 'DSVILLA01', 'DSVILLA01', 2,  1, '".$now."', '".$now."'),
+					(28,'Tame Enmanuel', 'DSTAMEE01', 'DSTAMEE01', 2,  1, '".$now."', '".$now."')
 				
 					;";
 					
@@ -120,13 +120,13 @@ class DatosIniciales {
 			$now = Carbon::now('America/Bogota');
 			
 			$consulta = "INSERT INTO au_users
-					(id, nombres, apellidos, email, username, password, tipo, sexo, created_at, updated_at)
+					(id, nombres, apellidos, email, username, password, tipo, sexo, union_id, asociacion_id, created_at, updated_at)
 				VALUES
-					(1, 'Joseth D', 'Guerrero', 'davidguerrero777@gmail.com', 'joseth',  '123', 'Admin', 'M', '".$now."', '".$now."'),
-					(2, 'Gustavo', 'Pérez', null, 'gustavo',  '123', 'Auditor', 'M', '".$now."', '".$now."'),
-					(3, 'Daniel', 'Grandas', null, 'daniel',  '123', 'Pastor', 'M', '".$now."', '".$now."'),
-					(4, 'Edilson', 'Marquez', null, 'edilson',  '123', 'Tesorero', 'M', '".$now."', '".$now."'),
-					(5, 'Felix', 'Díaz', null, 'felix',  '123', 'Pastor', 'M', '".$now."', '".$now."')
+					(1, 'Joseth D', 'Guerrero', 'davidguerrero777@gmail.com', 'joseth',  '123', 'Admin', 'M', 1, 2, '".$now."', '".$now."'),
+					(2, 'Gustavo', 'Pérez', null, 'gustavo',  '123', 'Auditor', 'M', null, 2, '".$now."', '".$now."'),
+					(3, 'Daniel', 'Grandas', null, 'daniel',  '123', 'Pastor', 'M', null, 2, '".$now."', '".$now."'),
+					(4, 'Edilson', 'Marquez', null, 'edilson',  '123', 'Tesorero', 'M', null, 2, '".$now."', '".$now."'),
+					(5, 'Felix', 'Díaz', null, 'felix',  '123', 'Pastor', 'M', null, 2, '".$now."', '".$now."')
 					;";
 					
 			DB::insert($consulta);

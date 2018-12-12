@@ -11,6 +11,7 @@ class CreateRemesasTable extends Migration
         Schema::create('au_remesas', function (Blueprint $table) {
             $table->engine = "InnoDB";
             $table->increments('id');
+            $table->integer('asociacion_id')->nullable();
             $table->integer('num_diario')->nullable();
             $table->integer('linea')->nullable();
             $table->string('tipo_diario')->nullable(); 
