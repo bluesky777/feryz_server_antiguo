@@ -51,6 +51,7 @@ class AuditoriasController extends Controller {
 		$res['usuarios'] 		= DB::select('SELECT * FROM au_users WHERE username=? and password=?;', [$username, $password]);
 		$res['recomendaciones'] = DB::select('SELECT * from au_recomendaciones;');
 		$res['dinero_efectivo'] = DB::select('SELECT * from au_dinero_efectivo;');
+		$res['remesas'] 		= DB::select('SELECT * from au_remesas;');
 		
 		return $res;
 	}
