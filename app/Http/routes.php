@@ -31,6 +31,7 @@ Route::controller('configuracion', 'ConfiguracionController');
 Route::controller('taxis', 'TaxiDriver\TaxisController');
 Route::controller('auditorias', 'AuditSystem\AuditoriasController');
 Route::controller('remesas', 'AuditSystem\RemesasController');
+Route::controller('au_usuario', 'AuditSystem\AuUsuarioController');
 
 /*
 |--------------------------------------------------------------------------

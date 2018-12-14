@@ -122,11 +122,12 @@ class DatosIniciales {
 			$consulta = "INSERT INTO au_users
 					(id, nombres, apellidos, email, username, password, tipo, sexo, union_id, asociacion_id, created_at, updated_at)
 				VALUES
-					(1, 'Joseth D', 'Guerrero', 'davidguerrero777@gmail.com', 'joseth',  '123', 'Admin', 'M', 1, 2, '".$now."', '".$now."'),
+					(1, 'Joseth D', 'Guerrero', 'davidguerrero777@gmail.com', 'joseth', '456', 'Admin', 'M', 1, 2, '".$now."', '".$now."'),
 					(2, 'Gustavo', 'Pérez', null, 'gustavo',  '123', 'Auditor', 'M', null, 2, '".$now."', '".$now."'),
 					(3, 'Daniel', 'Grandas', null, 'daniel',  '123', 'Pastor', 'M', null, 2, '".$now."', '".$now."'),
 					(4, 'Edilson', 'Marquez', null, 'edilson',  '123', 'Tesorero', 'M', null, 2, '".$now."', '".$now."'),
-					(5, 'Felix', 'Díaz', null, 'felix',  '123', 'Pastor', 'M', null, 2, '".$now."', '".$now."')
+					(5, 'Cesar', 'Saldariaga', null, 'felix',  '123', 'Tesorero asociación', 'M', null, 2, '".$now."', '".$now."'),
+					(6, 'Felix', 'Díaz', null, 'felix',  '123', 'Pastor', 'M', null, 2, '".$now."', '".$now."')
 					;";
 					
 			DB::insert($consulta);

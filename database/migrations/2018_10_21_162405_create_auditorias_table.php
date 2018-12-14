@@ -24,6 +24,8 @@ class CreateAuditoriasTable extends Migration
             $table->integer('iglesia_id')->nullable();
             $table->integer('auditoria_id')->nullable();
             $table->string('celular')->nullable();
+            $table->string('idioma')->nullable();
+            $table->string('tema')->nullable();
             $table->string('username');
             $table->string('password')->nullable();
             $table->timestamps();
@@ -105,6 +107,7 @@ class CreateAuditoriasTable extends Migration
             $table->increments('id');
             $table->date('fecha')->nullable();
             $table->string('hora')->nullable();
+            $table->integer('auditor_id');
             $table->integer('saldo_ant')->nullable();
             $table->integer('ingre_por_registrar')->nullable();
             $table->integer('ingre_sabados')->nullable();
@@ -115,6 +118,7 @@ class CreateAuditoriasTable extends Migration
             $table->integer('gastos_mes_por_regis')->nullable();
             $table->integer('dinero_efectivo')->nullable();
             $table->integer('cta_por_cobrar')->nullable();
+            $table->integer('iglesia_id')->nullable();
             $table->integer('iglesia_id')->nullable();
             $table->timestamps();
         });
