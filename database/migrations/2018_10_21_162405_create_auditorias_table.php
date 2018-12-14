@@ -28,6 +28,11 @@ class CreateAuditoriasTable extends Migration
             $table->string('tema')->nullable();
             $table->string('username');
             $table->string('password')->nullable();
+            
+            $table->integer('created_by')->nullable();
+            $table->integer('updated_by')->nullable();
+            $table->integer('deleted_by')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
 
@@ -41,6 +46,11 @@ class CreateAuditoriasTable extends Migration
             $table->integer('presidente')->nullable();
             $table->string('pais')->nullable();
             $table->integer('division_id')->nullable();
+            
+            $table->integer('created_by')->nullable();
+            $table->integer('updated_by')->nullable();
+            $table->integer('deleted_by')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
 
@@ -54,6 +64,11 @@ class CreateAuditoriasTable extends Migration
             $table->string('zona')->nullable();
             $table->integer('union_id')->nullable();
             $table->integer('tesorero_id')->nullable();
+            
+            $table->integer('created_by')->nullable();
+            $table->integer('updated_by')->nullable();
+            $table->integer('deleted_by')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
 
@@ -68,6 +83,10 @@ class CreateAuditoriasTable extends Migration
             $table->integer('asociacion_id')->nullable();
             $table->integer('pastor_id')->nullable();
             $table->integer('tesorero_id')->nullable(); // Tesorero del distrito
+            
+            $table->integer('created_by')->nullable();
+            $table->integer('deleted_by')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
 
@@ -98,6 +117,10 @@ class CreateAuditoriasTable extends Migration
             $table->integer('tesorero_id')->nullable();
             $table->integer('secretario_id')->nullable();
             
+            $table->integer('created_by')->nullable();
+            $table->integer('updated_by')->nullable();
+            $table->integer('deleted_by')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
 
@@ -119,6 +142,11 @@ class CreateAuditoriasTable extends Migration
             $table->integer('dinero_efectivo')->nullable();
             $table->integer('cta_por_cobrar')->nullable();
             $table->integer('iglesia_id')->nullable();
+            
+            $table->integer('created_by')->nullable();
+            $table->integer('updated_by')->nullable();
+            $table->integer('deleted_by')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
 
@@ -137,6 +165,11 @@ class CreateAuditoriasTable extends Migration
             $table->integer('gastos')->nullable()->defaul(0);
             $table->integer('gastos_soportados')->nullable()->defaul(0);
             $table->integer('remesa_enviada')->nullable()->defaul(0);
+            
+            $table->integer('created_by')->nullable();
+            $table->integer('updated_by')->nullable();
+            $table->integer('deleted_by')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
 
@@ -169,6 +202,8 @@ class CreateAuditoriasTable extends Migration
             $table->integer('total_ofrendas')->nullable()->defaul(0); // Ofrendas recogidas del mes, no por sábados
             $table->integer('total_especiales')->nullable()->defaul(0); // Ofrendas especiales recogidas del mes, no por sábados
             $table->integer('por_total')->nullable()->defaul(0); // 0 o 1. Si es por total, se ignoran los valores de los 5 sábados
+            $table->integer('created_by')->nullable();
+            $table->integer('updated_by')->nullable();
             $table->timestamps();
         });
 
@@ -179,6 +214,11 @@ class CreateAuditoriasTable extends Migration
             $table->integer('iglesia_id');
             $table->string('nombre');
             $table->string('descripcion')->nullable();
+            
+            $table->integer('created_by')->nullable();
+            $table->integer('updated_by')->nullable();
+            $table->integer('deleted_by')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
 
@@ -191,6 +231,11 @@ class CreateAuditoriasTable extends Migration
             $table->integer('pago');
             $table->date('fecha')->nullable();
             $table->string('descripcion')->nullable();
+            
+            $table->integer('created_by')->nullable();
+            $table->integer('updated_by')->nullable();
+            $table->integer('deleted_by')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
 
@@ -202,6 +247,11 @@ class CreateAuditoriasTable extends Migration
             $table->integer('auditoria_id')->nullable();
             $table->integer('valor');
             $table->string('descripcion')->nullable();
+            
+            $table->integer('created_by')->nullable();
+            $table->integer('updated_by')->nullable();
+            $table->integer('deleted_by')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
 
@@ -224,6 +274,11 @@ class CreateAuditoriasTable extends Migration
             $table->string('option2')->nullable();
             $table->string('option3')->nullable();
             $table->string('option4')->nullable();
+            
+            $table->integer('created_by')->nullable();
+            $table->integer('updated_by')->nullable();
+            $table->integer('deleted_by')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
         
@@ -233,6 +288,11 @@ class CreateAuditoriasTable extends Migration
             $table->integer('pregunta_id');
             $table->integer('auditoria_id')->nullable();
             $table->string('respuestas')->nullable();
+            
+            $table->integer('created_by')->nullable();
+            $table->integer('updated_by')->nullable();
+            $table->integer('deleted_by')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
         
@@ -248,6 +308,11 @@ class CreateAuditoriasTable extends Migration
             $table->string('fecha')->nullable();
             $table->string('fecha_respuesta')->nullable();
             $table->string('tipo')->nullable();
+            
+            $table->integer('created_by')->nullable();
+            $table->integer('updated_by')->nullable();
+            $table->integer('deleted_by')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
 
