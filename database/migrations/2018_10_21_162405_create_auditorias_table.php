@@ -119,7 +119,6 @@ class CreateAuditoriasTable extends Migration
             $table->integer('dinero_efectivo')->nullable();
             $table->integer('cta_por_cobrar')->nullable();
             $table->integer('iglesia_id')->nullable();
-            $table->integer('iglesia_id')->nullable();
             $table->timestamps();
         });
 
