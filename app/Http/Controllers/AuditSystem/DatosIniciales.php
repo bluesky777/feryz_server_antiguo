@@ -126,7 +126,7 @@ class DatosIniciales {
 					(2, 'Gustavo', 'Pérez', null, 'gustavo',  '123', 'Auditor', 'M', null, 2, '".$now."', '".$now."'),
 					(3, 'Daniel', 'Grandas', null, 'daniel',  '123', 'Pastor', 'M', null, 2, '".$now."', '".$now."'),
 					(4, 'Edilson', 'Marquez', null, 'edilson',  '123', 'Tesorero', 'M', null, 2, '".$now."', '".$now."'),
-					(5, 'Cesar', 'Saldariaga', null, 'felix',  '123', 'Tesorero asociación', 'M', null, 2, '".$now."', '".$now."'),
+					(5, 'Cesar', 'Saldariaga', null, 'cesar',  '123', 'Tesorero asociación', 'M', null, 2, '".$now."', '".$now."'),
 					(6, 'Felix', 'Díaz', null, 'felix',  '123', 'Pastor', 'M', null, 2, '".$now."', '".$now."')
 					;";
 					
