@@ -54,7 +54,7 @@ class TaxisController extends Controller {
 		
 		$datos->insertarTaxistas();
 		$datos->insertarTaxis();
-		$datos->insertarCarreras();
+		//$datos->insertarCarreras();
 		$datos->insertarUsuarios();
 		return 'Insertados';
 	}

@@ -67,7 +67,7 @@ class CreateTaxisTable extends Migration
             $table->string('lugar_fin')->nullable();
             $table->string('fecha_fin')->nullable();
             $table->string('estado')->nullable();
-            $table->integer('registrada_por')->nullable();
+            $table->string('registrada_por')->nullable();
             $table->timestamps();
         });
 
