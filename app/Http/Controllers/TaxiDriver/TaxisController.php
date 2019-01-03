@@ -40,7 +40,8 @@ class TaxisController extends Controller {
 		$res['taxis'] 		= DB::select('SELECT * from tx_taxis;');
 		$res['taxistas'] 	= DB::select('SELECT * from tx_taxistas;');
 		$res['carreras'] 	= DB::select('SELECT * from tx_carreras;');
-		$res['usuarios'] 	= DB::select('SELECT * from tx_users WHERE usuario=? and password=?;', [$username, $password]);
+		//$res['usuarios'] 	= DB::select('SELECT * from tx_users WHERE usuario=? and password=?;', [$username, $password]);
+		$res['usuarios'] 	= DB::select('SELECT * from tx_users;');
 
 		
 		return $res;
