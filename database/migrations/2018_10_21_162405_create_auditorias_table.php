@@ -321,20 +321,20 @@ class CreateAuditoriasTable extends Migration
 
     public function down()
     {
-        Schema::drop('au_dinero_efectivo');
-        Schema::drop('au_recomendaciones');
-        Schema::drop('au_respuestas');
-        Schema::drop('au_preguntas');
-        Schema::drop('au_gastos_mes');
-        Schema::drop('au_destinos_pagos');
-        Schema::drop('au_destinos');
-        Schema::drop('au_lib_semanales');
-        Schema::drop('au_lib_mensuales');
-        Schema::drop('au_auditorias');
-        Schema::drop('au_iglesias');
-        Schema::drop('au_distritos');
-        Schema::drop('au_asociaciones');
-        Schema::drop('au_uniones');
-        Schema::drop('au_users');
+        Schema::dropIfExists('au_dinero_efectivo');
+        Schema::dropIfExists('au_recomendaciones');
+        Schema::dropIfExists('au_respuestas');
+        Schema::dropIfExists('au_preguntas');
+        Schema::dropIfExists('au_gastos_mes');
+        Schema::dropIfExists('au_destinos_pagos');
+        Schema::dropIfExists('au_destinos');
+        Schema::dropIfExists('au_lib_semanales');
+        Schema::dropIfExists('au_lib_mensuales');
+        Schema::dropIfExists('au_auditorias');
+        Schema::dropIfExists('au_iglesias');
+        Schema::dropIfExists('au_distritos');
+        Schema::dropIfExists('au_asociaciones');
+        Schema::dropIfExists('au_uniones');
+        Schema::dropIfExists('au_users');
     }
 }

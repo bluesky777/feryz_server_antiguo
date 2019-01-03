@@ -61,9 +61,9 @@ class Sincronizar {
 	public function syncCarreras($tax, $now)
 	{
 		if (!$tax['id']) {
-            $consulta = 'INSERT INTO tx_carreras(taxi_id, taxista_id, zona, fecha_ini, lugar_ini, cell_llamado, lugar_fin, fecha_fin, estado, created_at, updated_at) 
-                VALUES(?,?,?,?,?,?,?,?,?,?,?);';
-            DB::insert($consulta, [$tax['taxi_id'], $tax['taxista_id'], $tax['zona'], $tax['fecha_ini'], $tax['lugar_inicio'], $tax['cell_llamado'], $tax['lugar_fin'], $tax['fecha_fin'], $tax['estado'], $now, $now ]);
+            $consulta = 'INSERT INTO tx_carreras(taxi_id, taxista_id, zona, fecha_ini, lugar_ini, cell_llamado, lugar_fin, fecha_fin, estado, created_at, updated_at, registrada_por) 
+                VALUES(?,?,?,?,?,?,?,?,?,?,?,?);';
+            DB::insert($consulta, [$tax['taxi_id'], $tax['taxista_id'], $tax['zona'], $tax['fecha_ini'], $tax['lugar_inicio'], $tax['cell_llamado'], $tax['lugar_fin'], $tax['fecha_fin'], $tax['estado'], $now, $now, $tax['registrada_por'] ]);
         }
         elseif($tax['modificado']){
             $consulta = 'UPDATE tx_carreras SET 

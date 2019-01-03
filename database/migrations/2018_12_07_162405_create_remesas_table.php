@@ -44,6 +44,6 @@ class CreateRemesasTable extends Migration
     public function down()
     {
         
-        Schema::drop('au_remesas');
+        Schema::dropIfExists('au_remesas');
     }
 }

@@ -63,9 +63,11 @@ class CreateTaxisTable extends Migration
             $table->string('zona')->nullable();
             $table->string('fecha_ini')->nullable();
             $table->string('lugar_ini')->nullable();
+            $table->string('cell_llamado')->nullable();
             $table->string('lugar_fin')->nullable();
             $table->string('fecha_fin')->nullable();
             $table->string('estado')->nullable();
+            $table->integer('registrada_por')->nullable();
             $table->timestamps();
         });
 
@@ -90,10 +92,10 @@ class CreateTaxisTable extends Migration
 
     public function down()
     {
-        Schema::drop('tx_posiciones');
-        Schema::drop('tx_carreras');
-        Schema::drop('tx_taxistas');
-        Schema::drop('tx_taxis');
-        Schema::drop('tx_users');
+        Schema::dropIfExists('tx_posiciones');
+        Schema::dropIfExists('tx_carreras');
+        Schema::dropIfExists('tx_taxistas');
+        Schema::dropIfExists('tx_taxis');
+        Schema::dropIfExists('tx_users');
     }
 }
