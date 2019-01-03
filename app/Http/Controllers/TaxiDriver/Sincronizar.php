@@ -69,7 +69,7 @@ class Sincronizar {
             $consulta = 'UPDATE tx_carreras SET 
                 taxi_id=?, taxista_id=?, zona=?, fecha_ini=?, lugar_ini=?, cell_llamado=?, lugar_fin=?, fecha_fin=?, estado=?, updated_at=?
                 WHERE id=?;';
-            DB::update($consulta, [$tax['taxi_id'], $tax['taxista_id'], $tax['zona'], $tax['fecha_ini'], $tax['lugar_inicio'], $tax['cell_llamado'], $tax['lugar_fin'], $tax['fecha_fin'], $now, $tax['id'] ]);
+            DB::update($consulta, [$tax['taxi_id'], $tax['taxista_id'], $tax['zona'], $tax['fecha_ini'], $tax['lugar_inicio'], $tax['cell_llamado'], $tax['lugar_fin'], $tax['fecha_fin'], $tax['estado'], $now, $tax['id'] ]);
         }
         elseif($tax['eliminado']){
             DB::delete('DELETE FROM tx_carreras WHERE id=?;', [$tax['id']]);
