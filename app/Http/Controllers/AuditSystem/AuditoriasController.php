@@ -36,6 +36,30 @@ class AuditoriasController extends Controller {
 		$username 	= Request::input('username');
 		$password 	= Request::input('password');
 		
+		
+		$user 		= DB::select('SELECT * FROM au_users WHERE username=? and password=?;', [$username, $password]);
+		
+		if (count($user) > 0) {
+			$user = $user[0]; // Auditor, Pastor, Tesorero, Tesorero asociación, Admin
+			if ($user->tipo == 'Auditor') {
+				$res['usuarios'] 		= DB::select('SELECT u.* FROM au_users u WHERE u.tipo="Tesorero" or u.tipo="Pastor";');
+			}
+			
+			if ($user->tipo == 'Tesorero asociación') {
+				$res['usuarios'] 		= DB::select('SELECT u.* FROM au_users u WHERE u.tipo="Tesorero" or u.tipo="Pastor" or u.tipo="Auditor";');
+			}
+			
+			if ($user->tipo == 'Admin') {
+				$res['usuarios'] 		= DB::select('SELECT u.* FROM au_users u ;');
+			}
+			
+		}else{
+			// Debería mandar error, pero por probar...
+			// return abort(401, 'Datos incorrectos.');
+			$res['usuarios'] 		= DB::select('SELECT * FROM au_users WHERE username=? and password=?;', [$username, $password]);
+		}
+		
+		
 		$res['respuestas'] 		= DB::select('SELECT * from au_respuestas;');
 		$res['preguntas'] 		= DB::select('SELECT * from au_preguntas;');
 		$res['gastos_mes'] 		= DB::select('SELECT * from au_gastos_mes;');
@@ -48,10 +72,10 @@ class AuditoriasController extends Controller {
 		$res['distritos'] 		= DB::select('SELECT * from au_distritos;');
 		$res['asociaciones'] 	= DB::select('SELECT * from au_asociaciones;');
 		$res['uniones'] 		= DB::select('SELECT * from au_uniones;');
-		$res['usuarios'] 		= DB::select('SELECT * FROM au_users WHERE username=? and password=?;', [$username, $password]);
 		$res['recomendaciones'] = DB::select('SELECT * from au_recomendaciones;');
 		$res['dinero_efectivo'] = DB::select('SELECT * from au_dinero_efectivo;');
 		$res['remesas'] 		= DB::select('SELECT * from au_remesas;');
+		
 		
 		return $res;
 	}

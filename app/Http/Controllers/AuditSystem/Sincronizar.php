@@ -123,15 +123,15 @@ class Sincronizar {
 	public function syncAuditorias($elem, $now)
 	{
 		if (!isset($elem['id'])) {
-            $consulta = 'INSERT INTO au_auditorias(fecha, hora, auditor_id, saldo_ant, ingre_por_registrar, ingre_sabados, cta_por_pagar, ajuste_por_enviar, saldo_banco, consig_fondos_confia, gastos_mes_por_regis, dinero_efectivo, cta_por_cobrar, iglesia_id, created_at, updated_at) 
+            $consulta = 'INSERT INTO au_auditorias(fecha, hora, auditor_id, saldo_ant, saldo_ant_descripcion, saldo_final, ingre_por_registrar, ingre_sabados, cta_por_pagar, ajuste_por_enviar, saldo_banco, consig_fondos_confia, gastos_mes_por_regis, dinero_efectivo, cta_por_cobrar, iglesia_id, cerrada, cerrada_fecha, created_at, updated_at) 
                 VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);';
-            DB::insert($consulta, [$elem['fecha'], $elem['hora'], $elem['auditor_id'], $elem['saldo_ant'], $elem['ingre_por_registrar'], $elem['ingre_sabados'], $elem['cta_por_pagar'], $elem['ajuste_por_enviar'], $elem['saldo_banco'], $elem['consig_fondos_confia'], $elem['gastos_mes_por_regis'], $elem['dinero_efectivo'], $elem['cta_por_cobrar'], $elem['iglesia_id'], $now, $now ]);
+            DB::insert($consulta, [$elem['fecha'], $elem['hora'], $elem['auditor_id'], $elem['saldo_ant'], $elem['saldo_ant_descripcion'], $elem['saldo_final'], $elem['ingre_por_registrar'], $elem['ingre_sabados'], $elem['cta_por_pagar'], $elem['ajuste_por_enviar'], $elem['saldo_banco'], $elem['consig_fondos_confia'], $elem['gastos_mes_por_regis'], $elem['dinero_efectivo'], $elem['cta_por_cobrar'], $elem['iglesia_id'], $elem['cerrada'], $elem['cerrada_fecha'], $now, $now ]);
         }
         elseif($elem['modificado']){
             $consulta = 'UPDATE au_auditorias SET 
-                fecha=?, hora=?, auditor_id=?, saldo_ant=?, ingre_por_registrar=?, ingre_sabados=?, cta_por_pagar=?, ajuste_por_enviar=?, saldo_banco=?, consig_fondos_confia=?, gastos_mes_por_regis=?, dinero_efectivo=?, cta_por_cobrar=?, iglesia_id=?, updated_at=? 
+                fecha=?, hora=?, auditor_id=?, saldo_ant=?, saldo_ant_descripcion=?, saldo_final=?, ingre_por_registrar=?, ingre_sabados=?, cta_por_pagar=?, ajuste_por_enviar=?, saldo_banco=?, consig_fondos_confia=?, gastos_mes_por_regis=?, dinero_efectivo=?, cta_por_cobrar=?, iglesia_id=?, cerrada=?, cerrada_fecha=?, updated_at=? 
                 WHERE id=?;';
-            DB::update($consulta, [$elem['fecha'], $elem['hora'], $elem['auditor_id'], $elem['saldo_ant'], $elem['ingre_por_registrar'], $elem['ingre_sabados'], $elem['cta_por_pagar'], $elem['ajuste_por_enviar'], $elem['saldo_banco'], $elem['consig_fondos_confia'], $elem['gastos_mes_por_regis'], $elem['dinero_efectivo'], $elem['cta_por_cobrar'], $elem['iglesia_id'], $now, $elem['id'], $elem['id'] ]);
+            DB::update($consulta, [$elem['fecha'], $elem['hora'], $elem['auditor_id'], $elem['saldo_ant'], $elem['saldo_ant_descripcion'], $elem['saldo_final'], $elem['ingre_por_registrar'], $elem['ingre_sabados'], $elem['cta_por_pagar'], $elem['ajuste_por_enviar'], $elem['saldo_banco'], $elem['consig_fondos_confia'], $elem['gastos_mes_por_regis'], $elem['dinero_efectivo'], $elem['cta_por_cobrar'], $elem['iglesia_id'], $elem['cerrada'], $elem['cerrada_fecha'], $now, $elem['id'], $elem['id'] ]);
         }
         elseif($elem['eliminado']){
             DB::delete('DELETE FROM au_auditorias WHERE id=?;', [$elem['id']]);

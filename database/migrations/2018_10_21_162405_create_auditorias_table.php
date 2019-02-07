@@ -16,7 +16,7 @@ class CreateAuditoriasTable extends Migration
             $table->string('email')->nullable(); // ->unique()
             $table->string('sexo')->nullable();
             $table->date('fecha')->nullable(); // fecha nac
-            $table->string('tipo');
+            $table->string('tipo'); // Auditor, Pastor, Tesorero, Tesorero asociación, Admin
             $table->boolean('is_active')->default(true);
             $table->integer('union_id')->nullable();
             $table->integer('asociacion_id')->nullable();
@@ -131,7 +131,7 @@ class CreateAuditoriasTable extends Migration
             $table->date('fecha')->nullable();
             $table->string('hora')->nullable();
             $table->integer('auditor_id');
-            $table->integer('saldo_ant')->nullable();
+            $table->integer('saldo_ant')->nullable()->default(0);
             $table->integer('ingre_por_registrar')->nullable();
             $table->integer('ingre_sabados')->nullable();
             $table->integer('cta_por_pagar')->nullable();

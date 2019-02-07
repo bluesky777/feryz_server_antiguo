@@ -4,12 +4,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 use DB;
+use File;
 
 
 class ImagenModel extends Model {
 	protected $fillable = [];
 
-	protected $table = 'images';
+	protected $table = 'au_images';
 
 	use SoftDeletes;
 	protected $softDelete = true;
@@ -22,26 +23,18 @@ class ImagenModel extends Model {
 		$datos_imagen = null;
 
 
-		$consulta = 'SELECT u.nombres, i.nombre, u.apellidos, u.sexo, "usuario" as tipo, i.id  FROM images i 
-				inner join users u on u.imagen_id=i.id and i.id=:imagen_id1
-				UNION 
-				SELECT p.nombres, i.nombre, p.apellidos, p.sexo, "paciente" as tipo, i.id FROM images i 
-				inner join pacientes p on p.imagen_id=i.id  and i.id=:imagen_id2';
+		$consulta = 'SELECT u.nombres, i.nombre, u.apellidos, u.sexo, i.id  FROM images i 
+				inner join users u on u.imagen_id=i.id and i.id=:imagen_id';
 
-		$oficiales = DB::select(DB::raw($consulta), array(
-					':imagen_id1'	=> $imagen_id,
-					':imagen_id2'	=> $imagen_id,
-				));
+		$oficiales = DB::select($consulta, [':imagen_id'	=> $imagen_id]);
 
 
-		$consulta = 'SELECT u.nombres, u.apellidos, i.nombre, u.sexo, i.id FROM images i 
+		/*$consulta = 'SELECT u.nombres, u.apellidos, i.nombre, u.sexo, i.id FROM images i 
 				inner join users u on u.firma_id=i.id  and i.id=:imagen_id';
 
-		$firmas = DB::select(DB::raw($consulta), array(
-					':imagen_id'	=> $imagen_id
-				));
+		$firmas = DB::select($consulta, [':imagen_id'	=> $imagen_id] );*/
 
-		$datos_imagen = array('oficiales' => $oficiales, 'firmas' => $firmas);
+		$datos_imagen = array('oficiales' => $oficiales);
 
 		return $datos_imagen;
 	}
@@ -59,20 +52,22 @@ class ImagenModel extends Model {
 
 			if ($img) {
 
-				if ($img->publica) {
-					return 'publics/' . $img->nombre;
-				}else{
-					return 'perfil/' . $img->nombre;
-				}
+				return 'perfil/' . $img->nombre;
 					
 			}else{
-				return ImagenModel::default_image_name($sexo);
+				if ($sexo == 'F') {
+					return 'default_female.png';
+				}else{
+					return 'default_male.png';
+				}
 			}
 			
 		}else{
-
-			return ImagenModel::default_image_name($sexo);
-
+			if ($sexo == 'F') {
+				return 'default_female.png';
+			}else{
+				return 'default_male.png';
+			}
 		}
 	}
 
@@ -121,6 +116,29 @@ class ImagenModel extends Model {
 			return 'system/avatars/no-photo.jpg';
 
 		}
+	}
+
+	
+	public static function eliminar_imagen_y_enlaces($imagen_id)
+	{
+		$img 		= ImageModel::findOrFail($imagen_id);
+		$filename 	= 'images/perfil/'.$img->nombre;
+		
+		if (File::exists($filename)) {
+			File::delete($filename);
+		}else{
+			Log::info($imagen_id . ' -- Al parecer NO existe imagen: ' . $filename);
+		}
+		
+		$img->delete();
+
+		// Elimino cualquier referencia que otros tengan a esa imagen borrada.
+		/*
+		$consulta 	= 'UPDATE au_users SET foto_id=NULL WHERE foto_id=?;';
+		DB::update($consulta, [$imagen_id]);
+		*/
+		
+		
 	}
 
 	

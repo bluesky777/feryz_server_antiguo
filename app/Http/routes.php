@@ -25,6 +25,7 @@ Route::controller('productos', 'ProductosController');
 Route::controller('inventarios', 'InventariosController');
 Route::controller('entradas', 'EntradasController');
 Route::controller('imagenes', 'ImagesController');
+Route::controller('au_imagenes', 'AuditSystem\ImagesController');
 Route::controller('paises', 'PaisesController');
 Route::controller('ciudades', 'CiudadesController');
 Route::controller('configuracion', 'ConfiguracionController');
