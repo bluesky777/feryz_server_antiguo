@@ -122,6 +122,10 @@ class Sincronizar {
 
 	public function syncAuditorias($elem, $now)
 	{
+        if (!isset($elem['saldo_ant_descripcion'])) {
+            $elem['saldo_ant_descripcion'] = '';
+        }
+        
 		if (!isset($elem['id'])) {
             $consulta = 'INSERT INTO au_auditorias(fecha, hora, auditor_id, saldo_ant, saldo_ant_descripcion, saldo_final, ingre_por_registrar, ingre_sabados, cta_por_pagar, ajuste_por_enviar, saldo_banco, consig_fondos_confia, gastos_mes_por_regis, dinero_efectivo, cta_por_cobrar, iglesia_id, cerrada, cerrada_fecha, created_at, updated_at) 
                 VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);';
