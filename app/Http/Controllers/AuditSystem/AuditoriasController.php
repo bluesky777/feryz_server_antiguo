@@ -42,11 +42,11 @@ class AuditoriasController extends Controller {
 		if (count($user) > 0) {
 			$user = $user[0]; // Auditor, Pastor, Tesorero, Tesorero asociación, Admin
 			if ($user->tipo == 'Auditor') {
-				$res['usuarios'] 		= DB::select('SELECT u.* FROM au_users u WHERE u.tipo="Tesorero" or u.tipo="Pastor";');
+				$res['usuarios'] 		= DB::select('SELECT u.* FROM au_users u WHERE u.tipo="Tesorero" or u.tipo="Pastor" or (u.tipo="Auditor" and u.id=?);', [$user->id]);
 			}
 			
 			if ($user->tipo == 'Tesorero asociación') {
-				$res['usuarios'] 		= DB::select('SELECT u.* FROM au_users u WHERE u.tipo="Tesorero" or u.tipo="Pastor" or u.tipo="Auditor";');
+				$res['usuarios'] 		= DB::select('SELECT u.* FROM au_users u WHERE u.tipo="Tesorero" or u.tipo="Pastor" or u.tipo="Auditor" or (u.tipo="Tesorero asociación" and u.id=?);', [$user->id]);
 			}
 			
 			if ($user->tipo == 'Admin') {
