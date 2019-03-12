@@ -128,6 +128,12 @@ class Sincronizar {
         if (!isset($elem['saldo_final'])) {
             $elem['saldo_final'] = 0;
         }
+        if (!isset($elem['cerrada'])) {
+            $elem['cerrada'] = 0;
+        }
+        if (!isset($elem['cerrada_fecha'])) {
+            $elem['cerrada_fecha'] = 0;
+        }
         
 		if (!isset($elem['id'])) {
             $consulta = 'INSERT INTO au_auditorias(fecha, hora, auditor_id, saldo_ant, saldo_ant_descripcion, saldo_final, ingre_por_registrar, ingre_sabados, cta_por_pagar, ajuste_por_enviar, saldo_banco, consig_fondos_confia, gastos_mes_por_regis, dinero_efectivo, cta_por_cobrar, iglesia_id, cerrada, cerrada_fecha, created_at, updated_at) 
