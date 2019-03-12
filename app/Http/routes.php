@@ -35,6 +35,7 @@ Route::controller('auditorias', 'AuditSystem\AuditoriasController');
 Route::controller('remesas', 'AuditSystem\RemesasController');
 Route::controller('au_usuario', 'AuditSystem\AuUsuarioController');
 Route::controller('au_usuarios', 'AuditSystem\AuUsuariosController');
+Route::controller('au_observaciones', 'AuditSystem\ObservacionesController');
 
 /*
 |--------------------------------------------------------------------------
