@@ -28,11 +28,11 @@ class AuUsuariosController extends Controller {
             abort(404, 'No puede crear un tipo mayor que usted');
         }
         
-        $consulta = 'INSERT INTO au_users(nombres, apellidos, sexo, username, password, email, fecha, tipo, celular, created_by, created_at, updated_at) 
-            VALUES(?,?,?,?,?,?,?,?,?,?,?,?)';
+        $consulta = 'INSERT INTO au_users(nombres, apellidos, sexo, username, password, email, fecha, tipo, celular, union_id, asociacion_id, created_by, created_at, updated_at) 
+            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
             
         DB::insert($consulta, [$data['nombres'], $data['apellidos'], $data['sexo'], $data['username'], $data['password'], $data['email'],
-            $data['email'], $data['tipo'], $data['celular'], $user->id, $now, $now]);
+            $data['email'], $data['tipo'], $data['celular'], $data['union_id'], $data['asociacion_id'], $user->id, $now, $now]);
         
         $last_id = DB::getPdo()->lastInsertId();
         

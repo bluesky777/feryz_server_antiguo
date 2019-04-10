@@ -16,7 +16,7 @@ class CreateAuditoriasTable extends Migration
             $table->string('email')->nullable(); // ->unique()
             $table->string('sexo')->nullable();
             $table->date('fecha')->nullable(); // fecha nac
-            $table->string('tipo'); // Auditor, Pastor, Tesorero, Tesorero asociación, Admin
+            $table->string('tipo'); // Auditor, Pastor, Tesorero, Tesorero asociación, Cajero, Tesorero de unión, Coordinador de auditores, Tesorero de división, Coordinador de división, Admin
             $table->boolean('is_active')->default(true);
             $table->integer('union_id')->nullable();
             $table->integer('asociacion_id')->nullable();

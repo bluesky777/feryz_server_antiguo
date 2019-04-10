@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\AuditSystem\DatosIniciales;
 use App\Http\Controllers\AuditSystem\Sincronizar;
+use App\Http\Controllers\AuditSystem\Models\DatosDescarga;
 use Carbon\Carbon;
 use \Log;
 
@@ -68,8 +69,8 @@ class AuditoriasController extends Controller {
 		$res['lib_semanales'] 	= DB::select('SELECT * from au_lib_semanales;');
 		$res['lib_mensuales'] 	= DB::select('SELECT * from au_lib_mensuales;');
 		$res['auditorias'] 		= DB::select('SELECT * from au_auditorias;');
-		$res['iglesias'] 		= DB::select('SELECT * from au_iglesias;');
-		$res['distritos'] 		= DB::select('SELECT * from au_distritos;');
+		$res['iglesias'] 		= DatosDescarga::iglesias($user->tipo, $user->asociacion_id);
+		$res['distritos'] 		= DatosDescarga::distritos($user->tipo, $user->asociacion_id);
 		$res['asociaciones'] 	= DB::select('SELECT * from au_asociaciones;');
 		$res['uniones'] 		= DB::select('SELECT * from au_uniones;');
 		$res['recomendaciones'] = DB::select('SELECT * from au_recomendaciones;');
