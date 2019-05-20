@@ -311,7 +311,7 @@ class ObservacionesController extends Controller {
 		$para 				= $recomendacion['para'];
 		
 		
-		function updateRecomendacion()
+		function updateRecomendacion($recomendacion)
 		{
 			
 			$consulta   = "UPDATE au_recomendaciones SET justificacion=? WHERE id=?";
@@ -323,22 +323,22 @@ class ObservacionesController extends Controller {
 		// Comprobamos si en verdad puede guardar
 		if ($para == 'Auditoria' || $para == 'Iglesia') {
 			if ($tipo == 'Pastor' || $tipo == 'Tesorero iglesia') {
-				updateRecomendacion();
+				return updateRecomendacion($recomendacion);
 			}
 			
 		}else if ($para == 'Distrito') {
 			if ($tipo == 'Pastor' || $tipo == 'Tesorero distrital') {
-				updateRecomendacion();
+				return updateRecomendacion($recomendacion);
 			}
 			
 		}else if ($para == 'Asociacion') {
 			if (AuUser::hasAsociacionRole($tipo)){
-				updateRecomendacion();
+				return updateRecomendacion($recomendacion);
 			}
 	
 		}else if ($para == 'Union') {
 			if (AuUser::hasUnionRole($tipo)){
-				updateRecomendacion();
+				return updateRecomendacion($recomendacion);
 			}
 		}
 		
