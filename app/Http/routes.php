@@ -25,20 +25,23 @@ Route::controller('productos', 'ProductosController');
 Route::controller('inventarios', 'InventariosController');
 Route::controller('entradas', 'EntradasController');
 Route::controller('imagenes', 'ImagesController');
-Route::controller('au_imagenes', 'AuditSystem\ImagesController');
-Route::controller('au_propiedad', 'AuditSystem\PropiedadController');
-Route::controller('au_iglesias', 'AuditSystem\IglesiasController');
 Route::controller('paises', 'PaisesController');
 Route::controller('ciudades', 'CiudadesController');
 Route::controller('configuracion', 'ConfiguracionController');
 Route::controller('taxis', 'TaxiDriver\TaxisController');
 
+
+Route::controller('au_imagenes', 'AuditSystem\ImagesController');
+Route::controller('au_propiedad', 'AuditSystem\PropiedadController');
+Route::controller('au_iglesias', 'AuditSystem\IglesiasController');
+Route::controller('au_asociaciones', 'AuditSystem\AsociacionesController');
+Route::controller('au_uniones', 'AuditSystem\UnionesController');
 Route::controller('auditorias', 'AuditSystem\AuditoriasController');
 Route::controller('remesas', 'AuditSystem\RemesasController');
 Route::controller('au_usuario', 'AuditSystem\AuUsuarioController');
 Route::controller('au_usuarios', 'AuditSystem\AuUsuariosController');
 Route::controller('au_observaciones', 'AuditSystem\ObservacionesController');
-
+Route::controller('au_login', 'AuditSystem\LoginController');
 /*
 |--------------------------------------------------------------------------
 | Application Routes

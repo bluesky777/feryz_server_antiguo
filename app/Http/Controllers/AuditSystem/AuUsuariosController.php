@@ -53,10 +53,26 @@ class AuUsuariosController extends Controller {
         $user   = AuUser::identificar();
         $tipo   = $user->tipo;
         $datos 	= [];
+        $consulta = '';
         
-        if ($tipo == 'Auditor' || $tipo == 'Tesorero asociación' || $tipo == 'Admin') {
-            $consulta 	= "SELECT *, null as password FROM au_users WHERE deleted_at is null ORDER BY id DESC";
-        }else if($tipo == 'Tesorero' || $tipo == 'Pastor'){
+        if (AuUser::hasAsociacionRole($tipo)) {
+            $consulta 	= "SELECT *, null as password FROM au_users 
+                WHERE tipo='Auditor' and tipo='Pastor' and tipo='Tesorero iglesia'
+                    and tipo='Tesorero distrital' and deleted_at is null ORDER BY id DESC";
+                
+        }else if (AuUser::hasUnionRole($tipo)) {
+            $consulta 	= "SELECT *, null as password FROM au_users 
+                WHERE tipo='Tesorero asociación' and tipo='Cajero de asociación' and deleted_at is null ORDER BY id DESC";
+                
+        }else if (AuUser::hasDivisionRole($tipo)) {
+            $consulta 	= "SELECT *, null as password FROM au_users 
+                WHERE tipo='Tesorero de unión' and tipo='Coordinador de unión' and deleted_at is null ORDER BY id DESC";
+                
+        }else if ($tipo=='Admin') {
+            $consulta 	= "SELECT *, null as password FROM au_users 
+                WHERE deleted_at is null ORDER BY id DESC";
+                
+        }else if($tipo == 'Tesorero iglesia' || $tipo == 'Pastor'){
             //$consulta 	= "SELECT *, null as password FROM au_users WHERE deleted_at is null and (tipo=? or tipo=?) ORDER BY id DESC";
             //$datos 		= ['Tesorero', 'Pastor'];
             abort(404, 'No puede ver usuarios');

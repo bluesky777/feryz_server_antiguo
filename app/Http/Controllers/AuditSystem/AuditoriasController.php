@@ -14,22 +14,6 @@ use DB;
 
 class AuditoriasController extends Controller {
 
-	public function postLoguear()
-	{
-		$username 	= Request::input('username');
-		$password 	= Request::input('password');
-		
-		$consulta 	= 'SELECT * FROM au_users WHERE username=? and password=?;';
-		$usuario 	= DB::select($consulta, [$username, $password]);
-		
-		if (count($usuario) > 0) {
-			return $usuario;
-		}else{
-			return abort(401, 'Datos incorrectos.');
-		}
-		
-	}
-
 
 	public function getAll()
 	{
