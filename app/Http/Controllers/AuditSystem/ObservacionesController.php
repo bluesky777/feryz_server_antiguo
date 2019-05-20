@@ -50,7 +50,7 @@ class ObservacionesController extends Controller {
 		
 		if ($user->tipo == 'Pastor') {
 			
-			$consulta   = "SELECT r.* FROM au_recomendaciones r 
+			$consulta   = "SELECT r.*, i.nombre as iglesia_nombre, i.alias as alias_nombre FROM au_recomendaciones r 
 				LEFT JOIN au_auditorias a ON a.id=r.auditoria_id and a.deleted_at is null
 				LEFT JOIN au_iglesias i ON i.id=a.iglesia_id and i.deleted_at is null
 				LEFT JOIN au_distritos d ON d.id=i.distrito_id and d.deleted_at is null
