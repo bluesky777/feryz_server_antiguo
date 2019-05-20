@@ -39,9 +39,20 @@ class AuUsuarioController extends Controller {
 	
 	public function putCambiarIglesia()
 	{
-        $consulta = 'UPDATE au_users SET iglesia_id=? WHERE id=?';
-		DB::update($consulta, [Request::input('iglesia_id'), Request::input('user_id')]);
-
+		$distrito_id = Request::input('distrito_id');
+		
+		if ($distrito_id) {
+			
+			$consulta = 'UPDATE au_users SET iglesia_id=?, distrito_id=? WHERE id=?';
+			DB::update($consulta, [Request::input('iglesia_id'), $distrito_id, Request::input('user_id')]);
+	
+		}else{
+			
+			$consulta = 'UPDATE au_users SET iglesia_id=? WHERE id=?';
+			DB::update($consulta, [Request::input('iglesia_id'), Request::input('user_id')]);
+	
+		}
+		
 		return 'Cambiado';
 		
 	}

@@ -33,11 +33,50 @@ class AsociacionesController extends Controller {
         $asociaciones   = DB::select($consulta, [$union_id]);
         
         
-        
         return $asociaciones;
-
+    }
+    
+    
+	public function putAsociacionConDistritos(){
+        
+        $tipo_usu               = Request::input('tipo_usu');
+        $usu_id                 = Request::input('usu_id');
+        $distrito_id            = Request::input('distrito_id');
+        $asociacion_id          = Request::input('asociacion_id');
+        $asociacion             = [];
         
         
+        if ($distrito_id) {
+            
+            $consulta       = "SELECT a.id as rowid, a.* FROM au_asociaciones a 
+                INNER JOIN au_distritos d ON a.id = d.asociacion_id and d.deleted_at is null 
+                WHERE d.id=?";
+            $asociacion   = DB::select($consulta, [$distrito_id]);
+            
+            if (count($asociacion) > 0) {
+                $asociacion = $asociacion[0];
+            }
+            
+        }else {
+            
+            $consulta       = "SELECT a.id as rowid, a.* FROM au_asociaciones a 
+                WHERE a.id=?";
+            $asociacion   = DB::select($consulta, [$asociacion_id]);
+            
+            if (count($asociacion) > 0) {
+                $asociacion = $asociacion[0];
+            }
+            
+        }
+    
+        $consulta       = "SELECT d.id as rowid, d.* FROM au_distritos d  
+            WHERE d.asociacion_id=? and d.deleted_at is null";
+            
+        $asociacion->distritos   = DB::select($consulta, [$asociacion->id]);
+        
+        
+        
+        return ["asociacion" => $asociacion];
         
     }
     
