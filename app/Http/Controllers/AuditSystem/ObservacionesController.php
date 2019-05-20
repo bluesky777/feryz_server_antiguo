@@ -57,7 +57,7 @@ class ObservacionesController extends Controller {
 				LEFT JOIN au_users u ON u.id=d.pastor_id and u.deleted_at is null
 				WHERE u.id=? and r.deleted_at is null";
 				
-			$recomendaciones     = DB::select($consulta, [$id_usu]);
+			$recomendaciones     = DB::select($consulta, [$user->id]);
 		}
 		
 		

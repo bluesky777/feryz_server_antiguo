@@ -42,12 +42,24 @@ class LoginController extends Controller {
 			
 			if($usuario->iglesia_id > 0){
                     
-				$consulta 	= 'SELECT * FROM au_iglesias WHERE id=? and deleted_at is null';
+				$consulta 	= 'SELECT i.*, d.nombre as distrito_nombre, d.alias as distrito_alias,
+						t.nombres as tesorero_nombres, t.apellidos as tesorero_apellidos, 
+                		p.nombres as pastor_nombres, p.apellidos as pastor_apellidos
+					FROM au_iglesias i 
+					LEFT JOIN au_distritos d ON d.id=i.distrito_id AND d.deleted_at is null 
+					LEFT JOIN au_users t ON t.tipo="Tesorero distrital" and t.id=d.tesorero_id and t.deleted_at is null
+					LEFT JOIN au_users p ON p.tipo="Pastor" and p.id=d.pastor_id and p.deleted_at is null
+					WHERE i.id=? and i.deleted_at is null';
 				$iglesia 	= DB::select($consulta, [$usuario->iglesia_id]);
 				
 				if (count($iglesia) > 0) {
 					$usuario->iglesia_nombre 	= $iglesia[0]->nombre;
 					$usuario->iglesia_alias 	= $iglesia[0]->alias;
+					$usuario->iglesia_codigo 	= $iglesia[0]->codigo;
+					$usuario->distrito_nombre 	= $iglesia[0]->distrito_nombre;
+					$usuario->distrito_alias 	= $iglesia[0]->distrito_alias;
+					$usuario->distrito_pastor 	= $iglesia[0]->pastor_nombres . ' ' . $iglesia[0]->pastor_apellidos;
+					$usuario->distrito_tesorero = $iglesia[0]->tesorero_nombres . ' ' . $iglesia[0]->tesorero_apellidos;
 				}
 				
 			}
