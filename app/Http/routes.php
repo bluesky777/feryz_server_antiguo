@@ -42,6 +42,7 @@ Route::controller('au_usuario', 'AuditSystem\AuUsuarioController');
 Route::controller('au_usuarios', 'AuditSystem\AuUsuariosController');
 Route::controller('au_observaciones', 'AuditSystem\ObservacionesController');
 Route::controller('au_login', 'AuditSystem\LoginController');
+Route::controller('au_comparar', 'AuditSystem\Informes\CompararController');
 /*
 |--------------------------------------------------------------------------
 | Application Routes

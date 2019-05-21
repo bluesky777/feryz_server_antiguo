@@ -70,11 +70,13 @@ class AuditoriasController extends Controller {
 	{
 		$datos 		= new DatosIniciales;
 		
-		$datos->insertarUnionAudit();
-		$datos->insertarAsociaciones();
+		//$datos->insertarUnionAudit();
+		//$datos->insertarAsociaciones();
+		Log::info('Vamo a insertar');
 		$datos->insertarDistritos();
 		$datos->insertarIglesias();
-		$datos->insertarUsuarios();
+		
+		//$datos->insertarUsuarios();
 		return 'Insertados';
 	}
 
