@@ -31,6 +31,7 @@ class CreateRemesasTable extends Migration
             $table->string('org_id'); // COD IGLESIA
             $table->integer('empleados')->nullable();
             $table->string('concepto')->nullable();
+            $table->integer('updated_by')->nullable();
             $table->timestamps();
         });
 

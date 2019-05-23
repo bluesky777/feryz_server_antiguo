@@ -25,7 +25,7 @@ class AuUsuariosController extends Controller {
         $data   = Request::input('data');
         
         if (($data['tipo'] == 'Tesorero asociación' || $data['tipo'] == 'Admin') && ($user->tipo == 'Pastor' || $user->tipo == 'Tesorero' || $user->tipo == 'Auditor')) {
-            abort(404, 'No puede crear un tipo mayor que usted');
+            return abort(404, 'No puede crear un tipo mayor que usted');
         }
         
         $consulta = 'INSERT INTO au_users(nombres, apellidos, sexo, username, password, email, fecha, tipo, celular, union_id, asociacion_id, created_by, created_at, updated_at) 
@@ -55,18 +55,27 @@ class AuUsuariosController extends Controller {
         $datos 	= [];
         $consulta = '';
         
+        Log::info('asociacion_id ' . $user->asociacion_id);
+        
         if (AuUser::hasAsociacionRole($tipo)) {
+
             $consulta 	= "SELECT *, null as password FROM au_users 
-                WHERE tipo='Auditor' and tipo='Pastor' and tipo='Tesorero iglesia'
-                    and tipo='Tesorero distrital' and deleted_at is null ORDER BY id DESC";
+                WHERE (tipo='Pastor' or tipo='Tesorero iglesia'
+                    or tipo=?) and asociacion_id=? and deleted_at is null ORDER BY id DESC";
+                    
+            $datos = [$tipo, $user->asociacion_id];
                 
         }else if (AuUser::hasUnionRole($tipo)) {
             $consulta 	= "SELECT *, null as password FROM au_users 
-                WHERE tipo='Tesorero asociación' and tipo='Cajero de asociación' and deleted_at is null ORDER BY id DESC";
+                WHERE (tipo=? or tipo='Tesorero asociación' or tipo='Cajero de asociación') and union_id=? and deleted_at is null ORDER BY id DESC";
+                
+            $datos = [$tipo, $user->union_id];
                 
         }else if (AuUser::hasDivisionRole($tipo)) {
             $consulta 	= "SELECT *, null as password FROM au_users 
-                WHERE tipo='Tesorero de unión' and tipo='Coordinador de unión' and deleted_at is null ORDER BY id DESC";
+                WHERE (tipo=? or tipo='Tesorero de unión' or tipo='Coordinador de unión') and deleted_at is null ORDER BY id DESC";
+            
+            $datos = [$tipo];
                 
         }else if ($tipo=='Admin') {
             $consulta 	= "SELECT *, null as password FROM au_users 
