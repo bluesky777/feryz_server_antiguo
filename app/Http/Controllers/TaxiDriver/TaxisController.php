@@ -8,6 +8,7 @@ use App\Http\Controllers\TaxiDriver\DatosIniciales;
 use App\Http\Controllers\TaxiDriver\Sincronizar;
 use Carbon\Carbon;
 use \Log;
+use Excel;
 
 use DB;
 
@@ -45,6 +46,59 @@ class TaxisController extends Controller {
 
 		
 		return $res;
+	}
+	
+
+	public function getExportarCarreras()
+	{
+		
+		$host = env('LOCAL_XLS');
+		if ($host == '1' || $host == 1) {
+            $extension = 'xls';
+        }else{
+            $extension = 'xlsx';
+		}
+		$anio 	= Request::input('select_year');
+		$mes 	= Request::input('select_month');
+		$datos 	= ['anio' => $anio, 'mes' => $mes];
+		
+		
+		Excel::create('Carreras '.$mes.'/'.$anio, function($excel) use ($datos) {
+			
+
+            $excel->sheet('Carreras', function($sheet) use ($datos) {
+                    
+				$consulta = 'SELECT c.*, t.nombres, t.apellidos, tx.numero
+					from tx_carreras c
+					INNER JOIN tx_taxistas t ON c.taxista_id = t.id
+					INNER JOIN tx_taxis tx ON c.taxi_id = tx.id
+					WHERE fecha_ini like "' . $datos['anio'].'/'.$datos['mes'].'/'. '%" 
+					order by fecha_ini, c.id desc';
+
+
+				$carreras = DB::select($consulta, [] );
+				
+				$sheet->setBorder('A3:M'.(count($carreras)+5), 'thin', "D8572C");
+				$sheet->getStyle('A3:M3')->getAlignment()->setWrapText(true); 
+				$sheet->mergeCells('A1:B1');
+				
+				$sheet->loadView('exportar', compact('carreras', 'datos') )->mergeCells('C1:F1');
+				
+				$sheet->setWidth(['A'=>5, 'B'=>10, 'D'=>20, 'F'=>20, 'G'=>20, 'H'=>14, 'I'=>20, 'K'=>20, 'L'=>20, 'M'=>20,]);
+				$sheet->setHeight(3, 30);
+
+				$objDrawing = new \PHPExcel_Worksheet_Drawing;
+				$objDrawing->setPath(public_path('images/perfil/system/logo_radiotaxi.jpeg')); //your image path
+				$objDrawing->setCoordinates('A1');
+				$objDrawing->setWidth(48);
+				$objDrawing->setWorksheet($sheet);
+                    
+            });
+
+            
+        
+        })->download($extension, ['Access-Control-Allow-Origin' => '*']);
+
 	}
 	
 	// /feryz_server/public/taxis/insertar-datos-iniciales

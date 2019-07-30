@@ -43,9 +43,9 @@ class Sincronizar {
         }
         elseif($tax['modificado']){
             $consulta = 'UPDATE tx_taxis SET 
-                placa=?, numero=?, taxista_id=?, updated_at=? 
+                placa=?, numero=?, taxista_id=? 
                 WHERE id=?;';
-            DB::update($consulta, [$tax['placa'], $tax['numero'], $tax['taxista_id'], $tax['updated_at'], $now, $tax['id'] ]);
+            DB::update($consulta, [$tax['placa'], $tax['numero'], $tax['taxista_id'], $now, $tax['id'] ]);
         }
         elseif($tax['eliminado']){
             DB::delete('DELETE FROM tx_taxis WHERE id=?;', [$tax['id']]);

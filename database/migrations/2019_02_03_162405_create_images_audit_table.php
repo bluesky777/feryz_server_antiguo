@@ -43,10 +43,11 @@ class CreateImagesAuditTable extends Migration
     public function down()
     {
         Schema::dropIfExists('au_images');
-        
+        /*
         Schema::table('au_auditorias', function($table)
         {
             $table->dropColumn(['cerrada', 'cerrada_fecha', 'saldo_ant_descripcion', 'saldo_final']);
         });
+        */
     }
 }
