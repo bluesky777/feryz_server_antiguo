@@ -40,7 +40,7 @@ class TaxisController extends Controller {
 		
 		$res['taxis'] 		= DB::select('SELECT * from tx_taxis;');
 		$res['taxistas'] 	= DB::select('SELECT * from tx_taxistas;');
-		$res['carreras'] 	= DB::select('SELECT * from tx_carreras;');
+		$res['carreras'] 	= DB::select('SELECT * from tx_carreras limit 2000;');
 		//$res['usuarios'] 	= DB::select('SELECT * from tx_users WHERE usuario=? and password=?;', [$username, $password]);
 		$res['usuarios'] 	= DB::select('SELECT * from tx_users;');
 
@@ -113,7 +113,7 @@ class TaxisController extends Controller {
 		return 'Insertados';
 	}
 
-
+	/*
 	// /feryz_server/public/taxis/borrar-datos-iniciales
 	// Función muy peligrosa. Debo borrarla!!!
 	public function getBorrarDatosIniciales()
@@ -124,6 +124,7 @@ class TaxisController extends Controller {
 		DB::delete('DELETE FROM tx_users;');
 		return 'BORRADOS';
 	}
+	*/
 
 
 	public function putGuardarPosicion()
