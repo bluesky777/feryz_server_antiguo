@@ -237,6 +237,9 @@ class AuditoriasController extends Controller {
 		}
 
 		
+
+		$new_ids_auditorias = [];
+
 		for ($i=0; $i < count($auditorias); $i++) { 
 			$elem 	= $auditorias[$i];
 			
@@ -244,6 +247,9 @@ class AuditoriasController extends Controller {
 			$sincro->syncAuditorias($elem, $now);
 			
 			if (!isset($elem['id'])) {
+				$new_id = DB::getPdo()->lastInsertId();
+				array_push($new_ids_auditorias, [ 'new_id' => $new_id, 'row_id' => $elem['id'] ]);
+				
 				if (strlen($sqlAuditorias) > 0) {
 					$sqlAuditorias .= ' OR id=' . DB::getPdo()->lastInsertId();
 				}else{
@@ -251,13 +257,18 @@ class AuditoriasController extends Controller {
 				}
 			}
 		}
+		if (strlen($sqlAuditorias) > 0) {
+			$consulta = 'SELECT * FROM au_auditorias WHERE ' . $sqlAuditorias;
+			$rAuditorias = DB::select($consulta);
+		}
+
 
 		
 		for ($i=0; $i < count($lib_mensuales); $i++) { 
 			$elem 	= $lib_mensuales[$i];
 			
 			$sincro 	= new Sincronizar();
-			$sincro->syncLib_mensuales($elem, $now);
+			$sincro->syncLib_mensuales($elem, $now, $new_ids_auditorias);
 			
 			if (!isset($elem['id'])) {
 				if (strlen($sqlLib_mensuales) > 0) {
@@ -320,7 +331,7 @@ class AuditoriasController extends Controller {
 			$elem 	= $gastos_mes[$i];
 			
 			$sincro 	= new Sincronizar();
-			$sincro->syncGastos_mes($elem, $now);
+			$sincro->syncGastos_mes($elem, $now, $new_ids_auditorias);
 			
 			if (!isset($elem['id'])) {
 				if (strlen($sqlGastos_mes) > 0) {
@@ -352,7 +363,7 @@ class AuditoriasController extends Controller {
 			$elem 	= $respuestas[$i];
 			
 			$sincro 	= new Sincronizar();
-			$sincro->syncRespuestas($elem, $now);
+			$sincro->syncRespuestas($elem, $now, $new_ids_auditorias);
 			
 			if (!isset($elem['id'])) {
 				if (strlen($sqlRespuestas) > 0) {
@@ -364,18 +375,20 @@ class AuditoriasController extends Controller {
 		}
 
 		
-		
+
 		for ($i=0; $i < count($recomendas); $i++) { 
 			$elem 	= $recomendas[$i];
 
 			$sincro 	= new Sincronizar();
-			$sincro->syncRecomendas($elem, $now);
+			$sincro->syncRecomendas($elem, $now, $new_ids_auditorias);
 			
 			if (!isset($elem['id'])) {
+				$new_id = DB::getPdo()->lastInsertId();
+
 				if (strlen($sqlRecomendas) > 0) {
-					$sqlRecomendas .= ' OR id=' . DB::getPdo()->lastInsertId();
+					$sqlRecomendas .= ' OR id=' . $new_id;
 				}else{
-					$sqlRecomendas .= ' id=' . DB::getPdo()->lastInsertId();
+					$sqlRecomendas .= ' id=' . $new_id;
 				}
 			}
 		}
@@ -406,7 +419,7 @@ class AuditoriasController extends Controller {
 		
 		if (strlen($sqlAsociaciones) > 0) {
 			$consulta = 'SELECT * FROM au_asociaciones WHERE ' . $sqlAsociaciones;
-			Log::info($consulta);
+			//Log::info($consulta);
 			$rAsociaciones = DB::select($consulta);
 		}
 		
@@ -422,10 +435,6 @@ class AuditoriasController extends Controller {
 		if (strlen($sqlUsuarios) > 0) {
 			$consulta = 'SELECT * FROM au_users WHERE ' . $sqlUsuarios;
 			$rUsuarios = DB::select($consulta);
-		}
-		if (strlen($sqlAuditorias) > 0) {
-			$consulta = 'SELECT * FROM au_auditorias WHERE ' . $sqlAuditorias;
-			$rAuditorias = DB::select($consulta);
 		}
 		if (strlen($sqlLib_mensuales) > 0) {
 			$consulta = 'SELECT * FROM au_lib_mensuales WHERE ' . $sqlLib_mensuales;

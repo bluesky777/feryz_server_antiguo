@@ -36,7 +36,12 @@ class IglesiasController extends Controller {
             $distritos      = DB::select($consulta, [$usu_id]);
             
             for ($i=0; $i < count($distritos); $i++) { 
-                $consulta                   = "SELECT *, id as rowid FROM au_iglesias i WHERE i.distrito_id=? AND i.deleted_at is null";
+                $consulta                   = "SELECT i.*, i.id as rowid, d.nombre as nombre_distrito, d.alias as alias_distrito, d.codigo as codigo_alias, CONCAT(u.nombres, ' ', u.apellidos ) as nombre_pastor, CONCAT(t.nombres, ' ', t.apellidos ) as nombre_tesorero 
+                    FROM au_iglesias i 
+                    LEFT JOIN au_distritos d ON d.id=i.distrito_id and d.deleted_at is null 
+                    LEFT JOIN au_users u ON u.id=d.pastor_id and u.deleted_at is null 
+                    LEFT JOIN au_users t ON t.id=i.tesorero_id and t.deleted_at is null 
+                    WHERE i.distrito_id=? AND i.deleted_at is null";
                 $distritos[$i]->iglesias    = DB::select($consulta, [ $distritos[$i]->id ]);
                 
             }
@@ -52,7 +57,12 @@ class IglesiasController extends Controller {
             $distritos      = DB::select($consulta, [$asociacion_id]);
             
             for ($i=0; $i < count($distritos); $i++) { 
-                $consulta                   = "SELECT *, id as rowid FROM au_iglesias i WHERE i.distrito_id=? AND i.deleted_at is null";
+                $consulta                   = "SELECT i.*, i.id as rowid, d.nombre as nombre_distrito, d.alias as alias_distrito, d.codigo as codigo_alias, CONCAT(u.nombres, ' ', u.apellidos ) as nombre_pastor, CONCAT(t.nombres, ' ', t.apellidos ) as nombre_tesorero 
+                    FROM au_iglesias i 
+                    LEFT JOIN au_distritos d ON d.id=i.distrito_id and d.deleted_at is null 
+                    LEFT JOIN au_users u ON u.id=d.pastor_id and u.deleted_at is null 
+                    LEFT JOIN au_users t ON t.id=i.tesorero_id and t.deleted_at is null 
+                    WHERE i.distrito_id=? AND i.deleted_at is null";
                 $distritos[$i]->iglesias    = DB::select($consulta, [ $distritos[$i]->id ]);
                 
             }

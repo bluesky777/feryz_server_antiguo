@@ -155,9 +155,11 @@ class Sincronizar {
 	}
 
 
-	public function syncLib_mensuales($elem, $now)
+	public function syncLib_mensuales($elem, $now, $new_ids_auditorias)
 	{
 		if (!isset($elem['id'])) {
+            $this->cambiar_foranea_id($elem, $new_ids_auditorias, 'auditoria_id');
+            
             $consulta = 'INSERT INTO au_lib_mensuales(year, mes, periodo, orden, auditoria_id, diezmos, ofrendas, especiales, gastos, gastos_soportados, remesa_enviada, created_at, updated_at) 
                 VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?);';
             DB::insert($consulta, [$elem['year'], $elem['mes'], $elem['periodo'], $elem['orden'], $elem['auditoria_id'], $elem['diezmos'], $elem['ofrendas'], $elem['especiales'], $elem['gastos'], $elem['gastos_soportados'], $elem['remesa_enviada'], $now, $now ]);
@@ -180,6 +182,8 @@ class Sincronizar {
 	public function syncLib_semanales($elem, $now)
 	{
 		if (!isset($elem['id'])) {
+            //$this->cambiar_foranea_id($elem, $new_ids_meses, 'libro_mes_id');
+
             $consulta = 'INSERT INTO au_lib_semanales(libro_mes_id, diezmo_1, ofrenda_1, especial_1, diezmo_2, ofrenda_2, especial_2, diezmo_3, ofrenda_3, especial_3, diezmo_4, ofrenda_4, especial_4, diezmo_5, ofrenda_5, especial_5, diaconos_1, diaconos_2, diaconos_3, diaconos_4, diaconos_5, total_diezmos, total_ofrendas, total_especiales, por_total, created_at, updated_at)  
                 VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);';
             DB::insert($consulta, [$elem['libro_mes_id'], $elem['diezmo_1'], $elem['ofrenda_1'], $elem['especial_1'], $elem['diezmo_2'], $elem['ofrenda_2'], $elem['especial_2'], $elem['diezmo_3'], $elem['ofrenda_3'], $elem['especial_3'], $elem['diezmo_4'], $elem['ofrenda_4'], $elem['especial_4'], $elem['diezmo_5'], $elem['ofrenda_5'], $elem['especial_5'], $elem['diaconos_1'], $elem['diaconos_2'], $elem['diaconos_3'], $elem['diaconos_4'], $elem['diaconos_5'], $elem['total_diezmos'], $elem['total_ofrendas'], $elem['total_especiales'], $elem['por_total'], $now, $now ]);
@@ -243,12 +247,14 @@ class Sincronizar {
 	}
 
     
-	public function syncGastos_mes($elem, $now)
+	public function syncGastos_mes($elem, $now, $new_ids_auditorias)
 	{
 		if (!isset($elem['id'])) {
+            $this->cambiar_foranea_id($elem, $new_ids_auditorias, 'auditoria_id');
+            
             $consulta = 'INSERT INTO au_gastos_mes(libro_mes_id, auditoria_id, valor, descripcion, created_at, updated_at) 
                 VALUES(?,?,?,?,?,?);';
-                Log::info('descripcion: ' .$elem['descripcion']);
+
             DB::insert($consulta, [$elem['libro_mes_id'], $elem['auditoria_id'], $elem['valor'], $elem['descripcion'], $now, $now ]);
         }
         elseif($elem['modificado']){
@@ -267,6 +273,8 @@ class Sincronizar {
 	public function syncDinero_efectivo($elem, $now)
 	{
 		if (!isset($elem['id'])) {
+            $this->cambiar_foranea_id($elem, $new_ids_auditorias, 'auditoria_id');
+            
             $consulta = 'INSERT INTO au_dinero_efectivo(auditoria_id, valor, descripcion, created_at, updated_at) 
                 VALUES(?,?,?,?,?,?);';
             DB::insert($consulta, [$elem['auditoria_id'], $elem['valor'], $elem['descripcion'], $now, $now ]);
@@ -305,9 +313,11 @@ class Sincronizar {
 	}
 
 
-	public function syncRespuestas($elem, $now)
+	public function syncRespuestas($elem, $now, $new_ids_auditorias)
 	{
 		if (!isset($elem['id'])) {
+            $this->cambiar_foranea_id($elem, $new_ids_auditorias, 'auditoria_id');
+            
             $consulta = 'INSERT INTO au_respuestas(pregunta_id, auditoria_id, respuestas, created_at, updated_at) 
                 VALUES(?,?,?,?,?);';
             DB::insert($consulta, [$elem['pregunta_id'], $elem['auditoria_id'], $elem['respuestas'], $now, $now ]);
@@ -325,10 +335,11 @@ class Sincronizar {
 	}
 
 
-	public function syncRecomendas($elem, $now)
+	public function syncRecomendas($elem, $now, $new_ids_auditorias)
 	{
 		if (!isset($elem['id'])) {
-            Log::info('Recomendacion: '.$elem['auditoria_id']. ' - '. $elem['recomendacion']);
+            $this->cambiar_foranea_id($elem, $new_ids_auditorias, 'auditoria_id');
+
             $consulta = 'INSERT INTO au_recomendaciones(auditoria_id, hallazgo, recomendacion, justificacion, superada, fecha, fecha_respuesta, tipo, created_at, updated_at) 
                 VALUES(?,?,?,?,?,?,?,?,?,?);';
             DB::insert($consulta, [$elem['auditoria_id'], $elem['hallazgo'], $elem['recomendacion'], $elem['justificacion'], $elem['superada'], $elem['fecha'], $elem['fecha_respuesta'], $elem['tipo'], $now, $now ]);
@@ -346,6 +357,15 @@ class Sincronizar {
 	}
 
 
+    
+    private function cambiar_foranea_id(&$elem, $new_ids, $campo){
+
+        for ($i=0; $i < count($new_ids); $i++) { 
+            if ($new_ids[$i]['row_id'] == $elem[$campo]) {
+                $elem[$campo] = $new_ids[$i]['new_id'];
+            }
+        }
+    }
 
 
 
