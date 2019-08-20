@@ -45,7 +45,7 @@ class RemesasController extends Controller {
 				$results 	= $reader->all();
 				
 				if (count($results) > 0) {
-
+					
 					if (isset($results[0]->orgid)) {
 						$this->insertarRemesas($results);
 					}else{
@@ -60,6 +60,7 @@ class RemesasController extends Controller {
 							
 						}
 					}
+					
 				}
                 
 			});

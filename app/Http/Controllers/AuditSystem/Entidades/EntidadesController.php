@@ -35,7 +35,7 @@ class EntidadesController extends Controller {
 
             $consulta = 'SELECT u.* 
                 FROM au_users u 
-                WHERE u.asociacion_id=? and u.tipo="Tesorero" or u.tipo="Pastor" or u.tipo="Auditor" 
+                WHERE u.asociacion_id=? and (u.tipo="Tesorero iglesia" or u.tipo="Pastor" or u.tipo="Auditor") 
                     or (u.tipo="Tesorero asociación" and u.id=?) ;';
 
             $res['usuarios'] 		= DB::select($consulta, [$user->asociacion_id, $user->id]);
