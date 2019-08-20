@@ -75,6 +75,40 @@ class IglesiasController extends Controller {
         
     }
     
+    
+    
+
+	/*************************************************************
+	 * Guardar por VALOR
+	 *************************************************************/
+	public function putGuardarValor()
+	{
+        $now 		= Carbon::now('America/Bogota');
+        $id 		= Request::input('iglesia_id');
+        $valor 		= Request::input('valor');
+        $user_id 	= Request::input('user_id');
+        $tipo_usu   = Request::input('tipo_usu');
+        $propiedad  = Request::input('propiedad');
+
+		
+		if (AuUser::hasUnionRole($tipo_usu, true) || AuUser::hasAsociacionRole($tipo_usu) || AuUser::hasUnionRole($tipo_usu)) {
+            $consulta 	= 'UPDATE au_iglesias SET '.$propiedad.'=:valor, updated_by=:modificador, updated_at=:fecha WHERE id=:id';
+            $datos 		= [
+                ':valor'		=> $valor, 
+                ':modificador'	=> $user_id, 
+                ':fecha' 		=> $now,
+                ':id'	=> $id
+            ];
+			$alumno 	= DB::select($consulta, $datos);
+            
+            return 'Guardado';
+		} else {
+			return abort('400', 'No tiene permisos');
+		}
+		
+	}
 	
+
+
 
 }

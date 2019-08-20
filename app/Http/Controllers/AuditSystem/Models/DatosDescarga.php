@@ -34,7 +34,7 @@ class DatosDescarga
     {
         if ($tipo_usu == 'Auditor' || $tipo_usu == 'Admin' || $tipo_usu == 'Tesorero asociacion') {
             if ($asociacion_id) {
-                $consulta = 'SELECT i.* FROM au_iglesias i 
+                $consulta = 'SELECT i.*, d.asociacion_id FROM au_iglesias i 
                     INNER JOIN au_distritos d ON d.id=i.distrito_id and d.deleted_at is null
                     WHERE d.asociacion_id=? and i.deleted_at is null;';
                 return DB::select($consulta, [$asociacion_id]);
