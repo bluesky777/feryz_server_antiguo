@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\AuditSystem\DatosIniciales;
 use App\Http\Controllers\AuditSystem\Sincronizar;
 use App\Http\Controllers\AuditSystem\Models\DatosDescarga;
+use App\Http\Controllers\AuditSystem\Models\AuUser;
 use Carbon\Carbon;
 use \Log;
 
@@ -491,6 +492,74 @@ class AuditoriasController extends Controller {
 			'recomendaciones' 		=> $rRecomendas,
 			'dinero_efectivo' 		=> $rDinero
 		];
+	}
+
+
+
+
+
+	public function putRevision()
+	{
+		$user 				= AuUser::identificar();
+		$r 					= [];
+
+		$anio 	= date("Y");
+
+		if (Request::has('anio')) {
+			$anio = Request::input('anio');
+		}else{
+			$consulta = "SELECT distinct LEFT(a.fecha , 4) as anio FROM au_auditorias a 
+				INNER JOIN au_iglesias i ON i.id=a.iglesia_id and i.deleted_at is null
+				INNER JOIN au_distritos d ON d.id=i.distrito_id and d.deleted_at is null
+				WHERE d.asociacion_id=? and a.deleted_at is null
+				ORDER BY anio";
+
+			$r['anios']     = DB::select($consulta, [$user->asociacion_id]);
+		}
+
+		$r['anio']     = $anio;
+
+
+		$consulta = "SELECT * FROM au_asociaciones a 
+			WHERE a.id=? and a.deleted_at is null";
+
+		$r['asociacion']     = DB::select($consulta, [$user->asociacion_id]);
+		
+		if (count($r['asociacion']) > 0) {
+			$r['asociacion'] = $r['asociacion'][0];
+		}
+
+
+		if (AuUser::hasAsociacionRole($user->tipo, true) || AuUser::hasUnionRole($user->tipo)) {
+			
+			$consulta 			= 'SELECT * FROM au_distritos WHERE asociacion_id=?';
+			$distritos 			= DB::select($consulta, [$user->asociacion_id]);
+			$cant_dist 			= count($distritos);
+
+			
+			for ($j=0; $j < $cant_dist; $j++) { 
+				
+				$consulta   = "SELECT COUNT(a.id) as cantidad FROM au_auditorias a 
+					INNER JOIN au_iglesias i ON i.id=a.iglesia_id and i.deleted_at is null
+					WHERE i.distrito_id=? and fecha like '".$anio."%' and cerrada=1 and a.deleted_at is null";
+					
+				$distritos[$j]->cant_auditorias_cerradas     = (DB::select($consulta, [$distritos[$j]->id])[0] )->cantidad;
+				
+				
+				$consulta   = "SELECT a.*, i.nombre, i.codigo 
+					FROM au_iglesias i
+					LEFT JOIN au_auditorias a ON i.id=a.iglesia_id and a.deleted_at is null and fecha like '".$anio."%'
+					WHERE i.distrito_id=? and i.deleted_at is null";
+					
+				$distritos[$j]->auditorias     = DB::select($consulta, [$distritos[$j]->id]);
+				
+				
+			}
+			
+			$r['distritos'] = $distritos;
+		}
+		
+		return $r;
 	}
 
 }
