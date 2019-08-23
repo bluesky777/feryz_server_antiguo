@@ -535,6 +535,8 @@ class AuditoriasController extends Controller {
 			$consulta 			= 'SELECT * FROM au_distritos WHERE asociacion_id=?';
 			$distritos 			= DB::select($consulta, [$user->asociacion_id]);
 			$cant_dist 			= count($distritos);
+			$cant_iglesias 		= 0;
+			$cant_auditadas 	= 0;
 
 			
 			for ($j=0; $j < $cant_dist; $j++) { 
@@ -544,20 +546,24 @@ class AuditoriasController extends Controller {
 					WHERE i.distrito_id=? and fecha like '".$anio."%' and cerrada=1 and a.deleted_at is null";
 					
 				$distritos[$j]->cant_auditorias_cerradas     = (DB::select($consulta, [$distritos[$j]->id])[0] )->cantidad;
-				
+				$cant_auditadas 	+= $distritos[$j]->cant_auditorias_cerradas;
+
 				
 				$consulta   = "SELECT a.*, i.nombre, i.codigo 
 					FROM au_iglesias i
 					LEFT JOIN au_auditorias a ON i.id=a.iglesia_id and a.deleted_at is null and fecha like '".$anio."%'
 					WHERE i.distrito_id=? and i.deleted_at is null";
 					
-				$distritos[$j]->auditorias     = DB::select($consulta, [$distritos[$j]->id]);
-				
+				$distritos[$j]->auditorias     	= DB::select($consulta, [$distritos[$j]->id]);
+				$cant_iglesias 					+= count($distritos[$j]->auditorias);
 				
 			}
 			
 			$r['distritos'] = $distritos;
 		}
+		
+		$r['cant_iglesias'] 	= $cant_iglesias;
+		$r['cant_auditadas'] 	= $cant_auditadas;
 		
 		return $r;
 	}
