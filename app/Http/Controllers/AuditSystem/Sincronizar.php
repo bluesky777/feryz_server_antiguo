@@ -56,15 +56,15 @@ class Sincronizar {
 	public function syncDistritos($elem, $now)
 	{
 		if (!isset($elem['id'])) {
-            $consulta = 'INSERT INTO au_distritos(nombre, alias, codigo, zona, pastor_id, tesorero_id, created_at, updated_at) 
-                VALUES(?,?,?,?,?,?,?,?);';
-            DB::insert($consulta, [$elem['nombre'], $elem['alias'], $elem['codigo'], $elem['zona'], $elem['pastor_id'], $elem['tesorero_id'], $now, $now ]);
+            $consulta = 'INSERT INTO au_distritos(nombre, alias, codigo, zona, asociacion_id, pastor_id, tesorero_id, created_at, updated_at) 
+                VALUES(?,?,?,?,?,?,?,?,?);';
+            DB::insert($consulta, [$elem['nombre'], $elem['alias'], $elem['codigo'], $elem['zona'], $elem['asociacion_id'], $elem['pastor_id'], $elem['tesorero_id'], $now, $now ]);
         }
         elseif($elem['modificado']){
             $consulta = 'UPDATE au_distritos SET 
-                nombre=?, alias=?, codigo=?, zona=?, pastor_id=?, tesorero_id=?, updated_at=? 
+                nombre=?, alias=?, codigo=?, zona=?, asociacion_id=?, pastor_id=?, tesorero_id=?, updated_at=? 
                 WHERE id=?;';
-            DB::update($consulta, [$elem['nombre'], $elem['alias'], $elem['codigo'], $elem['zona'], $elem['pastor_id'], $elem['tesorero_id'], $now, $elem['id'] ]);
+            DB::update($consulta, [$elem['nombre'], $elem['alias'], $elem['codigo'], $elem['zona'], $elem['asociacion_id'], $elem['pastor_id'], $elem['tesorero_id'], $now, $elem['id'] ]);
         }
         elseif($elem['eliminado']){
             DB::delete('DELETE FROM au_distritos WHERE id=?;', [$elem['id']]);
